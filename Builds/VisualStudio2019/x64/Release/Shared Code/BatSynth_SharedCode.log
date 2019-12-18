@@ -1,0 +1,165 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (x64\Release\Shared Code\) contains files shared from another project (SynthFramework_SharedCode.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  PluginEditor.cpp
+  PluginProcessor.cpp
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(34,34): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(34,23): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(76,65): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(94,65): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(124,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:         with
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:         [
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:             Type=float
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:         ] (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(125,58): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(128,63): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(132,79): warning C4100:  'newName': unreferenced formal parameter
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(132,58): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(139,31): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(34,34): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(34,23): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(76,65): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(94,65): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(124,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:         with
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:         [
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:             Type=float
+C:\Users\ehaye\Documents\BatSynth\Source\SynthVoice.h(172,54): warning C4244:         ] (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(20,20): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(21,26): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(21,15): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(426,16): warning C4244:  'initializing': conversion from 'float' to 'short', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(426,37): warning C4244:  'initializing': conversion from 'float' to 'short', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(432,54): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(432,44): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(432,33): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(432,23): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(433,54): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(433,44): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(433,33): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(433,23): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(434,61): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(434,51): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(434,41): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(434,30): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(435,62): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(435,52): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(435,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(435,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(436,63): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(436,53): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(436,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(436,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(437,59): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(437,49): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(437,39): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(437,29): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(438,58): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(438,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(438,38): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(438,28): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(439,60): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(439,50): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(439,40): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(439,30): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(440,60): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(440,50): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(440,40): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(440,30): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(441,62): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(441,52): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(441,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(441,32): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(442,62): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(442,52): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(442,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(442,32): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(443,67): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(443,57): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(443,47): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(443,37): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(444,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(444,56): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(444,46): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(444,36): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(447,62): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(447,52): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(447,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(447,32): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(448,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(448,56): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(448,46): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(448,35): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(449,67): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(449,57): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(449,47): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(449,36): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(450,64): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(450,54): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(450,44): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(450,33): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(451,64): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(451,54): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(451,44): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(451,33): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(452,62): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(452,52): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(452,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(452,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(453,62): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(453,52): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(453,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(453,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(454,65): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(454,55): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(454,45): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(454,34): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(455,62): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(455,52): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(455,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(455,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(456,54): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(456,44): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(456,34): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(456,23): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(457,68): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(457,58): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(457,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(457,37): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(458,64): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(458,53): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(458,42): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(458,31): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(463,79): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(464,82): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(465,82): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(466,77): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(467,74): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(468,80): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(469,79): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(470,85): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(471,88): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(472,101): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(473,94): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(476,97): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(477,103): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(478,94): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(479,95): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(480,94): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(481,100): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(482,82): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(483,86): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(484,82): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\BatSynth\Source\PluginEditor.cpp(485,82): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.22.27905\include\memory(2066,56): warning C4244:  'argument': conversion from '_Ty' to 'float', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.22.27905\include\memory(2066,56): warning C4244:         with
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.22.27905\include\memory(2066,56): warning C4244:         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.22.27905\include\memory(2066,56): warning C4244:             _Ty=int
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.22.27905\include\memory(2066,56): warning C4244:         ] (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(51): message :  see reference to function template instantiation 'std::unique_ptr<Parameter,std::default_delete<_Ty>> std::make_unique<Parameter,const char(&)[9],const char(&)[9],const char(&)[9],juce::NormalisableRange<float>&,int,nullptr,nullptr,0>(const char (&)[9],const char (&)[9],const char (&)[9],juce::NormalisableRange<float> &,int &&,nullptr &&,nullptr &&)' being compiled
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(51): message :         with
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(51): message :         [
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(51): message :             _Ty=Parameter
+C:\Users\ehaye\Documents\BatSynth\Source\PluginProcessor.cpp(51): message :         ]
+  BatSynth_SharedCode.vcxproj -> C:\Users\ehaye\Documents\BatSynth\Builds\VisualStudio2019\x64\Release\Shared Code\BatSynth.lib

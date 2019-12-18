@@ -1,0 +1,4 @@
+﻿  Generating code
+  Not all modules are compiled with -Gy (function comdat), build without incremental LTCG.
+  Finished generating code
+  BatSynth_StandalonePlugin.vcxproj -> C:\Users\ehaye\Documents\BatSynth\Builds\VisualStudio2019\x64\Release\Standalone Plugin\BatSynth.exe

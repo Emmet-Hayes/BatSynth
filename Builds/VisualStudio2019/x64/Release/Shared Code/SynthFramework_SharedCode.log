@@ -1,0 +1,375 @@
+﻿  include_juce_audio_basics.cpp
+  include_juce_audio_devices.cpp
+  include_juce_audio_formats.cpp
+  include_juce_audio_plugin_client_utils.cpp
+  include_juce_audio_processors.cpp
+  include_juce_audio_utils.cpp
+  include_juce_core.cpp
+  include_juce_cryptography.cpp
+  include_juce_data_structures.cpp
+  include_juce_dsp.cpp
+  include_juce_events.cpp
+  include_juce_graphics.cpp
+  include_juce_gui_basics.cpp
+  include_juce_gui_extra.cpp
+  include_juce_opengl.cpp
+  Maximilian.cpp
+  Oscillator.cpp
+  PluginEditor.cpp
+  PluginProcessor.cpp
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(311,61): warning C4244:  '=': conversion from 'double' to 'short', possible loss of data (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(523,60): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(548,61): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(549,75): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(232,44): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(241,44): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(270,43): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(280,43): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(289,42): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(297,42): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(306,54): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(317,78): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(317,78): warning C4458:  declaration of 'startphase' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(84,9): message :  see declaration of 'maxiOsc::startphase' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(317,78): warning C4458:  declaration of 'endphase' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(85,9): message :  see declaration of 'maxiOsc::endphase' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(329,39): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(338,40): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(357,53): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(357,47): warning C4100:  'duty': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(357,29): warning C4100:  'frequency': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(364,48): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(368,48): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(375,44): warning C4458:  declaration of 'frequency' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(82,9): message :  see declaration of 'maxiOsc::frequency' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(425,41): warning C4458:  declaration of 'noteOn' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(120,10): message :  see declaration of 'maxiEnvelope::noteOn' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(432,75): warning C4458:  declaration of 'startVal' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(116,9): message :  see declaration of 'maxiEnvelope::startVal' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(432,75): warning C4458:  declaration of 'endVal' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(117,12): message :  see declaration of 'maxiEnvelope::endVal' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(644,19): warning C4244:  'initializing': conversion from 'double' to 'int32_t', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(671,56): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(169,9): message :  see declaration of 'maxiFilter::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(671,56): warning C4458:  declaration of 'cutoff' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(181,9): message :  see declaration of 'maxiFilter::cutoff' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(678,56): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(169,9): message :  see declaration of 'maxiFilter::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(678,56): warning C4458:  declaration of 'cutoff' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(181,9): message :  see declaration of 'maxiFilter::cutoff' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(684,73): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(169,9): message :  see declaration of 'maxiFilter::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(684,73): warning C4458:  declaration of 'cutoff1' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(173,9): message :  see declaration of 'maxiFilter::cutoff1' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(684,73): warning C4458:  declaration of 'resonance' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(182,9): message :  see declaration of 'maxiFilter::resonance' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(700,73): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(169,9): message :  see declaration of 'maxiFilter::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(700,73): warning C4458:  declaration of 'cutoff1' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(173,9): message :  see declaration of 'maxiFilter::cutoff1' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(700,73): warning C4458:  declaration of 'resonance' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(182,9): message :  see declaration of 'maxiFilter::resonance' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(716,76): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(169,9): message :  see declaration of 'maxiFilter::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(716,76): warning C4458:  declaration of 'cutoff1' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(173,9): message :  see declaration of 'maxiFilter::cutoff1' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(716,76): warning C4458:  declaration of 'resonance' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(182,9): message :  see declaration of 'maxiFilter::resonance' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(732,62): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(192,9): message :  see declaration of 'maxiMix::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(732,62): warning C4458:  declaration of 'two' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(193,9): message :  see declaration of 'maxiMix::two' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(732,62): warning C4458:  declaration of 'x' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(197,9): message :  see declaration of 'maxiMix::x' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(741,70): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(192,9): message :  see declaration of 'maxiMix::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(741,70): warning C4458:  declaration of 'four' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(194,9): message :  see declaration of 'maxiMix::four' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(741,70): warning C4458:  declaration of 'x' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(197,9): message :  see declaration of 'maxiMix::x' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(741,70): warning C4458:  declaration of 'y' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(198,9): message :  see declaration of 'maxiMix::y' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(754,85): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(192,9): message :  see declaration of 'maxiMix::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(754,85): warning C4458:  declaration of 'eight' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(195,9): message :  see declaration of 'maxiMix::eight' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(754,85): warning C4458:  declaration of 'x' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(197,9): message :  see declaration of 'maxiMix::x' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(754,85): warning C4458:  declaration of 'y' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(198,9): message :  see declaration of 'maxiMix::y' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(754,85): warning C4458:  declaration of 'z' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(199,9): message :  see declaration of 'maxiMix::z' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(780,47): warning C4100:  'channel': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(869,20): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(874,17): warning C4458:  declaration of 'position' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(247,9): message :  see declaration of 'maxiSample::position' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(943,43): warning C4458:  declaration of 'speed' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(248,9): message :  see declaration of 'maxiSample::speed' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(954,39): warning C4458:  declaration of 'speed' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(248,9): message :  see declaration of 'maxiSample::speed' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(963,14): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(971,13): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(982,14): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(989,13): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1018,13): warning C4244:  'initializing': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1040,13): warning C4244:  'initializing': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1139,68): warning C4458:  declaration of 'length' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(256,7): message :  see declaration of 'maxiSample::length' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1149,81): warning C4458:  declaration of 'speed' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(248,9): message :  see declaration of 'maxiSample::speed' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1149,81): warning C4458:  declaration of 'length' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(256,7): message :  see declaration of 'maxiSample::length' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1159,14): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1167,14): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1178,14): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1185,14): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1197,9): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1208,12): warning C4244:  'initializing': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1230,12): warning C4244:  'initializing': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1329,27): warning C4244:  '=': conversion from 'double' to 'long', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1358,27): warning C4244:  '=': conversion from 'int' to 'short', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1361,17): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1363,24): warning C4244:  '=': conversion from 'float' to 'short', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1373,35): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1373,35): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1373,35): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1373,35): warning C4244:             T=float
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1373,35): warning C4244:         ]
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1385,33): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1385,33): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1385,33): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1385,33): warning C4244:             T=float
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1385,33): warning C4244:         ]
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1411,28): warning C4244:  '=': conversion from 'float' to 'short', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1412,41): warning C4244:  '=': conversion from 'float' to 'short', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1425,100): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(431,12): message :  see declaration of 'maxiDyn::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1425,100): warning C4458:  declaration of 'threshold' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(434,9): message :  see declaration of 'maxiDyn::threshold' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1425,100): warning C4458:  declaration of 'holdtime' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(443,7): message :  see declaration of 'maxiDyn::holdtime' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1425,100): warning C4458:  declaration of 'attack' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(436,9): message :  see declaration of 'maxiDyn::attack' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1425,100): warning C4458:  declaration of 'release' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(437,9): message :  see declaration of 'maxiDyn::release' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1463,105): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(431,12): message :  see declaration of 'maxiDyn::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1463,105): warning C4458:  declaration of 'ratio' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(432,9): message :  see declaration of 'maxiDyn::ratio' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1463,105): warning C4458:  declaration of 'threshold' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(434,9): message :  see declaration of 'maxiDyn::threshold' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1463,105): warning C4458:  declaration of 'attack' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(436,9): message :  see declaration of 'maxiDyn::attack' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1463,105): warning C4458:  declaration of 'release' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(437,9): message :  see declaration of 'maxiDyn::release' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1494,40): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(431,12): message :  see declaration of 'maxiDyn::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1529,93): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(455,9): message :  see declaration of 'maxiEnv::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1529,93): warning C4458:  declaration of 'attack' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(457,9): message :  see declaration of 'maxiEnv::attack' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1529,93): warning C4458:  declaration of 'release' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(460,9): message :  see declaration of 'maxiEnv::release' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1529,93): warning C4458:  declaration of 'holdtime' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(467,7): message :  see declaration of 'maxiEnv::holdtime' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1529,93): warning C4458:  declaration of 'trigger' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(466,6): message :  see declaration of 'maxiEnv::trigger' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1572,125): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(455,9): message :  see declaration of 'maxiEnv::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1572,125): warning C4458:  declaration of 'attack' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(457,9): message :  see declaration of 'maxiEnv::attack' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1572,125): warning C4458:  declaration of 'decay' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(458,9): message :  see declaration of 'maxiEnv::decay' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1572,125): warning C4458:  declaration of 'sustain' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(459,9): message :  see declaration of 'maxiEnv::sustain' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1572,125): warning C4458:  declaration of 'release' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(460,9): message :  see declaration of 'maxiEnv::release' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1572,125): warning C4458:  declaration of 'holdtime' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(467,7): message :  see declaration of 'maxiEnv::holdtime' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1572,125): warning C4458:  declaration of 'trigger' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(466,6): message :  see declaration of 'maxiEnv::trigger' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1625,49): warning C4458:  declaration of 'input' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(455,9): message :  see declaration of 'maxiEnv::input' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1625,49): warning C4458:  declaration of 'trigger' hides class member
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(466,6): message :  see declaration of 'maxiEnv::trigger' (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1717,54): warning C4244:  'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(2005,23): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(2135,69): warning C4100:  'setall': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(2135,54): warning C4100:  'velocity': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(2456,20): warning C4244:  'initializing': conversion from 'int' to 'short', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(224,25): warning C4244:  '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(224,25): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(224,25): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(224,25): warning C4244:             T=float
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(224,25): warning C4244:         ] (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(222): message :  while compiling class template member function 'void maxiLagExp<float>::init(T,T)'
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(222): message :         with
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(222): message :         [
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(222): message :             T=float
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(222): message :         ] (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(219): message :  see reference to function template instantiation 'void maxiLagExp<float>::init(T,T)' being compiled
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(219): message :         with
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(219): message :         [
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(219): message :             T=float
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(219): message :         ] (compiling source file ..\..\Source\Maximilian.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.cpp(1371): message :  see reference to class template instantiation 'maxiLagExp<float>' being compiled
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(311,61): warning C4244:  '=': conversion from 'double' to 'short', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(523,60): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(548,61): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(549,75): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(40,29): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(42,28): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(44,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(46,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(48,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(52,35): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(56,38): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,39): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(68,40): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(72,41): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(76,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(80,36): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(84,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(88,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,32): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,21): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(88,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(102,27): warning C4100:  'newPitchWheelValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(105,49): warning C4100:  'newControllerValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(105,27): warning C4100:  'controllerNumber': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:             Type=float
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         ] (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(18,1): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(194,76): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(221,76): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(222,73): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(223,79): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(224,78): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(225,84): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(226,87): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(227,96): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(228,102): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(229,93): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(230,94): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(231,81): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(232,85): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(233,81): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(234,81): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(311,61): warning C4244:  '=': conversion from 'double' to 'short', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(523,60): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(548,61): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(549,75): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(40,29): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(42,28): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(44,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(46,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(48,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(52,35): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(56,38): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,39): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(68,40): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(72,41): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(76,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(80,36): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(84,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(88,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,32): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,21): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(88,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(102,27): warning C4100:  'newPitchWheelValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(105,49): warning C4100:  'newControllerValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(105,27): warning C4100:  'controllerNumber': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:             Type=float
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         ] (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(33,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(34,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(35,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(36,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(37,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(38,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(39,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(40,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(41,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(42,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(43,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(44,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(45,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(46,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(47,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(110,59): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(114,64): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(119,80): warning C4100:  'newName': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(119,59): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(200,70): warning C4100:  'destData': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(207,79): warning C4100:  'sizeInBytes': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(207,69): warning C4100:  'data': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(311,61): warning C4244:  '=': conversion from 'double' to 'short', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(523,60): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(548,61): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(549,75): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(40,29): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(42,28): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(44,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(46,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(48,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(52,35): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(56,38): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,39): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(68,40): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(72,41): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(76,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(80,36): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(84,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(88,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,32): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,21): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(88,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(102,27): warning C4100:  'newPitchWheelValue': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(105,49): warning C4100:  'newControllerValue': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(105,27): warning C4100:  'controllerNumber': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:             Type=float
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(118,50): warning C4244:         ] (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Oscillator.cpp(15,1): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer'
+C:\Users\ehaye\Documents\SynthFramework\Source\Oscillator.cpp(34,1): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer'
+  SynthFramework_SharedCode.vcxproj -> C:\Users\ehaye\Documents\SynthFramework\Builds\VisualStudio2019\x64\Release\Shared Code\SynthFramework.lib

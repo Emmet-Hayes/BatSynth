@@ -1,0 +1,112 @@
+﻿  Oscillator.cpp
+  PluginEditor.cpp
+  PluginProcessor.cpp
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(316,61): warning C4244:  '=': conversion from 'double' to 'short', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(533,60): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(558,61): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(559,75): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(40,29): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(42,28): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(44,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(46,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(48,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(52,35): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(56,38): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,32): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,21): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(74,27): warning C4100:  'newPitchWheelValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(77,49): warning C4100:  'newControllerValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(77,27): warning C4100:  'controllerNumber': unreferenced formal parameter (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:             Type=float
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         ] (compiling source file ..\..\Source\PluginEditor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(167,1): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(260,1): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::SliderAttachment>::~ScopedPointer'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(283,76): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(284,73): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(285,79): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(286,78): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(287,84): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(288,87): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginEditor.cpp(289,81): warning C4244:  'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(316,61): warning C4244:  '=': conversion from 'double' to 'short', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(533,60): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(558,61): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(559,75): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(316,61): warning C4244:  '=': conversion from 'double' to 'short', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(40,29): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(533,60): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(42,28): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(44,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(46,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(558,61): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(48,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Maximilian.h(559,75): warning C4244:  'argument': conversion from 'double' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(52,35): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(56,38): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,32): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,21): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(74,27): warning C4100:  'newPitchWheelValue': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(77,49): warning C4100:  'newControllerValue': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(77,27): warning C4100:  'controllerNumber': unreferenced formal parameter (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:             Type=float
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         ] (compiling source file ..\..\Source\Oscillator.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\Oscillator.cpp(15,1): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer'
+C:\Users\ehaye\Documents\SynthFramework\Source\Oscillator.cpp(34,1): warning C4996:  'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_core\memory\juce_ScopedPointer.h(56): message :  see declaration of 'juce::ScopedPointer<juce::AudioProcessorValueTreeState::ComboBoxAttachment>::~ScopedPointer'
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(40,29): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(42,28): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(44,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(46,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(48,32): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(52,35): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(56,38): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,30): warning C4114:  same type qualifier used more than once (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,32): warning C4100:  'currentPitchWheelPosition': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(26,21): warning C4100:  'sound': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(60,68): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(74,27): warning C4100:  'newPitchWheelValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(77,49): warning C4100:  'newControllerValue': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(77,27): warning C4100:  'controllerNumber': unreferenced formal parameter (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:  'argument': conversion from 'double' to 'Type', possible loss of data
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         with
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         [
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:             Type=float
+C:\Users\ehaye\Documents\SynthFramework\Source\SynthVoice.h(90,50): warning C4244:         ] (compiling source file ..\..\Source\PluginProcessor.cpp)
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(30,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(31,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(32,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(33,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(34,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(35,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(36,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(37,1): warning C4996:  'juce::AudioProcessorValueTreeState::createAndAddParameter': was declared deprecated
+C:\Users\ehaye\Documents\juce\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h(260): message :  see declaration of 'juce::AudioProcessorValueTreeState::createAndAddParameter'
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(100,59): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(104,64): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(109,80): warning C4100:  'newName': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(109,59): warning C4100:  'index': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(183,70): warning C4100:  'destData': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(190,79): warning C4100:  'sizeInBytes': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(190,69): warning C4100:  'data': unreferenced formal parameter
+C:\Users\ehaye\Documents\SynthFramework\Source\PluginProcessor.cpp(156): warning C4706:  assignment within conditional expression
+  SynthFramework_SharedCode.vcxproj -> C:\Users\ehaye\Documents\SynthFramework\Builds\VisualStudio2019\x64\Debug\Shared Code\SynthFramework.lib
