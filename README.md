@@ -17,3 +17,4 @@ After the ADSR circuit in the signal chain, there is a 12db per octave low pass 
 a cutoff frequency parameter to determine what audio frequency to begin filtering, and a resonance
 control to determine how resonant the cutoff frequency will be in the final result (be careful!!)
 
+![alt text](Images/BatSynthExampleImage.png)
