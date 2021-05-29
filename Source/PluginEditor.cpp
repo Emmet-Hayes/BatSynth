@@ -392,7 +392,7 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents() {
     totalGainSlider.textFromValueFunction = nullptr;
     
     attackSlider.setNumDecimalPlacesToDisplay(0);
-    decaySlider.setNumDecimalPlacesToDisplay(3);
+    decaySlider.setNumDecimalPlacesToDisplay(0);
     sustainSlider.setNumDecimalPlacesToDisplay(2);
     releaseSlider.setNumDecimalPlacesToDisplay(0);
     osc2GainSlider.setNumDecimalPlacesToDisplay(3);
