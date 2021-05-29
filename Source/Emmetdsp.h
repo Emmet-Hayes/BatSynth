@@ -77,6 +77,7 @@ public:
   double coswave(double frequency);
   double saw(double frequency);
   double sawr(double frequency);
+  double sawe(double frequency);
   double triangle(double frequency);
   double square(double frequency);
   double sawwane(double frequency);

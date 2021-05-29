@@ -56,7 +56,7 @@ public:
   void setCurrentProgram (int index) override;
   const String getProgramName (int index) override;
   void changeProgramName (int index, const String& newName) override;
-
+  
   //==============================================================================
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
@@ -93,7 +93,7 @@ public:
 private:
   Synthesiser mySynth;
   SynthVoice* myVoice;
-
+  void addAllControls();
   float attackTime, decayTime, sustainTime, releaseTime, osc2Gain, noiseGain, osc2Pitch,
     filterCutoff, filterResonance, lfoFilterIntensity, lfoFilterRate, /*lfoPitchIntensity, lfoPitchRate, */
     compressionRatio, compressionThreshold, compressionAttack, compressionRelease,

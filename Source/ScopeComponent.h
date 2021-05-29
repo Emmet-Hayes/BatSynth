@@ -1,8 +1,8 @@
 /* ScopeComponent.h
  
   AudioBufferQueue and ScopeComponent are responsible for rendering the
- oscilloscope in real time as audio is being generated. All classes are
- capable of switching between single and double precision.
+ oscilloscope in real time (or as close to as possible) as audio is being generated.
+ All classes are capable of switching between single and double precision.
 */
 
 #pragma once
@@ -152,12 +152,12 @@ private:
 
   //draw the actual waves using jmap and data
   static void plot(const SampleType* data, size_t numSamples, Graphics& g, juce::Rectangle<SampleType> rect,
-    SampleType scaler = SampleType(1), SampleType offset = SampleType(0)) {
+    SampleType scale = SampleType(0.7), SampleType offset = SampleType(0)) {
     auto w = rect.getWidth();
     auto h = rect.getHeight();
     auto right = rect.getRight();
     auto center = rect.getBottom() - offset;
-    auto gain = h * scaler;
+    auto gain = h * scale;
     for (size_t i = 1; i < numSamples; ++i) //draw every piece of the sample
 	  g.drawLine({ jmap(SampleType(i - 1), SampleType(0), SampleType(numSamples - 1), SampleType(right - w), 
 		SampleType(right)), center - gain * data[i - 1], jmap(SampleType(i), SampleType(0), 

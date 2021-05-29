@@ -420,14 +420,15 @@ SynthFrameworkAudioProcessorEditor::~SynthFrameworkAudioProcessorEditor() {
 
 //draws the background image, or if the image is missing, a black background
 void SynthFrameworkAudioProcessorEditor::paint (Graphics& g) {
-  // (Our component is opaque, so we must completely fill the background with a solid colour)
+  // Our component is opaque, so we must completely fill the background with a solid colour
   juce::Colour c(0, 0, 0);
   g.fillAll(c);
+  scale *= 0.63; // adjust scale so it doesnt dominate the entire screen of what its running on
   short height = scale * 800, width = scale * 600;
   g.drawImage(image, 0, 0, height, width, 200, 0, 1600, 1200); //these numbers are specific to this particular image.
 }
 
-//here we actually place the widgets on the screen, each placement and distance based on the scale of the device
+//here we actually place the widgets on the screen, each placement and distance based on scale set by device
 void SynthFrameworkAudioProcessorEditor::resized() {
   osc1Gui.setBounds(10*scale, 30*scale, 120*scale, 30*scale);
   osc2Gui.setBounds(10*scale, 85*scale, 120*scale, 30*scale);

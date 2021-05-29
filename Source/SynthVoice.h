@@ -47,33 +47,33 @@ public:
 
   //setters and getters for all of the DSP-side variable values.
   //these all correspond to the user interface boxes, knobs and sliders.
-  void setAttack(const float * attack) { env1.setAttack((double)* attack); }
-  void setDecay(const float * decay) { env1.setDecay((double)* decay); }
-  void setSustain(const float * sustain) { env1.setSustain((double)* sustain); }
-  void setRelease(const float * release) { env1.setRelease((double)* release); }
-  void setTotalGain(const float* lvl) { totalGain = *lvl; }
+  void setAttack(std::atomic<float> * attack) { env1.setAttack((double)* attack); }
+  void setDecay(std::atomic<float> * decay) { env1.setDecay((double)* decay); }
+  void setSustain(std::atomic<float> * sustain) { env1.setSustain((double)* sustain); }
+  void setRelease(std::atomic<float> * release) { env1.setRelease((double)* release); }
+  void setTotalGain(std::atomic<float> * lvl) { totalGain = (double)*lvl; }
   double getTotalGain() const { return totalGain; }
-  void setFilterCutoff(const float * filtCut) { filt1.cutoff = *filtCut; }
+  void setFilterCutoff(std::atomic<float> * filtCut) { filt1.cutoff = (double)*filtCut; }
   double getFilterCutoff() const { return filt1.cutoff; }
-  void setFilterResonance(const float * filtRes) { filt1.resonance = *filtRes; }
+  void setFilterResonance(std::atomic<float> * filtRes) { filt1.resonance = (double)*filtRes; }
   double getFilterResonance() const { return filt1.resonance; }
-  void setCompressionRatio(const float * ratio) { comp1.setRatio(*ratio); compressGain = -0.05 * *ratio + 0.9; }
+  void setCompressionRatio(std::atomic<float> * ratio) { comp1.setRatio((double)*ratio); compressGain = -0.05 * (double)*ratio + 0.9; }
   double getCompressionRatio() const { return comp1.ratio; }
-  void setCompressionThreshold(const float* thresh) { comp1.setThreshold(*thresh); }
+  void setCompressionThreshold(std::atomic<float> * thresh) { comp1.setThreshold((double)*thresh); }
   double getCompressionThreshold() const { return comp1.threshold; }
-  void setCompressionAttack(const float * attack) { comp1.setAttack(*attack); }
+  void setCompressionAttack(std::atomic<float> * attack) { comp1.setAttack((double)*attack); }
   double getCompressionAttack() const { return comp1.attack; }
-  void setCompressionRelease(const float * release) { comp1.setRelease(*release); }
+  void setCompressionRelease(std::atomic<float> * release) { comp1.setRelease((double)*release); }
   double getCompressionRelease() const { return comp1.release; }
-  void setCompressionGain(const float * gain) { compressGain = *gain; }
+  void setCompressionGain(std::atomic<float> * gain) { compressGain = (double)*gain; }
   double getCompressionGain() const { return compressGain; }
-  void setDelayTime(const float * time) { delay1.time = *time; }
+  void setDelayTime(std::atomic<float> * time) { delay1.time = (double)*time; }
   double getDelayTime() const { return delay1.time; }
-  void setDelayFeedback(const float * feedback) { delay1.feedback = *feedback; }
+  void setDelayFeedback(std::atomic<float> * feedback) { delay1.feedback = (double)*feedback; }
   double getDelayFeedback() const { return delay1.feedback; }
-  void setDelayGain(const float * gain) { delayGain = *gain; }
+  void setDelayGain(std::atomic<float> * gain) { delayGain = (double)*gain; }
   double getDelayGain() const { return delayGain; }
-  void setOsc1Type(const float * oscType) { theWave1 = *oscType + 0.1f; } //chosen type doesn't get rounded down
+  void setOsc1Type(std::atomic<float> * oscType) { theWave1 = (double)*oscType + 0.1f; } //chosen type doesn't get rounded down
   double getOsc1Type() {
     switch (theWave1) { //picks the wave type and also sets the frequency using all the possible variables
       case 0: default: return osc1.sinewave(frequency * oscAllPitchBend + lfoPitchIntensity * lfo2.sinewave(lfoPitchFreq) * (frequency/220.));
@@ -91,7 +91,7 @@ public:
       case 12: return osc1.sawpulse(frequency * oscAllPitchBend + lfoPitchIntensity * lfo2.sinewave(lfoPitchFreq) * (frequency/220.), 0.3);
     }
   }
-  void setOsc2Type(const float * oscType) { theWave2 = *oscType + 0.1f; } //chosen type doesn't get rounded down
+  void setOsc2Type(std::atomic<float> * oscType) { theWave2 = (double)*oscType + 0.1f; } //chosen type doesn't get rounded down
   double getOsc2Type() {
     switch (theWave2) { //see getOsc1Type() directly above
       case 0: default: return osc2.sinewave(frequency * osc2PitchBend * oscAllPitchBend + lfoPitchIntensity * lfo2.sinewave(lfoPitchFreq) * (frequency/220.));
@@ -109,19 +109,19 @@ public:
       case 12: return osc2.sawpulse(frequency * osc2PitchBend * oscAllPitchBend + lfoPitchIntensity * lfo2.sinewave(lfoPitchFreq) * (frequency/220.), 0.3);
     }
   }
-  void setOsc2Gain(const float * newGain) { osc2Gain = *newGain; }
+  void setOsc2Gain(std::atomic<float> * newGain) { osc2Gain = (double)*newGain; }
   double getOsc2Gain() const { return osc2Gain; }
-  void setNoiseGain(const float * newGain) { noiseGain = *newGain; }
+  void setNoiseGain(std::atomic<float> * newGain) { noiseGain = (double)*newGain; }
   double getNoiseGain() const { return noiseGain; }
-  void setOsc2Pitch(const float * newPitch) { osc2PitchBend = *newPitch; }
+  void setOsc2Pitch(std::atomic<float> * newPitch) { osc2PitchBend = (double)*newPitch; }
   double getOsc2Pitch() const { return osc2PitchBend; }
-  void setLfoFilterIntensity(const float * newGain) { lfoFilterIntensity = *newGain; }
+  void setLfoFilterIntensity(std::atomic<float> * newGain) { lfoFilterIntensity = (double)*newGain; }
   double getLfoFilterIntensity() const { return lfoFilterIntensity; }
-  void setLfoFilterRate(const float * newRate) { lfoFilterFreq = *newRate; }
+  void setLfoFilterRate(std::atomic<float> * newRate) { lfoFilterFreq = (double)*newRate; }
   double getLfoFilterRate() const { return lfoFilterFreq; }
-  void setDistDrive(const float * newDrive) { distDrive1 = *newDrive; }
+  void setDistDrive(std::atomic<float> * newDrive) { distDrive1 = (double)*newDrive; }
   double getDistDrive() const { return distDrive1; }
-  void setDistType(const float * newType) { distChoice1 = *newType + 0.1f; }
+  void setDistType(std::atomic<float> * newType) { distChoice1 = (double)*newType + 0.1f; }
   double getDistSignal(const double signal) {
     switch (distChoice1) {
       case 0: default: return signal;

@@ -32,51 +32,7 @@ SynthFrameworkAudioProcessor::SynthFrameworkAudioProcessor()
   ), tree(*this, nullptr)
 #endif
 {
-  //keyboardState.reset();
-  //These ranges will determine what our parameters are capaable of changing to. They should always line up
-  //with the corresponding ranges set on the UI buttons and sliders themselves.
-  NormalisableRange<float> attackRange(0.1f, 5000.0f), decayRange(0.1f, 2000.0f), sustainRange(0.0f, 1.0f),
-    releaseRange(0.1f, 5000.0f), wavetypeRange(0, 12), wavetype2Range(0, 12),
-    osc2GainRange(0.f, 1.f), noiseGainRange(0.f, 1.f), osc2PitchRange(0.5f, 2.f),
-    filterCutRange(50.f, 7100.f), filterResonRange(1.f, 10.f), lfoFilterIntenRange(0.f, 0.9f),
-    lfoFilterRateRange(0.5f, 12.0f), /*lfoPitchIntenRange0.0f, 3.0f), lfoPitchRateRange(0.05f, 4.0f), */
-    compressRatioRange(1.f, 10.f),  compressGainRange(0.f, 1.f),
-    compressThreshRange(0.1f, 1.f), compressAttackRange(0.5f, 100.f), compressReleaseRange(0.1f, 2.0f), distortionTypeRange(0, 4), distortionDriveRange(0.01f, 6.f),
-    delayTimeRange(100.f, 88000.f), delayFeedbackRange(0.f, 0.9f), delayGainRange(0.f, 1.f), totalGainRange(0.f, 1.3f);
-  using Parameter = AudioProcessorValueTreeState::Parameter; //shortens the next few lines a bit
-  tree.createAndAddParameter(std::make_unique<Parameter>("attack", "Attack", "Attack", attackRange, 0.1f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("decay", "Decay", "Decay", decayRange, 500.f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("sustain", "Sustain", "Sustain", sustainRange, 0.8f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("release", "Release", "Release", releaseRange, 0.1f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("wavetype", "Wavetype", "Wavetype", wavetypeRange, 1, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("wavetype2", "Wavetype 2", "Wavetype 2", wavetype2Range, 0, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("osc2Gain", "Osc 2 Gain", "Osc 2 Gain", osc2GainRange, 0.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("noiseGain", "Noise Gain", "Noise Gain", noiseGainRange, 0.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("osc2Pitch", "Osc 2 Pitch", "Osc 2 Pitch", osc2PitchRange, 1.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("filterCutoff", "Filter Cutoff", "Filter Cutoff", filterCutRange, 500.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("filterResonance", "Filter Resonance", "Filter Resonance", filterResonRange, 1.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("lfoFilterIntensity", "lfo Filter Intensity", "lfo Filter Intensity", lfoFilterIntenRange, 0.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("lfoFilterRate", "lfo Filter Rate", "lfo Filter Rate", lfoFilterRateRange, 2.0f, nullptr, nullptr));
-  /*tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchIntensity", "lfo Pitch Intensity", "lfo Pitch Intensity", lfoPitchIntenRange, 0.0f));
-  tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchRate", "lfo Pitch Rate", "lfo Pitch Rate", lfoPitchRateRange, 0.05f));*/
-  tree.createAndAddParameter(std::make_unique<Parameter>("compressionRatio", "Compression Ratio", "Compression Ratio", compressRatioRange, 2.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("compressionThreshold", "Compression Threshold", "Compression Threshold", compressThreshRange, 0.9f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("compressionAttack", "Compression Attack", "Compression Threshold", compressAttackRange, 1.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("compressionRelease", "Compression Release", "Compression Release", compressReleaseRange, 0.995f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("compressionGain", "Compression Gain", "Compression Gain", compressGainRange, 0.8f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("distortionType", "Distortion Type", "Distortion Type", distortionTypeRange, 0, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("distortionDrive", "Distortion Drive", "Distortion Drive", distortionDriveRange, 1.f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("delayTime", "Delay Time", "Delay Time", delayTimeRange, 10000.0f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("delayFeedback", "Delay Feedback", "Delay Feedback", delayFeedbackRange, 0.5f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("delayGain", "Delay Gain", "Delay Gain", delayGainRange, 0.5f, nullptr, nullptr));
-  tree.createAndAddParameter(std::make_unique<Parameter>("totalGain", "Total Gain", "Total Gain", totalGainRange, 1.0f, nullptr, nullptr));
-  tree.state = ValueTree("Empty"); //initialize tree state, otherwise it won't load
-  mySynth.clearVoices(); //voices should be empty
-  for (int i = 0; i < 8; ++i) //8 voices for up to 8 keys pressed at once. octophonic.
-    mySynth.addVoice(new SynthVoice());
-  mySynth.clearSounds(); //sounds should also be empty
-  mySynth.addSound(new SynthSound()); //add the sound class items
-  //midiCollector.reset(emmetSettings::sampleRate);
+    addAllControls();
 }
 
 SynthFrameworkAudioProcessor::~SynthFrameworkAudioProcessor() {
@@ -216,6 +172,54 @@ bool SynthFrameworkAudioProcessor::hasEditor() const {
 
 AudioProcessorEditor* SynthFrameworkAudioProcessor::createEditor() {
   return new SynthFrameworkAudioProcessorEditor (*this); //create the editor
+}
+
+void SynthFrameworkAudioProcessor::addAllControls() {
+      //keyboardState.reset();
+  //These ranges will determine what our parameters are capaable of changing to. They should always line up
+  //with the corresponding ranges set on the UI buttons and sliders themselves.
+  NormalisableRange<float> attackRange(0.1f, 5000.0f), decayRange(0.1f, 2000.0f), sustainRange(0.0f, 1.0f),
+    releaseRange(0.1f, 5000.0f), wavetypeRange(0, 12), wavetype2Range(0, 12),
+    osc2GainRange(0.f, 1.f), noiseGainRange(0.f, 1.f), osc2PitchRange(0.5f, 2.f),
+    filterCutRange(50.f, 7100.f), filterResonRange(1.f, 10.f), lfoFilterIntenRange(0.f, 0.9f),
+    lfoFilterRateRange(0.5f, 12.0f), /*lfoPitchIntenRange0.0f, 3.0f), lfoPitchRateRange(0.05f, 4.0f), */
+    compressRatioRange(1.f, 10.f),  compressGainRange(0.f, 1.f),
+    compressThreshRange(0.1f, 1.f), compressAttackRange(0.5f, 100.f), compressReleaseRange(0.1f, 2.0f), distortionTypeRange(0, 4), distortionDriveRange(0.01f, 6.f),
+    delayTimeRange(100.f, 88000.f), delayFeedbackRange(0.f, 0.9f), delayGainRange(0.f, 1.f), totalGainRange(0.f, 1.3f);
+  using Parameter = AudioProcessorValueTreeState::Parameter; //shortens the next few lines a bit
+  tree.createAndAddParameter(std::make_unique<Parameter>("attack", "Attack", "Attack", attackRange, 0.1f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("decay", "Decay", "Decay", decayRange, 500.f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("sustain", "Sustain", "Sustain", sustainRange, 0.8f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("release", "Release", "Release", releaseRange, 0.1f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("wavetype", "Wavetype", "Wavetype", wavetypeRange, 1, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("wavetype2", "Wavetype 2", "Wavetype 2", wavetype2Range, 0, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("osc2Gain", "Osc 2 Gain", "Osc 2 Gain", osc2GainRange, 0.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("noiseGain", "Noise Gain", "Noise Gain", noiseGainRange, 0.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("osc2Pitch", "Osc 2 Pitch", "Osc 2 Pitch", osc2PitchRange, 1.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("filterCutoff", "Filter Cutoff", "Filter Cutoff", filterCutRange, 500.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("filterResonance", "Filter Resonance", "Filter Resonance", filterResonRange, 1.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("lfoFilterIntensity", "lfo Filter Intensity", "lfo Filter Intensity", lfoFilterIntenRange, 0.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("lfoFilterRate", "lfo Filter Rate", "lfo Filter Rate", lfoFilterRateRange, 2.0f, nullptr, nullptr));
+  /*tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchIntensity", "lfo Pitch Intensity", "lfo Pitch Intensity", lfoPitchIntenRange, 0.0f));
+  tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchRate", "lfo Pitch Rate", "lfo Pitch Rate", lfoPitchRateRange, 0.05f));*/
+  tree.createAndAddParameter(std::make_unique<Parameter>("compressionRatio", "Compression Ratio", "Compression Ratio", compressRatioRange, 2.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("compressionThreshold", "Compression Threshold", "Compression Threshold", compressThreshRange, 0.9f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("compressionAttack", "Compression Attack", "Compression Threshold", compressAttackRange, 1.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("compressionRelease", "Compression Release", "Compression Release", compressReleaseRange, 0.995f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("compressionGain", "Compression Gain", "Compression Gain", compressGainRange, 0.8f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("distortionType", "Distortion Type", "Distortion Type", distortionTypeRange, 0, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("distortionDrive", "Distortion Drive", "Distortion Drive", distortionDriveRange, 1.f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("delayTime", "Delay Time", "Delay Time", delayTimeRange, 10000.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("delayFeedback", "Delay Feedback", "Delay Feedback", delayFeedbackRange, 0.5f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("delayGain", "Delay Gain", "Delay Gain", delayGainRange, 0.5f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("totalGain", "Total Gain", "Total Gain", totalGainRange, 1.0f, nullptr, nullptr));
+  tree.state = ValueTree("Empty"); //initialize tree state, otherwise it won't load
+  mySynth.clearVoices(); //voices should be empty
+  for (int i = 0; i < 8; ++i) //8 voices for up to 8 keys pressed at once. octophonic.
+    mySynth.addVoice(new SynthVoice());
+  mySynth.clearSounds(); //sounds should also be empty
+  mySynth.addSound(new SynthSound()); //add the sound class items
+  //midiCollector.reset(emmetSettings::sampleRate);
 }
 
 //==============================================================================

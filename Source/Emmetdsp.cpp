@@ -263,11 +263,11 @@ double emmetDyn::gate(double input, double threshold, long holdtime, double atta
   }
   
   if (attackphase == 1 && amplitude < 1) { //if attack phase activated, attenuate amplitude
-    amplitude*=(1+attack); //amplitude is at least one now.
+    amplitude*=(1+attack); //amplitude change scaled by attack speed
     output=input*amplitude; //output amplified attack signal from the gate
   }
   
-  if (amplitude >= 1) { //actiavte the hold phase if amplitude if greater than 1
+  if (amplitude >= 1) { //actiavte the hold phase if amplitude is greater than 1
     attackphase=0; //out of attack phase
     holdphase=1; //and into the hold phase
   }
@@ -291,33 +291,27 @@ double emmetDyn::gate(double input, double threshold, long holdtime, double atta
 
 //This thing is great! goes through phases similar to the gate.
 double emmetDyn::compressor(double input, double ratio, double threshold, double attack, double release) {
-  if (fabs(input)>threshold && attackphase!=1){ 
-    holdcount=0;
-    releasephase=0;
-    attackphase=1;
-    if(currentRatio==0) currentRatio=ratio;
+  if (fabs(input) > threshold && attackphase != 1){ // go into attack phase if input hits threshold
+    releasephase = 0;
+    attackphase = 1;
+    currentRatio = 1;
   }
   
-  if (attackphase==1 && currentRatio<ratio-1) {
-    currentRatio*=(1+attack);
+  if (attackphase == 1 && currentRatio < ratio-1) { // update currentRatio based on attack speed in atk phase
+    currentRatio *= 1 + (1 / attack);
   }
   
-  if (currentRatio>=ratio-1) {
-    attackphase=0;
-    releasephase=1;
+  if (currentRatio >= ratio-1 && fabs(input) < threshold ){ // if ratio hits threshold
+    attackphase = 0;
+    releasephase = 1;
   }
   
-  if (releasephase==1 && currentRatio>0.) {
-    currentRatio*=release;    
+  if (releasephase == 1 && currentRatio > 0.) {
+    currentRatio /= 1 + (1 / release);
   }
+  output = input/(1.+currentRatio);
   
-  if (input>0.) {
-    output = input/(1.+currentRatio);
-  } else {
-    output = input/(1.+currentRatio);
-  }
-  
-  return output * (1 + log(ratio));
+  return output;
 }
 
 double emmetDyn::limiter(double input) {
