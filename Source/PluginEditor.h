@@ -26,8 +26,8 @@ public:
   ~SynthFrameworkAudioProcessorEditor();
   void paint (Graphics&) override;
   void resized() override;
-  void sliderValueChanged(Slider* slider) override;
-  void comboBoxChanged(ComboBox* comboBox) override;
+  void sliderValueChanged(Slider*) override;
+  void comboBoxChanged(ComboBox*) override;
 private:
   SynthFrameworkAudioProcessor& processor; //accesses the processor object that created the editor
   ComboBox osc1Gui, osc2Gui, distGui; //GUI for synth oscillators
@@ -40,6 +40,8 @@ private:
     fcLabel, frLabel, tgLabel, crLabel, ctLabel, caLabel, clLabel, dtLabel, dfLabel, dgLabel, cgLabel, dLabel, ddLabel,
     lfiLabel, lfrLabel /*, lpiLabel, lprLabel*/; //labels for all our sliders
   
+  void addAllGUIComponents();
+      
   std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment>  osc1GuiAttach, osc2GuiAttach, distGuiAttach;
   std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> //attaches our sliders to their corresponding value tree
     attackSliderAttach, decaySliderAttach, sustainSliderAttach, releaseSliderAttach, noiseGainSliderAttach,

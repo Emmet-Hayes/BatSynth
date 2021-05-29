@@ -295,13 +295,14 @@ double emmetDyn::compressor(double input, double ratio, double threshold, double
     releasephase = 0;
     attackphase = 1;
     currentRatio = 1;
+    if (threshold < 0.1) threshold = 0.2;
   }
   
-  if (attackphase == 1 && currentRatio < ratio-1) { // update currentRatio based on attack speed in atk phase
+  if (attackphase == 1 && currentRatio < ratio - 1) { // update currentRatio based on attack speed in atk phase
     currentRatio *= 1 + (1 / attack);
   }
   
-  if (currentRatio >= ratio-1 && fabs(input) < threshold ){ // if ratio hits threshold
+  if (currentRatio >= ratio - 1 && fabs(input) < threshold ){ // if ratio hits threshold
     attackphase = 0;
     releasephase = 1;
   }
@@ -309,7 +310,7 @@ double emmetDyn::compressor(double input, double ratio, double threshold, double
   if (releasephase == 1 && currentRatio > 0.) {
     currentRatio /= 1 + (1 / release);
   }
-  output = input/(1.+currentRatio);
+  output = input/currentRatio;
   
   return output;
 }
@@ -318,7 +319,7 @@ double emmetDyn::limiter(double input) {
   return (input > 0.95) ? 0.95 : (input < -0.95) ? -0.95 : input;
 }
 
-// adsr. It's not bad, very simple to use!
+// adsr will affect the output based on the ratio
 double emmetEnv::adsr(double input, int trigger) {
   if (trigger==1 && attackphase!=1 && holdphase!=1 && decayphase!=1){
     holdcount=0;
