@@ -1,4 +1,0 @@
-﻿     Creating library C:\Users\ehaye\Documents\SynthFramework\Builds\VisualStudio2019\x64\Debug\VST3\SynthFramework.lib and object C:\Users\ehaye\Documents\SynthFramework\Builds\VisualStudio2019\x64\Debug\VST3\SynthFramework.exp
-SynthFramework.lib(PluginProcessor.obj) : error LNK2019: unresolved external symbol "public: __cdecl maxiOsc::maxiOsc(void)" (??0maxiOsc@@QEAA@XZ) referenced in function "public: __cdecl SynthVoice::SynthVoice(void)" (??0SynthVoice@@QEAA@XZ)
-SynthFramework.lib(PluginProcessor.obj) : error LNK2019: unresolved external symbol "public: double __cdecl maxiOsc::sinewave(double)" (?sinewave@maxiOsc@@QEAANN@Z) referenced in function "public: virtual void __cdecl SynthVoice::renderNextBlock(class juce::AudioBuffer<float> &,int,int)" (?renderNextBlock@SynthVoice@@UEAAXAEAV?$AudioBuffer@M@juce@@HH@Z)
-C:\Users\ehaye\Documents\SynthFramework\Builds\VisualStudio2019\x64\Debug\VST3\\SynthFramework.vst3 : fatal error LNK1120: 2 unresolved externals

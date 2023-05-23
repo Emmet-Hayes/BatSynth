@@ -1,2 +1,0 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (x64\Debug\Standalone Plugin\) contains files shared from another project (SynthFramework_StandalonePlugin.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  BatSynth_StandalonePlugin.vcxproj -> C:\Users\ehaye\Documents\BatSynth\Builds\VisualStudio2019\x64\Debug\Standalone Plugin\BatSynth.exe

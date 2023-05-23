@@ -11,22 +11,27 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#ifndef CustomFeel_h
-#define CustomFeel_h
 
-class CustomFeel : public LookAndFeel_V4 {
+class CustomFeel : public LookAndFeel_V4 
+{
 public:
-  CustomFeel();
-  void drawRotarySlider(Graphics&, int, int, int, int, float,
-    const float, const float, Slider&) override;
-  void drawComboBox(Graphics&, int, int, bool, int, int, int, int, ComboBox&) override;
-  void drawPopupMenuBackground(Graphics&, int, int) override;
-  Font getComboBoxFont(ComboBox&) override;
-  Font getPopupMenuFont() override;
-  inline void setScale(const float s) { scale = s; }
-private:
-  float scale;
-  Font getCommonMenuFont(float); //returns a default font
-};
+    CustomFeel();
+    
+    void drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
+                          const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider) override;
+    
+    void drawComboBox(Graphics& g, int w, int h, bool isDown, int bx, int by, int bw, int bh, ComboBox& cb) override;
+    
+    void drawPopupMenuBackground(Graphics& g, int width, int height) override;
+    
+    Font getComboBoxFont(ComboBox& c) override;
+    
+    Font getPopupMenuFont() override;
+    
+    void setScale(float s) { scale = s; }
 
-#endif /* CustomFeel_h */
+private:
+    Font getCommonMenuFont(float s); //returns a default font
+    
+    float scale;
+};

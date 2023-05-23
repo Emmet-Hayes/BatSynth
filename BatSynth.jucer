@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="PqNWLH" name="BatSynth" projectType="audioplug" jucerVersion="5.4.7"
-              pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
-              version="1.0.0" pluginFormats="buildAU,buildVST3" pluginManufacturer="EmmetSoft">
+<JUCERPROJECT id="PqNWLH" name="BatSynth" projectType="audioplug" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
+              version="1.0.0" pluginFormats="buildAU,buildStandalone,buildVST3"
+              pluginManufacturer="EmmetSoft" jucerFormatVersion="1">
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
       <FILE id="oFv0Zb" name="CustomFeel.cpp" compile="1" resource="0" file="Source/CustomFeel.cpp"/>
