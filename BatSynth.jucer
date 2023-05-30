@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="PqNWLH" name="BatSynth" projectType="audioplug" jucerVersion="5.4.7"
-              pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
-              version="1.0.0" pluginFormats="buildAU,buildVST3" pluginManufacturer="EmmetSoft">
+<JUCERPROJECT id="PqNWLH" name="BatSynth" projectType="audioplug" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
+              version="1.0.0" pluginFormats="buildAU,buildLV2,buildStandalone,buildVST3"
+              pluginManufacturer="EmmetSoft" jucerFormatVersion="1">
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
       <FILE id="oFv0Zb" name="CustomFeel.cpp" compile="1" resource="0" file="Source/CustomFeel.cpp"/>
@@ -21,6 +21,7 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="BFI0yq" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="EuDLyi" name="bgfile4.jpg" compile="0" resource="1" file="Images/bgfile4.jpg"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2019 targetFolder="Builds/VisualStudio2019">
@@ -69,6 +70,29 @@
         <MODULEPATH id="juce_audio_basics" path="../../juce"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="/usr/include/freetype2&#10;/usr/include/gtk-3.0&#10;/usr/local/include/gtk-3.0/gdk&#10;/usr/local/include/gdk-pixbuf-2.0&#10;/usr/local/include/atk-1.0&#10;/usr/local/lib/gtk-3.0/include&#10;/usr/include/glib-2.0&#10;/usr/lib/x86_64-linux-gnu/glib-2.0/include&#10;/usr/include/cairo&#10;/usr/include/pango-1.0&#10;/usr/include/harfbuzz&#10;/usr/include/webkitgtk-4.0&#10;/usr/include/libsoup-2.4"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="/usr/include/freetype2&#10;/usr/include/gtk-3.0&#10;/usr/local/include/gtk-3.0/gdk&#10;/usr/local/include/gdk-pixbuf-2.0&#10;/usr/local/include/atk-1.0&#10;/usr/local/lib/gtk-3.0/include&#10;/usr/include/glib-2.0&#10;/usr/lib/x86_64-linux-gnu/glib-2.0/include&#10;/usr/include/cairo&#10;/usr/include/pango-1.0&#10;/usr/include/harfbuzz&#10;/usr/include/webkitgtk-4.0&#10;/usr/include/libsoup-2.4"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../juce"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
+        <MODULEPATH id="juce_core" path="../../juce"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce"/>
+        <MODULEPATH id="juce_dsp" path="../../juce"/>
+        <MODULEPATH id="juce_events" path="../../juce"/>
+        <MODULEPATH id="juce_graphics" path="../../juce"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
+        <MODULEPATH id="juce_opengl" path="../../juce"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
