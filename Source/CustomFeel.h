@@ -24,8 +24,10 @@ public:
   Font getComboBoxFont(ComboBox&) override;
   Font getPopupMenuFont() override;
   inline void setScale(const float s) { scale = s; }
+  void setColorIntensity(float ampl); // map amplitude to color intensity, someday pitch to color
 private:
   float scale;
+  float rotaryOutlineBrightness = 1.0f;
   Font getCommonMenuFont(float); //returns a default font
 };
 

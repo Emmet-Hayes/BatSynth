@@ -144,8 +144,8 @@ void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
       myVoice->setFilterResonance(tree.getRawParameterValue("filterResonance"));
       myVoice->setLfoFilterIntensity(tree.getRawParameterValue("lfoFilterIntensity"));
       myVoice->setLfoFilterRate(tree.getRawParameterValue("lfoFilterRate"));
-      /*myVoice->setLfoPitchIntensity(tree.getRawParameterValue("lfoPitchIntensity"));
-       myVoice->setLfoPitchRate(tree.getRawParameterValue("lfoPitchRate")); */
+      myVoice->setLfoPitchIntensity(tree.getRawParameterValue("lfoPitchIntensity"));
+      myVoice->setLfoPitchRate(tree.getRawParameterValue("lfoPitchRate"));
       myVoice->setCompressionRatio(tree.getRawParameterValue("compressionRatio"));
       myVoice->setCompressionThreshold(tree.getRawParameterValue("compressionThreshold"));
       myVoice->setCompressionAttack(tree.getRawParameterValue("compressionAttack"));
@@ -163,6 +163,21 @@ void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
   //midiCollector.removeNextBlockOfMessages(midiMessages, buffer.getNumSamples()); // [11]
   //keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(), true);
   mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+  
+  float rms = 0.0f;
+  int numOutputs = getTotalNumOutputChannels();
+  int numSamples = buffer.getNumSamples();
+  for (int i = 0; i < numOutputs; ++i)
+  {
+      auto channelData = buffer.getReadPointer(i);
+      rms += std::inner_product(channelData, channelData + numSamples, channelData, 0.0f);
+  }
+  
+  rms /= buffer.getNumSamples() * buffer.getNumChannels();
+  rms = std::sqrt(rms);
+  
+  currentAmplitude = rms; // storing current amplitude for use by the styler
+  
   scopeDataCollector.process(buffer.getReadPointer(0), (size_t)buffer.getNumSamples());
 }
 
@@ -182,7 +197,7 @@ void SynthFrameworkAudioProcessor::addAllControls() {
     releaseRange(0.1f, 5000.0f), wavetypeRange(0, 12), wavetype2Range(0, 12),
     osc2GainRange(0.f, 1.f), noiseGainRange(0.f, 1.f), osc2PitchRange(0.5f, 2.f),
     filterCutRange(50.f, 7100.f), filterResonRange(1.f, 10.f), lfoFilterIntenRange(0.f, 0.9f),
-    lfoFilterRateRange(0.5f, 12.0f), /*lfoPitchIntenRange0.0f, 3.0f), lfoPitchRateRange(0.05f, 4.0f), */
+    lfoFilterRateRange(0.5f, 12.0f), lfoPitchIntenRange(0.0f, 4.0f), lfoPitchRateRange(0.05f, 6.0f),
     compressRatioRange(1.f, 10.f),  compressGainRange(0.f, 1.f),
     compressThreshRange(0.1f, 1.f), compressAttackRange(0.5f, 100.f), compressReleaseRange(0.1f, 2.0f), distortionTypeRange(0, 4), distortionDriveRange(0.01f, 6.f),
     delayTimeRange(100.f, 88000.f), delayFeedbackRange(0.f, 0.9f), delayGainRange(0.f, 1.f), totalGainRange(0.f, 1.3f);
@@ -200,8 +215,8 @@ void SynthFrameworkAudioProcessor::addAllControls() {
   tree.createAndAddParameter(std::make_unique<Parameter>("filterResonance", "Filter Resonance", "Filter Resonance", filterResonRange, 1.0f, nullptr, nullptr));
   tree.createAndAddParameter(std::make_unique<Parameter>("lfoFilterIntensity", "lfo Filter Intensity", "lfo Filter Intensity", lfoFilterIntenRange, 0.0f, nullptr, nullptr));
   tree.createAndAddParameter(std::make_unique<Parameter>("lfoFilterRate", "lfo Filter Rate", "lfo Filter Rate", lfoFilterRateRange, 2.0f, nullptr, nullptr));
-  /*tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchIntensity", "lfo Pitch Intensity", "lfo Pitch Intensity", lfoPitchIntenRange, 0.0f));
-  tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchRate", "lfo Pitch Rate", "lfo Pitch Rate", lfoPitchRateRange, 0.05f));*/
+  tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchIntensity", "lfo Pitch Intensity", "lfo Pitch Intensity", lfoPitchIntenRange, 0.0f, nullptr, nullptr));
+  tree.createAndAddParameter(std::make_unique<Parameter>("lfoPitchRate", "lfo Pitch Rate", "lfo Pitch Rate", lfoPitchRateRange, 0.05f, nullptr, nullptr));
   tree.createAndAddParameter(std::make_unique<Parameter>("compressionRatio", "Compression Ratio", "Compression Ratio", compressRatioRange, 2.0f, nullptr, nullptr));
   tree.createAndAddParameter(std::make_unique<Parameter>("compressionThreshold", "Compression Threshold", "Compression Threshold", compressThreshRange, 0.9f, nullptr, nullptr));
   tree.createAndAddParameter(std::make_unique<Parameter>("compressionAttack", "Compression Attack", "Compression Threshold", compressAttackRange, 1.0f, nullptr, nullptr));
@@ -238,4 +253,8 @@ void SynthFrameworkAudioProcessor::setStateInformation (const void* data, int si
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
   return new SynthFrameworkAudioProcessor();
+}
+
+float SynthFrameworkAudioProcessor::getCurrentAmplitude() {
+    return currentAmplitude;
 }

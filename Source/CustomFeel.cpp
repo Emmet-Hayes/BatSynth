@@ -29,14 +29,17 @@ void CustomFeel::drawRotarySlider(Graphics& g, int x, int y, int width, int heig
   double angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
   //fill the rotary
   g.setColour(Colours::whitesmoke);
-  g.setOpacity(0.13f);
+  g.setOpacity(0.33f);
   g.fillEllipse(rx, ry, rw, rw);
-  //outline the rotary
+  
+  //outline the rotary with reactive color, uses rotaryOutlineBrightness to compute
   g.setColour(Colours::darkmagenta);
-  g.drawEllipse(rx, ry, rw, rw, 0.5f);
+  g.setOpacity(1.0f);
+  g.drawEllipse(rx, ry, rw, rw, 2.0f);
+  
   //draw the knob dial
   Path p;
-  double pointerLength = radius * 0.33f;
+  double pointerLength = radius * 0.5f;
   double pointerThickness = 5.0f;
   p.addRectangle(-pointerThickness * 0.5f, -radius, pointerThickness, pointerLength);
   p.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY)); //animate
@@ -70,4 +73,8 @@ void CustomFeel::drawPopupMenuBackground(Graphics& g, int width, int height) {
   Colour c(30, 8, 33);
   g.setColour(c);
   g.fillAll();
+}
+
+void CustomFeel::setColorIntensity(float value) {
+    rotaryOutlineBrightness = value;
 }

@@ -16,6 +16,7 @@ float SynthFrameworkAudioProcessorEditor::scale = 1.0f;
 SynthFrameworkAudioProcessorEditor::SynthFrameworkAudioProcessorEditor (SynthFrameworkAudioProcessor& p)
 :   AudioProcessorEditor (&p), processor (p), scopeComponent(processor.audioBufferQueue) 
 {
+    startTimerHz(30); // refresh at 30 fps
     setSize (800*scale, 600*scale);
     lookAndFeel.setScale(scale);
     setLookAndFeel(&lookAndFeel);
@@ -27,9 +28,10 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
     auto setupComboBox = [&](ComboBox &box, const Justification& jtype, const String &initialText,
                              bool isOsc = true)
     {
-        const std::vector<String> options = isOsc ? std::vector<String>({ "Sine", "Saw", "Square", "Soft Distorted Sine", "Hard Distorted Sine", "Triangle", "Noise", 
-                                                        "Sharp Saw", "Thick Saw", "Pulse 0.2", "Pulse 0.3", "Saw Pulse 0.2", "Saw Pulse 0.3" }) :
-                                           std::vector<String>({ "None", "Sigmoid", "Tanh", "Arctan10", "FastArcTan10" });
+        const std::vector<String> options = isOsc ? std::vector<String>({ "Sine", "Saw", "Square", "Soft Distorted Sine", "Hard Distorted Sine", 
+                                                                          "Triangle", "Noise", "Sharp Saw", "Thick Saw", "Pulse 0.2", "Pulse 0.3", 
+                                                                          "Saw Pulse 0.2", "Saw Pulse 0.3" }) :
+                                                    std::vector<String>({ "None", "Sigmoid", "Tanh", "Arctan10", "FastArcTan10" });
         for (int i = 0; i < options.size(); ++i)
             box.addItem(options[i], i+1);
         box.setJustificationType(jtype);
@@ -60,59 +62,46 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
     
     Font font1("Lucida Console", scale*10.0f, Font::bold);
     Font font2("Lucida Console", scale*9.0f, Font::bold);
-        
-    setupLabel(labels[21], "Osc 1", font1, Justification::centred, &comboboxes[0], false);
-    setupComboBox(comboboxes[0], Justification::centred, "Saw");
-    setupLabel(labels[22], "Osc 2", font1, Justification::centred, &comboboxes[1], false);
-    setupComboBox(comboboxes[1], Justification::centred, "Sine");
     
-    setupLabel(labels[0], "Atk", font2, Justification::centred, &sliders[0], false);
+    std::string sliderlabels[NUM_SLIDERS] = { "Atk", "Dec", "Sus", "Rel", "Pitch", "Gain", "Noise", "Cutoff", "Resonance", 
+                                              "LFO Filter Gain", "LFO Filter Rate", "LFO Pitch Gain", "LFO Pitch Rate", 
+                                              "Ratio", "Threshold", "Attack", "Release", "Comp Gain", "Drive", "Time", 
+                                              "Feedback", "Delay Gain", "Total Gain" };
+    for (int i = 0; i < NUM_SLIDERS; ++i)
+        setupLabel(labels[i], sliderlabels[i], font2, Justification::centred, &sliders[i], false);
+    
+    // the floats passed in below are, in order, the lower bound, upper bound, and default value.
     setupSlider(sliders[0], Slider::SliderStyle::Rotary, 0.1f, 5000.0f, 10.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[1], "Dec", font2, Justification::centred, &sliders[1], false);
     setupSlider(sliders[1], Slider::SliderStyle::Rotary, 0.1f, 2000.0f, 200.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[2], "Sus", font2, Justification::centred, &sliders[2], false);
     setupSlider(sliders[2], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[3], "Rel", font2, Justification::centred, &sliders[3], false);
     setupSlider(sliders[3], Slider::SliderStyle::Rotary, 0.1f, 5000.0f, 100.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[4], "Pitch", font2, Justification::centred, &sliders[4], false);
     setupSlider(sliders[4], Slider::SliderStyle::Rotary, 0.5f, 2.0f, 1.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[5], "Gain", font2, Justification::centred, &sliders[5], false);
     setupSlider(sliders[5], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.5f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[6], "Noise", font2, Justification::centred, &sliders[6], false);
     setupSlider(sliders[6], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[7], "Cutoff", font2, Justification::centred, &sliders[7], false);
     setupSlider(sliders[7], Slider::SliderStyle::Rotary, 50.0f, 9000.0f, 500.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[8], "Resonance", font2, Justification::centred, &sliders[8], false);
     setupSlider(sliders[8], Slider::SliderStyle::Rotary, 0.1f, 0.99f, 0.1f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[9], "LFO Intensity", font2, Justification::centred, &sliders[9], false);
     setupSlider(sliders[9], Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[10], "LFO Rate", font2, Justification::centred, &sliders[10], false);
     setupSlider(sliders[10], Slider::SliderStyle::Rotary, 0.5f, 12.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[11], "Ratio", font2, Justification::centred, &sliders[11], false);
-    setupSlider(sliders[11], Slider::SliderStyle::Rotary, 1.0f, 10.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[12], "Threshold", font2, Justification::centred, &sliders[12], false);
-    setupSlider(sliders[12], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.9f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[13], "Attack", font2, Justification::centred, &sliders[13], false);
-    setupSlider(sliders[13], Slider::SliderStyle::Rotary, 0.5f, 200.0f, 10.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[14], "Release", font2, Justification::centred, &sliders[14], false);
-    setupSlider(sliders[14], Slider::SliderStyle::Rotary, 0.1f, 2.0f, 0.995f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[15], "Comp Gain", font2, Justification::centred, &sliders[15], false);
-    setupSlider(sliders[15], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[16], "Drive", font2, Justification::centred, &sliders[16], false);
-    setupSlider(sliders[16], Slider::SliderStyle::Rotary, 0.01f, 6.0f, 1.0f, Slider::TextBoxBelow, 50, 15);
-    /* lfoPitchIntenSlider.setRange(0.0f, 3.0f, 0.0f); lfoPitchRateSlider.setRange(0.05f, 4.0f, 0.05f); */
+    setupSlider(sliders[11], Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.0f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[12], Slider::SliderStyle::Rotary, 0.5f, 12.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[13], Slider::SliderStyle::Rotary, 1.0f, 10.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[14], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.9f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[15], Slider::SliderStyle::Rotary, 0.5f, 200.0f, 10.0f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[16], Slider::SliderStyle::Rotary, 0.1f, 2.0f, 0.995f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[17], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[18], Slider::SliderStyle::Rotary, 0.01f, 6.0f, 1.0f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[19], Slider::SliderStyle::Rotary, 100.0f, 88000.0f, 10000.0f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[20], Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.5f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[21], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.5f, Slider::TextBoxBelow, 50, 15);
+    setupSlider(sliders[22], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
     
-    setupLabel(labels[23], "Distortion", font1, Justification::centred, &comboboxes[2], false);
+    std::string comboboxlabels[NUM_COMBOBOXES] = { "Osc 1", "Osc 2", "Distortion" };
+    for (int i = 0; i < NUM_COMBOBOXES; ++i)
+        setupLabel(labels[i + NUM_SLIDERS], comboboxlabels[i], font1, Justification::centred, &comboboxes[i], false);
+    
+    setupComboBox(comboboxes[0], Justification::centred, "Saw");
+    setupComboBox(comboboxes[1], Justification::centred, "Sine");
     setupComboBox(comboboxes[2], Justification::centred, "None", false); // NOT an osc
-    
-    setupLabel(labels[17], "Time", font2, Justification::centred, &sliders[17], false);
-    setupSlider(sliders[17], Slider::SliderStyle::Rotary, 100.0f, 88000.0f, 10000.0f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[18], "Feedback", font2, Justification::centred, &sliders[18], false);
-    setupSlider(sliders[18], Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.5f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[19], "Delay Gain", font2, Justification::centred, &sliders[19], false);
-    setupSlider(sliders[19], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.5f, Slider::TextBoxBelow, 50, 15);
-    setupLabel(labels[20], "Total Gain", font2, Justification::centred, &sliders[20], false);
-    setupSlider(sliders[20], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
     
     addAndMakeVisible(&scopeComponent);
     //addAndMakeVisible(&keyboardComponent);
@@ -132,40 +121,20 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
     };
     
     //attaching all sliders and combo boxes to keys in the processors value tree
-    setupComboBoxAttachments(comboboxes[0], "wavetype", comboboxattachments[0]);
-    setupComboBoxAttachments(comboboxes[1], "wavetype2", comboboxattachments[1]);
-    setupComboBoxAttachments(comboboxes[2], "distortionType", comboboxattachments[2]);
-    
-    setupSliderAttachments(sliders[0], "attack", sliderattachments[0]);
-    setupSliderAttachments(sliders[1], "decay", sliderattachments[1]);
-    setupSliderAttachments(sliders[2], "sustain", sliderattachments[2]);
-    setupSliderAttachments(sliders[3], "release", sliderattachments[3]);
-    setupSliderAttachments(sliders[4], "osc2Pitch", sliderattachments[4]);
-    setupSliderAttachments(sliders[5], "osc2Gain", sliderattachments[5]);
-    setupSliderAttachments(sliders[6], "noiseGain", sliderattachments[6]);
-    setupSliderAttachments(sliders[7], "filterCutoff", sliderattachments[7]);
-    setupSliderAttachments(sliders[8], "filterResonance", sliderattachments[8]);
-    setupSliderAttachments(sliders[9], "lfoFilterIntensity", sliderattachments[9]);
-    setupSliderAttachments(sliders[10], "lfoFilterRate", sliderattachments[10]);
-    setupSliderAttachments(sliders[11], "compressionRatio", sliderattachments[11]);
-    setupSliderAttachments(sliders[12], "compressionThreshold", sliderattachments[12]);
-    setupSliderAttachments(sliders[13], "compressionAttack", sliderattachments[13]);
-    setupSliderAttachments(sliders[14], "compressionRelease", sliderattachments[14]);
-    setupSliderAttachments(sliders[15], "compressionGain", sliderattachments[15]);
-    setupSliderAttachments(sliders[16], "distortionDrive", sliderattachments[16]);
-    setupSliderAttachments(sliders[17], "delayTime", sliderattachments[17]);
-    setupSliderAttachments(sliders[18], "delayFeedback", sliderattachments[18]);
-    setupSliderAttachments(sliders[19], "delayGain", sliderattachments[19]);
-    setupSliderAttachments(sliders[20], "totalGain", sliderattachments[20]);
+    std::string comboboxtreelabels[NUM_COMBOBOXES] = { "wavetype", "wavetype2", "distortionType" };
+    for (int i = 0; i < NUM_COMBOBOXES; ++i)
+        setupComboBoxAttachments(comboboxes[i], comboboxtreelabels[i], comboboxattachments[i]);
 
-    //lfoPitchIntenSliderAttach.reset(new AudioProcessorValueTreeState::SliderAttachment(
-      //processor.tree, "lfoPitchIntensity", lfoPitchIntenSlider));
-    //lfoPitchRateSliderAttach.reset(new AudioProcessorValueTreeState::SliderAttachment(
-      //processor.tree, "lfoPitchRate", lfoPitchRateSlider)); */
+    std::string slidertreelabels[NUM_SLIDERS] = { "attack", "decay", "sustain", "release", "osc2Pitch", "osc2Gain", "noiseGain", "filterCutoff",
+                                                "filterResonance", "lfoFilterIntensity", "lfoFilterRate", "lfoPitchIntensity", "lfoPitchRate",
+                                                "compressionRatio", "compresssionThreshold", "compressionAttack", "compressionRelease",
+                                                "compressionGain", "distortionDrive", "delayTime", "delayFeedback", "delayGain", "totalGain" };
+    for (int i = 0; i < NUM_SLIDERS; ++i)
+        setupSliderAttachments(sliders[i], slidertreelabels[i], sliderattachments[i]);
 
     //we have to override this function AFTER the slider has an attachment
     //num decimal points to display states for each slider.
-    int ndp_sliders[NUM_SLIDERS] = { 0, 0, 2, 0, 3, 3, 3, 0, 2, 2, 2, 1, 2, 1, 1, 2, 2, 0, 2, 2, 2};
+    int ndp_sliders[NUM_SLIDERS] = { 0, 0, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 1, 2, 1, 1, 2, 2, 0, 2, 2, 2};
     for (int i = 0; i < NUM_SLIDERS; ++i)
     {
         sliders[i].textFromValueFunction = nullptr;
@@ -175,7 +144,7 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
     image = juce::ImageCache::getFromMemory(BinaryData::bgfile4_jpg, BinaryData::bgfile4_jpgSize);
 }
 
-//release resources 
+//release all resources 
 SynthFrameworkAudioProcessorEditor::~SynthFrameworkAudioProcessorEditor() {
     setLookAndFeel(nullptr);
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
@@ -207,25 +176,34 @@ void SynthFrameworkAudioProcessorEditor::resized() {
     sliders[6].setBounds(130*scale, 130*scale, 50*scale, 50*scale);
     sliders[7].setBounds(410*scale, 45*scale, 70*scale, 70*scale);
     sliders[8].setBounds(490*scale, 45*scale, 70*scale, 70*scale);
-    sliders[9].setBounds(570*scale, 40*scale, 60*scale, 60*scale);
-    sliders[10].setBounds(640*scale, 40*scale, 60*scale, 60*scale);
-    //lfoPitchIntenSlider.setBounds(580*scale, 75*scale, 50*scale, 50*scale);
-    //lfoPitchRateSlider.setBounds(640*scale, 75*scale, 50*scale, 50*scale);
-    sliders[11].setBounds(10*scale, 220*scale, 60*scale, 60*scale);
-    sliders[12].setBounds(80*scale, 220*scale, 60*scale, 60*scale);
-    sliders[13].setBounds(10*scale, 300*scale, 60*scale, 60*scale);
-    sliders[14].setBounds(80*scale, 300*scale, 60*scale, 60*scale);
-    sliders[15].setBounds(10*scale, 460*scale, 60*scale, 60*scale);
-    sliders[16].setBounds(80*scale, 540*scale, 50*scale, 50*scale);
-    sliders[17].setBounds(10*scale, 380*scale, 60*scale, 60*scale);
-    sliders[18].setBounds(80*scale, 380*scale, 60*scale, 60*scale);
-    sliders[19].setBounds(80*scale, 460*scale, 60*scale, 60*scale);
-    sliders[20].setBounds(710*scale, 35*scale, 80*scale, 80*scale);
-    scopeComponent.setBounds(150*scale, 120*scale, 630*scale, 450*scale);
+    sliders[9].setBounds(570*scale, 20*scale, 60*scale, 60*scale);
+    sliders[10].setBounds(640*scale, 20*scale, 60*scale, 60*scale);
+    sliders[11].setBounds(570*scale, 95*scale, 60*scale, 60*scale);
+    sliders[12].setBounds(640*scale, 95*scale, 60*scale, 60*scale);
+    sliders[13].setBounds(10*scale, 220*scale, 60*scale, 60*scale);
+    sliders[14].setBounds(80*scale, 220*scale, 60*scale, 60*scale);
+    sliders[15].setBounds(10*scale, 300*scale, 60*scale, 60*scale);
+    sliders[16].setBounds(80*scale, 300*scale, 60*scale, 60*scale);
+    sliders[17].setBounds(10*scale, 460*scale, 60*scale, 60*scale);
+    sliders[18].setBounds(80*scale, 540*scale, 50*scale, 50*scale);
+    sliders[19].setBounds(10*scale, 380*scale, 60*scale, 60*scale);
+    sliders[20].setBounds(80*scale, 380*scale, 60*scale, 60*scale);
+    sliders[21].setBounds(80*scale, 460*scale, 60*scale, 60*scale);
+    sliders[22].setBounds(710*scale, 35*scale, 80*scale, 80*scale);
+    scopeComponent.setBounds(150*scale, 140*scale, 630*scale, 400*scale);
 }
 
 void SynthFrameworkAudioProcessorEditor::sliderValueChanged(Slider* slider) {
 }
 
 void SynthFrameworkAudioProcessorEditor::comboBoxChanged(ComboBox* comboBox) {
+}
+
+void SynthFrameworkAudioProcessorEditor::timerCallback() {
+    float amplitude = processor.getCurrentAmplitude();
+    
+    lookAndFeel.setColorIntensity(amplitude);
+    
+    // repaint explicitly called to apply the new look and feel update
+    repaint();
 }

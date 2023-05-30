@@ -20,7 +20,7 @@
 #include "SynthVoice.h"
 #include "ScopeComponent.h"
 
-const int NUM_SLIDERS = 21;
+const int NUM_SLIDERS = 23;
 const int NUM_COMBOBOXES = 3;
 
 class SynthFrameworkAudioProcessor  : public AudioProcessor {
@@ -51,6 +51,8 @@ public:
   void changeProgramName (int index, const String& newName) override;
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
+  
+  float getCurrentAmplitude();
 
   AudioBufferQueue<float> audioBufferQueue; //used for oscilloscope
   //MidiKeyboardState keyboardState;
@@ -60,6 +62,8 @@ private:
   Synthesiser mySynth;
   SynthVoice* myVoice;
   void addAllControls();
+  
+  float currentAmplitude;
   ScopeDataCollector<float> scopeDataCollector{ audioBufferQueue }; //oscilloscope!!
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthFrameworkAudioProcessor)

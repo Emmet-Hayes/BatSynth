@@ -21,7 +21,8 @@
 
 class SynthFrameworkAudioProcessorEditor : public AudioProcessorEditor,
                                            public Slider::Listener, 
-                                           public ComboBox::Listener 
+                                           public ComboBox::Listener,
+                                           public Timer
 {
 public:
     SynthFrameworkAudioProcessorEditor (SynthFrameworkAudioProcessor&);
@@ -30,6 +31,7 @@ public:
     void resized() override;
     void sliderValueChanged(Slider* slider) override;
     void comboBoxChanged(ComboBox* comboBox) override;
+    void timerCallback() override;
 private:
     void addAllGUIComponents();
 
@@ -40,7 +42,7 @@ private:
     Slider sliders[NUM_SLIDERS]; // atk, dcy, sus, rel, osc2pitch, osc2gain, noisegain, filtercut, filterres, lfoInten,
                                  // lfoRate, compRatio, compThr, compAtk, compRel, compGain, distDrive, delTime, delFdbk, delGain, totGain
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sliderattachments[NUM_SLIDERS];
-    Label labels[NUM_SLIDERS + NUM_COMBOBOXES]; //sliders first [0-20], then comboboxes [21-23]
+    Label labels[NUM_SLIDERS + NUM_COMBOBOXES]; //sliders first [0-22], then comboboxes [23-25]
 
     ScopeComponent<float> scopeComponent; //this is the oscilloscope UIwidget
     
