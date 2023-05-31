@@ -5,6 +5,8 @@
               pluginManufacturer="EmmetSoft" jucerFormatVersion="1">
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
+      <FILE id="M2mTG7" name="NoteToColor.cpp" compile="1" resource="0" file="Source/NoteToColor.cpp"/>
+      <FILE id="jWMFi8" name="NoteToColor.h" compile="0" resource="0" file="Source/NoteToColor.h"/>
       <FILE id="oFv0Zb" name="CustomFeel.cpp" compile="1" resource="0" file="Source/CustomFeel.cpp"/>
       <FILE id="DSM5jL" name="CustomFeel.h" compile="0" resource="0" file="Source/CustomFeel.h"/>
       <FILE id="VsoyEG" name="Emmetdsp.cpp" compile="1" resource="0" file="Source/Emmetdsp.cpp"/>

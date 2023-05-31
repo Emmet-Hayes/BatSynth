@@ -29,8 +29,8 @@ public:
     ~SynthFrameworkAudioProcessorEditor();
     void paint (Graphics&) override;
     void resized() override;
-    void sliderValueChanged(Slider* slider) override;
-    void comboBoxChanged(ComboBox* comboBox) override;
+    void sliderValueChanged(Slider* slider) override {};
+    void comboBoxChanged(ComboBox* comboBox) override {};
     void timerCallback() override;
 private:
     void addAllGUIComponents();

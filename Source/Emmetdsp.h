@@ -100,20 +100,20 @@ public:
 };
 
 class emmetFilter {
-  double gain;
-  double input;
-  double output;
-  double inputs[10];
-  double outputs[10];
-  double cutoff1;
-  double x; //speed
-  double y; //pos
-  double z; //pole
-  double c; //filter coefficient
+  double gain { 0.0 };
+  double input { 0.0 };
+  double output { 0.0 };
+  double inputs[10] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+  double outputs[10] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+  double cutoff1 { 0.0 };
+  double x { 0.0 }; //speed
+  double y { 0.0 }; //pos
+  double z { 0.0 }; //pole
+  double c { 0.0 }; //filter coefficient
 public:
-  emmetFilter():x(0.0), y(0.0), z(0.0), c(0.0){};
-  double cutoff;
-  double resonance;
+  emmetFilter() {};
+  double cutoff { 500.0 };
+  double resonance { 1.0 };
   double lores(double input,double cutoff1, double resonance);
   double hires(double input,double cutoff1, double resonance);
   double bandpass(double input,double cutoff1, double resonance);

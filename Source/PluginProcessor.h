@@ -52,19 +52,22 @@ public:
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
   
-  float getCurrentAmplitude();
+  float getCurrentAmplitude() const { return currentAmplitude; }
+  float getCurrentFrequency() const { return currentFrequency; }
 
-  AudioBufferQueue<float> audioBufferQueue; //used for oscilloscope
+  AudioBufferQueue<float> audioBufferQueue;
+  ScopeDataCollector<float> scopeDataCollector{ audioBufferQueue };
   //MidiKeyboardState keyboardState;
   //MidiMessageCollector midiCollector;
   AudioProcessorValueTreeState tree; //link values between sliders, comboBoxes and processor
 private:
+  void addAllControls();
+
   Synthesiser mySynth;
   SynthVoice* myVoice;
-  void addAllControls();
-  
-  float currentAmplitude;
-  ScopeDataCollector<float> scopeDataCollector{ audioBufferQueue }; //oscilloscope!!
+  float currentAmplitude = 0.0f;
+  float currentFrequency = 4186.01f;
+
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthFrameworkAudioProcessor)
 };

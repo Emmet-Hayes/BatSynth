@@ -4,8 +4,6 @@
 
 */
 
-#include <cstring>
-
 namespace BinaryData
 {
 
@@ -14330,8 +14328,10 @@ const char* getNamedResourceOriginalFilename (const char* resourceNameUTF8);
 const char* getNamedResourceOriginalFilename (const char* resourceNameUTF8)
 {
     for (unsigned int i = 0; i < (sizeof (namedResourceList) / sizeof (namedResourceList[0])); ++i)
-        if (strcmp (namedResourceList[i], resourceNameUTF8) == 0)
+    {
+        if (namedResourceList[i] == resourceNameUTF8)
             return originalFilenames[i];
+    }
 
     return nullptr;
 }

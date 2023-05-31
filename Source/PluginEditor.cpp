@@ -64,7 +64,7 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
     Font font2("Lucida Console", scale*9.0f, Font::bold);
     
     std::string sliderlabels[NUM_SLIDERS] = { "Atk", "Dec", "Sus", "Rel", "Pitch", "Gain", "Noise", "Cutoff", "Resonance", 
-                                              "LFO Filter Gain", "LFO Filter Rate", "LFO Pitch Gain", "LFO Pitch Rate", 
+                                              "LFO Filter", "LFO F. Rate", "LFO Pitch", "LFO P. Rate", 
                                               "Ratio", "Threshold", "Attack", "Release", "Comp Gain", "Drive", "Time", 
                                               "Feedback", "Delay Gain", "Total Gain" };
     for (int i = 0; i < NUM_SLIDERS; ++i)
@@ -104,6 +104,7 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
     setupComboBox(comboboxes[2], Justification::centred, "None", false); // NOT an osc
     
     addAndMakeVisible(&scopeComponent);
+    processor.scopeDataCollector.addListener(&scopeComponent);
     //addAndMakeVisible(&keyboardComponent);
 
     auto setupComboBoxAttachments = [&](ComboBox& comboBox, juce::String treelabel,
@@ -127,7 +128,7 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
 
     std::string slidertreelabels[NUM_SLIDERS] = { "attack", "decay", "sustain", "release", "osc2Pitch", "osc2Gain", "noiseGain", "filterCutoff",
                                                 "filterResonance", "lfoFilterIntensity", "lfoFilterRate", "lfoPitchIntensity", "lfoPitchRate",
-                                                "compressionRatio", "compresssionThreshold", "compressionAttack", "compressionRelease",
+                                                "compressionRatio", "compressionThreshold", "compressionAttack", "compressionRelease",
                                                 "compressionGain", "distortionDrive", "delayTime", "delayFeedback", "delayGain", "totalGain" };
     for (int i = 0; i < NUM_SLIDERS; ++i)
         setupSliderAttachments(sliders[i], slidertreelabels[i], sliderattachments[i]);
@@ -152,18 +153,19 @@ SynthFrameworkAudioProcessorEditor::~SynthFrameworkAudioProcessorEditor() {
         
     for (int i = 0; i < NUM_SLIDERS; ++i)
         sliders[i].removeListener(this);
+
+    processor.scopeDataCollector.removeAllListeners();
 }
 
 //draws the background image, or if the image is missing, a black background
 void SynthFrameworkAudioProcessorEditor::paint (Graphics& g) {
-    g.drawImageAt(image, 0, 0);
     short height = scale * 800, width = scale * 600;
     g.drawImage(image, 0, 0, height, width, 200, 0, 1600, 1200); //these numbers are specific to this particular image.
 }
 
 //here we actually place the widgets on the screen, each placement and distance based on scale set by device
 void SynthFrameworkAudioProcessorEditor::resized() {
-    scale = 1.0f; //for now, scale is fixed
+    scale = 1.0f; //for now, scale is fixed. won't be in the future.
     comboboxes[0].setBounds(10*scale, 30*scale, 120*scale, 30*scale);
     comboboxes[1].setBounds(10*scale, 85*scale, 120*scale, 30*scale);
     comboboxes[2].setBounds(10*scale, 550*scale, 60*scale, 30*scale);
@@ -178,8 +180,8 @@ void SynthFrameworkAudioProcessorEditor::resized() {
     sliders[8].setBounds(490*scale, 45*scale, 70*scale, 70*scale);
     sliders[9].setBounds(570*scale, 20*scale, 60*scale, 60*scale);
     sliders[10].setBounds(640*scale, 20*scale, 60*scale, 60*scale);
-    sliders[11].setBounds(570*scale, 95*scale, 60*scale, 60*scale);
-    sliders[12].setBounds(640*scale, 95*scale, 60*scale, 60*scale);
+    sliders[11].setBounds(570*scale, 100*scale, 60*scale, 60*scale);
+    sliders[12].setBounds(640*scale, 100*scale, 60*scale, 60*scale);
     sliders[13].setBounds(10*scale, 220*scale, 60*scale, 60*scale);
     sliders[14].setBounds(80*scale, 220*scale, 60*scale, 60*scale);
     sliders[15].setBounds(10*scale, 300*scale, 60*scale, 60*scale);
@@ -190,20 +192,15 @@ void SynthFrameworkAudioProcessorEditor::resized() {
     sliders[20].setBounds(80*scale, 380*scale, 60*scale, 60*scale);
     sliders[21].setBounds(80*scale, 460*scale, 60*scale, 60*scale);
     sliders[22].setBounds(710*scale, 35*scale, 80*scale, 80*scale);
-    scopeComponent.setBounds(150*scale, 140*scale, 630*scale, 400*scale);
-}
-
-void SynthFrameworkAudioProcessorEditor::sliderValueChanged(Slider* slider) {
-}
-
-void SynthFrameworkAudioProcessorEditor::comboBoxChanged(ComboBox* comboBox) {
+    scopeComponent.setBounds(150*scale, 160*scale, 630*scale, 400*scale);
 }
 
 void SynthFrameworkAudioProcessorEditor::timerCallback() {
     float amplitude = processor.getCurrentAmplitude();
+
+    float frequency = processor.getCurrentFrequency();
     
-    lookAndFeel.setColorIntensity(amplitude);
-    
-    // repaint explicitly called to apply the new look and feel update
+    lookAndFeel.setGainColorIntensity(amplitude);
+    lookAndFeel.setFrequencyColor(frequency);
     repaint();
 }

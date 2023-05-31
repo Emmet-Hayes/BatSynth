@@ -45,6 +45,8 @@ public:
       clearCurrentNote();
   }
 
+  double getFrequency() const { return frequency; }
+
   //setters and getters for all of the DSP-side variable values.
   //these all correspond to the user interface boxes, knobs and sliders.
   void setAttack(const std::atomic<float>* attack) { env1.setAttack((double)* attack); }
