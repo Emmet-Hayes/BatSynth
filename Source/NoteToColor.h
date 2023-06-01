@@ -11,17 +11,20 @@
 #include <unordered_map>
 #include "../JuceLibraryCode/JuceHeader.h"
 
-enum class NoteColors {
+enum class NoteColors 
+{
     BLACK, BLUE, PURPLE, WHITE, SEAFOAM, GREEN,
     YELLOWGREEN, YELLOW, ORANGE, REDORANGE, RED, DARKRED
 };
 
-class NoteColorListener {
+class NoteColorListener 
+{
 public:
     virtual void noteColorChanged(NoteColors newColor) = 0;
 };
 
-static std::unordered_map<NoteColors, juce::Colour> noteToColorMap{
+static std::unordered_map<NoteColors, juce::Colour> noteToColorMap 
+{
 	{ NoteColors::BLACK, juce::Colour::fromRGB(40, 0, 40) },
 	{ NoteColors::BLUE, juce::Colour::fromRGB(0, 0, 255) },
 	{ NoteColors::PURPLE, juce::Colour::fromRGB(128, 0, 255) },

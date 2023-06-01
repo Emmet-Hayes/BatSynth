@@ -1,31 +1,13 @@
-/*
- ==============================================================================
-
-     PluginProcessor.cpp
-     Created: 3 Sep 2019 11:46:10pm
-     Author:  Emmet Hayes
-
- The constructor fills the value tree with each parameter on the synthesizer
- initialized and within normalizable ranges. each value has a corresponding key
- which is simply its intended parameter name. processBlock encapsulates the entirety
- of the DSP, as well as the oscilloscope operations. in ProcessBlock, f
- rom within the value tree each parameter can be mutated, and is in fact always
- being mutated by the values being passed from the user interface.
-
- ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 const int NUM_VOICES = 8;
 
-//initializing the entirety of the mutatable value set that is the synthesizer's parameters.
 SynthFrameworkAudioProcessor::SynthFrameworkAudioProcessor()
    #ifndef JucePlugin_PreferredChannelConfigurations
 :   AudioProcessor (BusesProperties()
    #if ! JucePlugin_IsMidiEffect
-    #if ! JucePlugin_IsSynth //preprocessor checking for inputs and outputs
+    #if ! JucePlugin_IsSynth
         .withInput  ("Input",  AudioChannelSet::stereo(), true)
     #endif
         .withOutput ("Output", AudioChannelSet::stereo(), true)
@@ -36,15 +18,16 @@ SynthFrameworkAudioProcessor::SynthFrameworkAudioProcessor()
     addAllControls();
 }
 
-SynthFrameworkAudioProcessor::~SynthFrameworkAudioProcessor() {
-}
+SynthFrameworkAudioProcessor::~SynthFrameworkAudioProcessor() 
+{}
 
-//the following functions are JUCE default functions, they ask questions to our MIDI devices.
-const String SynthFrameworkAudioProcessor::getName() const {
+const String SynthFrameworkAudioProcessor::getName() const 
+{
     return JucePlugin_Name;
 }
 
-bool SynthFrameworkAudioProcessor::acceptsMidi() const {
+bool SynthFrameworkAudioProcessor::acceptsMidi() const 
+{
    #if JucePlugin_WantsMidiInput
     return true;
    #else
@@ -52,7 +35,8 @@ bool SynthFrameworkAudioProcessor::acceptsMidi() const {
    #endif
 }
 
-bool SynthFrameworkAudioProcessor::producesMidi() const {
+bool SynthFrameworkAudioProcessor::producesMidi() const 
+{
    #if JucePlugin_ProducesMidiOutput
     return true;
    #else
@@ -60,7 +44,8 @@ bool SynthFrameworkAudioProcessor::producesMidi() const {
    #endif
 }
 
-bool SynthFrameworkAudioProcessor::isMidiEffect() const {
+bool SynthFrameworkAudioProcessor::isMidiEffect() const 
+{
    #if JucePlugin_IsMidiEffect
     return true;
    #else
@@ -70,50 +55,49 @@ bool SynthFrameworkAudioProcessor::isMidiEffect() const {
 
 double SynthFrameworkAudioProcessor::getTailLengthSeconds() const { return 0.0; }
 
-int SynthFrameworkAudioProcessor::getNumPrograms() {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+int SynthFrameworkAudioProcessor::getNumPrograms() 
+{
+    return 1; 
 }
 
-int SynthFrameworkAudioProcessor::getCurrentProgram()  {
+int SynthFrameworkAudioProcessor::getCurrentProgram()  
+{
     return 0;
 }
 
-void SynthFrameworkAudioProcessor::setCurrentProgram(int index)  {
-}
+void SynthFrameworkAudioProcessor::setCurrentProgram(int)
+{}
 
-const String SynthFrameworkAudioProcessor::getProgramName(int index) {
+const String SynthFrameworkAudioProcessor::getProgramName(int) 
+{
     return {};
 }
 
-void SynthFrameworkAudioProcessor::changeProgramName(int index, const String& newName) {
-}
+void SynthFrameworkAudioProcessor::changeProgramName(int, const String&) 
+{}
 
-//set the sample rate of playback and ignore unused samples
-void SynthFrameworkAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
+void SynthFrameworkAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) 
+{
     ignoreUnused(samplesPerBlock);
-    emmetSettings::sampleRate = sampleRate; //so that DSP knows the right sample rate
-    mySynth.setCurrentPlaybackSampleRate(sampleRate); //so that JUCE knows the right sample rate lol
+    emmetSettings::sampleRate = static_cast<int>(sampleRate);
+    mySynth.setCurrentPlaybackSampleRate(sampleRate);
     //midiCollector.reset(sampleRate);
 }
 
-// When playback stops, you can use this as an opportunity to free up any spare memory, etc.
-void SynthFrameworkAudioProcessor::releaseResources(){
-}
+void SynthFrameworkAudioProcessor::releaseResources()
+{}
 
-//checks for type of output, mono/stereo, and also if input layout matches the output layout
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool SynthFrameworkAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const {
+bool SynthFrameworkAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const 
+{
    #if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
     return true;
    #else
-    //we only support mono or stereo for now. sorry film people and surround sound enthusiasts. :'(
     if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
         && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
         return false;
 
-    // This checks if the input layout matches the output layout
    #if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
@@ -123,15 +107,14 @@ bool SynthFrameworkAudioProcessor::isBusesLayoutSupported(const BusesLayout& lay
 }
 #endif
 
-//each block of audio is processed through this function, and this calls renderNextBlock for each voice in
-//synthesizer. the values in the tree are passed to the DSP thread, while being constantly updated by the user interface
-//thread. As long as the voice exists. Clear any previous audio in the buffer.
-//the oscilloscope data is updated at last after the audio has already been rendered."
-void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages) {
-    float lowestSynthFrequency = 4186.01f; // store lowest freq seen in the voices
-    for (int i = 0; i < mySynth.getNumVoices(); ++i) {
+void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages) 
+{
+    float lowestSynthFrequency = 4186.01f;
+    for (int i = 0; i < mySynth.getNumVoices(); ++i) 
+    {
         myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i));
-        if (myVoice != nullptr) { //each existing voice gets affected by every change in these tree values
+        if (myVoice != nullptr) 
+        {
             myVoice->setAttack(tree.getRawParameterValue("attack"));
             myVoice->setDecay(tree.getRawParameterValue("decay"));
             myVoice->setSustain(tree.getRawParameterValue("sustain"));
@@ -159,7 +142,7 @@ void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             myVoice->setOsc2Type(tree.getRawParameterValue("wavetype2"));
             myVoice->setDistType(tree.getRawParameterValue("distortionType"));
             if (myVoice->isVoiceActive() && myVoice->getFrequency() < lowestSynthFrequency)
-                lowestSynthFrequency = myVoice->getFrequency();
+                lowestSynthFrequency = static_cast<float>(myVoice->getFrequency());
         }
     }
     currentFrequency = lowestSynthFrequency;
@@ -169,7 +152,6 @@ void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     //keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(), true);
     mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
   
-    // amplitude calculation (rms)
     float rms = 0.0f;
     int numOutputs = getTotalNumOutputChannels();
     int numSamples = buffer.getNumSamples();
@@ -181,23 +163,24 @@ void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     rms /= buffer.getNumSamples() * buffer.getNumChannels();
     rms = std::sqrt(rms);
   
-    currentAmplitude = rms; // storing current amplitude for use by the styler
+    currentAmplitude = rms;
   
     scopeDataCollector.process(buffer.getReadPointer(0), (size_t)buffer.getNumSamples(), currentFrequency);
 }
 
-bool SynthFrameworkAudioProcessor::hasEditor() const {
-  return true; // so if anybody asks..
+bool SynthFrameworkAudioProcessor::hasEditor() const 
+{
+  return true;
 }
 
-AudioProcessorEditor* SynthFrameworkAudioProcessor::createEditor() {
-  return new SynthFrameworkAudioProcessorEditor (*this); //create the editor
+AudioProcessorEditor* SynthFrameworkAudioProcessor::createEditor() 
+{
+  return new SynthFrameworkAudioProcessorEditor (*this);
 }
 
-void SynthFrameworkAudioProcessor::addAllControls() {
+void SynthFrameworkAudioProcessor::addAllControls() 
+{
     //keyboardState.reset();
-    //These ranges will determine what our parameters are capaable of changing to. They should always line up
-    //with the corresponding ranges set on the UI buttons and sliders themselves.
     NormalisableRange<float> attackRange(0.1f, 5000.0f), decayRange(0.1f, 2000.0f), sustainRange(0.0f, 1.0f),
     releaseRange(0.1f, 5000.0f), wavetypeRange(0, 12), wavetype2Range(0, 12),
     osc2GainRange(0.f, 1.f), noiseGainRange(0.f, 1.f), osc2PitchRange(0.5f, 2.f),
@@ -233,28 +216,30 @@ void SynthFrameworkAudioProcessor::addAllControls() {
     tree.createAndAddParameter(std::make_unique<Parameter>("wavetype", "Wavetype", "Wavetype", wavetypeRange, 1, nullptr, nullptr));
     tree.createAndAddParameter(std::make_unique<Parameter>("wavetype2", "Wavetype 2", "Wavetype 2", wavetype2Range, 0, nullptr, nullptr));
     tree.createAndAddParameter(std::make_unique<Parameter>("distortionType", "Distortion Type", "Distortion Type", distortionTypeRange, 0, nullptr, nullptr));
-    tree.state = ValueTree("Empty"); //initialize tree state, otherwise it won't load
-    mySynth.clearVoices(); //voices should be empty
-    for (int i = 0; i < NUM_VOICES; ++i) //8 voices for up to 8 keys pressed at once. octophonic.
+    tree.state = ValueTree("Empty");
+    mySynth.clearVoices(); 
+    for (int i = 0; i < NUM_VOICES; ++i) 
         mySynth.addVoice(new SynthVoice());
-    mySynth.clearSounds(); //sounds should also be empty
-    mySynth.addSound(new SynthSound()); //add the sound class items
+    mySynth.clearSounds();
+    mySynth.addSound(new SynthSound());
     //midiCollector.reset(emmetSettings::sampleRate);
 }
 
-void SynthFrameworkAudioProcessor::getStateInformation (MemoryBlock& destData) {
+void SynthFrameworkAudioProcessor::getStateInformation (MemoryBlock& destData) 
+{
     std::unique_ptr<XmlElement> xml(tree.state.createXml());
     copyXmlToBinary(*xml, destData);
 }
 
-void SynthFrameworkAudioProcessor::setStateInformation (const void* data, int sizeInBytes) {
+void SynthFrameworkAudioProcessor::setStateInformation (const void* data, int sizeInBytes) 
+{
     std::unique_ptr<XmlElement> xmlState (getXmlFromBinary(data, sizeInBytes));
     if (xmlState.get() != nullptr)
         if (xmlState->hasTagName(tree.state.getType()))
             tree.replaceState(ValueTree::fromXml(*xmlState));
 }
 
-// This creates new instances of the plugin..
-AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
+AudioProcessor* JUCE_CALLTYPE createPluginFilter() 
+{
     return new SynthFrameworkAudioProcessor();
 }

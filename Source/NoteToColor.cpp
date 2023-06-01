@@ -1,23 +1,7 @@
-/*
-  ==============================================================================
-
-    NoteToColor.cpp
-    Created: 31 May 2023 12:40:48pm
-    Author:  gelli
-
-  ==============================================================================
-*/
 #include "NoteToColor.h"
 
-NoteColors frequencyToColor(float freq)
+NoteColors frequencyToColor(float freq) 
 {
-    // these loops mean note presses between A3 and A4
-    // will not need to iterate. within a reasonable bound
-    // of what typical users will need in low and high frequencies
-    // should in reasonable worst-case scenarios it will take 4
-    // extra operations to update the color. for example: 
-    // (F#8) 6 kHz -> 3 kHz - > 1.5 kHz -> 750 Hz -> 375 Hz
-    // (G0) 24 Hz -> 48 Hz -> 96 Hz -> 192 Hz -> 384 Hz
     while (freq > 440.f)
         freq *= 0.5;
     while (freq < 220.f)
