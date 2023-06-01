@@ -2,6 +2,7 @@
 
 float chandiv = 1;
 int emmetSettings::sampleRate = 44100;
+int oversampleFactor = 2;
 
 emmetOsc::emmetOsc()
 {
@@ -11,7 +12,7 @@ emmetOsc::emmetOsc()
 double emmetOsc::noise() 
 {
 	output = (rand()/(float)RAND_MAX) * 2 - 1;
-	return (output);
+	return output;
 }
 
 void emmetOsc::phaseReset(double phaseIn) 
@@ -24,7 +25,7 @@ double emmetOsc::sinewave(double freq)
 	output = sin(phase * (TWOPI));
 	if (phase >= 1.0) phase -= 1.0;
 	phase += (1./(emmetSettings::sampleRate/(freq)));
-	return (output);
+	return output;
 }
 
 double emmetOsc::coswave(double freq) 
@@ -32,35 +33,81 @@ double emmetOsc::coswave(double freq)
 	output = cos(phase * (TWOPI));
 	if (phase >= 1.0) phase -= 1.0;
 	phase += (1./(emmetSettings::sampleRate/(freq)));
-	return (output);
+	return output;
 }
 
 double emmetOsc::square(double freq) 
 {
-	if (phase <= 0.5) output =- 1;
-	if (phase > 0.5) output = 1;
-	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
-	return (output);
+    double oversampledOutput[oversampleFactor];
+	
+    for (int i = 0; i < oversampleFactor; ++i)
+    {
+        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        if (phase >= 1.0 ) phase -= 1.0;
+        if (phase <= 0.5) oversampledOutput[i] = -1;
+	    else oversampledOutput[i] = 1;
+    }
+    
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+    
+	return output;
 }
 
 double emmetOsc::pulse(double freq, double duty) 
 {
-	if (duty<0.) duty=0;
-	if (duty>1.) duty=1;
-	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
-	if (phase<duty) output= -1.;
-	if (phase>duty) output= 1.;
-	return(output);
+    if (duty < 0.) duty = 0;
+	if (duty > 1.) duty = 1;
+    
+	double oversampledOutput[oversampleFactor];
+    
+    for (int i = 0; i < oversampleFactor; ++i)
+    {
+        phase += (1. /(emmetSettings::sampleRate / freq));
+    	if (phase >= 1.0) phase -= 1.0;
+    	if (phase <= duty) oversampledOutput[i] = -1.;
+	    else oversampledOutput[i] = 1.;
+    }
+    
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+    
+	return output;
 }
 
 double emmetOsc::saw(double freq) 
 {
-	output = phase * 2 - 1;
-	if (phase>= 1.0 ) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
-	return (output);
+    double oversampledOutput[oversampleFactor];
+    
+    for (int i = 0; i < oversampleFactor; ++i)
+    {
+        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        if (phase >= 1.0 ) phase -= 1.0;
+        oversampledOutput[i] = phase * 2 - 1;
+    }
+    
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+    
+	return output;
 }
 
 double emmetOsc::sawr(double freq) 
@@ -70,102 +117,191 @@ double emmetOsc::sawr(double freq)
 
 double emmetOsc::softdistsine(double freq) 
 {
-	return tanh(1.2 * sinewave(freq));
+    double oversampledOutput[oversampleFactor];
+    
+    for (int i = 0; i < oversampleFactor; ++i)
+        oversampledOutput[i] = tanh(1.2 * sinewave(freq));
+        
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+    
+	return output;
 }
 
 double emmetOsc::harddistsine(double freq) 
 {
-	double s = 1.3 * (sinewave(freq));
-	if (s > 1) s = 1;
-	if (s < -1) s = -1;
-	return s;
+    double oversampledOutput[oversampleFactor];
+
+    for (int i = 0; i < oversampleFactor; ++i) {
+        oversampledOutput[i] = 1.3 * sinewave(freq);
+	    if (oversampledOutput[i] > 1) oversampledOutput[i] = 1;
+	    if (oversampledOutput[i] < -1) oversampledOutput[i] = -1;
+    }
+
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+
+    output = sum / oversampleFactor;
+
+	return output;
 }
 
 double emmetOsc::triangle(double freq) 
 {
-	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/freq));
-	if (phase <= 0.5) output = (phase - 0.25) * 4.;
-	else output =((1.0 - phase) - 0.25) * 4.;
-	return (output);
+    double oversampledOutput[oversampleFactor];
+    
+    for (int i = 0; i < oversampleFactor; ++i)
+    {
+        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        if (phase >= 1.0 ) phase -= 1.0;
+	    if (phase <= 0.5) oversampledOutput[i] = (phase - 0.25) * 4.;
+	    else oversampledOutput[i] = ((1.0 - phase) - 0.25) * 4.;
+    }
+    
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+
+	return output;
 }
 
 double emmetOsc::sawwane(double freq) 
 {
-	output = phase * phase * 2 - 1;
-	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
-	return (output);
+    double oversampledOutput[oversampleFactor];
+    
+    for (int i = 0; i < oversampleFactor; ++i)
+    {
+        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        if (phase >= 1.0 ) phase -= 1.0;
+        oversampledOutput[i] = phase * phase * 2 - 1;
+    }
+    
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+    
+	return output;
 }
 
 double emmetOsc::sawwax(double freq) 
 {
-	output = sqrt(phase) * 2 - 1;
-	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
-	return (output);
+    double oversampledOutput[oversampleFactor];
+    
+    for (int i = 0; i < oversampleFactor; ++i)
+    {
+        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        if (phase >= 1.0 ) phase -= 1.0;
+        oversampledOutput[i] = sqrt(phase) * 2 - 1;
+    }
+    
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+    
+    return output;
 }
 
 double emmetOsc::sawpulse(double freq, double duty) 
 {
 	if (duty < 0.) duty = 0;
 	else if (duty > 0.4) duty = 0.4;
-	if (phase < duty) output = -1;
-	else if (phase > (1 - duty)) output = 1;
-	else output = phase * 2 - 1;
-	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
+	
+	double oversampledOutput[oversampleFactor];
+    
+    for (int i = 0; i < oversampleFactor; ++i)
+    {
+        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        if (phase >= 1.0 ) phase -= 1.0;
+	    if (phase < duty) oversampledOutput[i] = -1;
+	    else if (phase > (1 - duty)) oversampledOutput[i] = 1;
+	    else oversampledOutput[i] = phase * 2 - 1;
+    }
+    
+    emmetLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    
+    double sum = 0;
+    for (int i = 0; i < oversampleFactor; ++i)
+        sum += lpFilter.process(oversampledOutput[i]);
+        
+    output = sum / oversampleFactor;
+    
 	return output;
 }
 
-emmetFractionalDelay::emmetFractionalDelay() 
+float emmetDelayLine::process(float input) 
 {
-	memset(memory, 0, delaySize * sizeof(double));
+    float delayedSignal = read(time);
+    write(input + delayedSignal * feedback);
+    return delayedSignal;
 }
 
-double emmetFractionalDelay::dl (double sig, double delayTime, double fdback) 
+void emmetDelayLine::write(float input)
 {
-	time = fmin(fabs(delayTime), delaySize);
-	int32_t delay = time;
-	double fractAmount = time - delay;
-	double truncAmount = 1.0f - fractAmount;
-	feedback = fdback;
-	readPointer = writePointer - delay;
-	if (readPointer < 0)
-		readPointer += delaySize;
-	
-	int readPointerFractPart = readPointer-1;
-	if (readPointerFractPart < 0)
-		readPointerFractPart += delaySize;
-	
-	double y = memory[readPointer] * truncAmount + memory[readPointerFractPart] * fractAmount;
-	memory[writePointer] = y * feedback + sig;
-		
-	if (++writePointer >= delaySize)
-		writePointer -= delaySize;
+    buffer[writePointer++] = input;
+    if (writePointer >= MAX_DELAY)
+        writePointer = 0;
+}
 
-	return y;
+float emmetDelayLine::read(float delayTime)
+{
+    float readPointer = float(writePointer) - time;
+    while (readPointer < 0) readPointer += MAX_DELAY;
+        
+    int index0 = int(readPointer);
+    int index1 = (index0 + 1) % MAX_DELAY;
+        
+    float frac = readPointer - float(index0);
+    float val0 = buffer[index0];
+    float val1 = buffer[index1];
+        
+    return val0 + frac * (val1 - val0);
 }
 
 double emmetFilter::lopass(double in, double cutoff) 
 {
 	output = outputs[0] + cutoff*(in-outputs[0]);
 	outputs[0] = output;
-	return (output);
+	return output;
 }
 
 double emmetFilter::hipass(double in, double cutoff) 
 {
 	output = input - (outputs[0] + cutoff * (in - outputs[0]));
 	outputs[0] = output;
-	return (output);
+	return output;
 }
 
 double emmetFilter::lores(double in, double cutoff1, double resonance) 
 {
 	cutoff = cutoff1;
 	if (cutoff < 20) cutoff = 20;
-	if (cutoff > (emmetSettings::sampleRate/2.22)) cutoff = (emmetSettings::sampleRate/2.22);
+	if (cutoff > (emmetSettings::sampleRate / 2.22)) cutoff = (emmetSettings::sampleRate / 2.22);
 	if (resonance < 1. || cutoff1 < 225) resonance = 1.;
 	z = cos(TWOPI * cutoff/emmetSettings::sampleRate);
 	c = 2 - 2 * z;
@@ -174,7 +310,7 @@ double emmetFilter::lores(double in, double cutoff1, double resonance)
 	y = y + x;
 	x = x * r;
 	output = y;
-	return (output);
+	return output;
 }
 
 double emmetFilter::hires(double in, double cutoff1, double resonance) 
@@ -182,7 +318,7 @@ double emmetFilter::hires(double in, double cutoff1, double resonance)
 	cutoff = cutoff1;
 	if (cutoff < 10) cutoff = 10;
 	if (cutoff > (emmetSettings::sampleRate)) cutoff = (emmetSettings::sampleRate);
-	if (resonance < 1.) resonance = 1.;
+	if (resonance < 1.) resonance = 1;
 	z = cos(TWOPI * cutoff/emmetSettings::sampleRate);
 	c= 2 - 2 * z;
 	double r = (sqrt(2.0) * sqrt(-pow((z - 1.0), 3.0)) + resonance * (z - 1))/(resonance * (z - 1));
@@ -190,7 +326,7 @@ double emmetFilter::hires(double in, double cutoff1, double resonance)
 	y = y + x;
 	x = x * r;
 	output = in - y;
-	return (output);
+	return output;
 }
 
 double emmetFilter::bandpass(double in, double cutoff1, double resonance) 
@@ -206,78 +342,37 @@ double emmetFilter::bandpass(double in, double cutoff1, double resonance)
 	output=inputs[0] * in + inputs[1] * outputs[1] + inputs[2] * outputs[2];
 	outputs[2] = outputs[1];
 	outputs[1] = output;
-	return (output);
-}
-
-double emmetDyn::gate(double in, double threshold, long holdtime, double attack, double release) 
-{
-	if (fabs(in) > threshold && attackphase != 1)
-	{ 
-		holdcount = 0;
-		releasephase = 0;
-		attackphase = 1;
-		if(amplitude == 0) amplitude = 0.01;
-	}
-	
-	if (attackphase == 1 && amplitude < 1) 
-	{ 
-		amplitude *= (1 + attack);
-		output = input * amplitude;
-	}
-	
-	if (amplitude >= 1) 
-	{
-		attackphase = 0;
-		holdphase = 1;
-	}
-	
-	if (holdcount < holdtime && holdphase == 1) 
-	{
-		output = input;
-		holdcount++;
-	}
-	
-	if (holdcount >= holdtime) 
-	{
-		holdphase = 0;
-		releasephase = 1;
-	}
-	
-	if (releasephase == 1 && amplitude > 0.)
-		output = input * (amplitude *= release);
-	
 	return output;
 }
 
-double emmetDyn::compressor(double in, double ratio, double threshold, double atk, double rel) 
+double emmetCompressor::process(double input)
 {
-	if (fabs(in) > threshold && attackphase != 1)
-	{
-		releasephase = 0;
-		attackphase = 1;
-		currentRatio = 1;
-	}
-	
-	if (attackphase == 1 && currentRatio < ratio-1) 
-		currentRatio *= 1 + (1 / atk);
-	
-	if (currentRatio >= ratio - 1 && fabs(in) < threshold )
-	{
-		attackphase = 0;
-		releasephase = 1;
-	}
-	
-	if (releasephase == 1 && currentRatio > 0.) 
-		currentRatio /= 1 + (1 / rel);
-
-	output = in / (1. + currentRatio);
-	
-	return output;
-}
-
-double emmetDyn::limiter(double in) 
-{
-	return (in > 0.95) ? 0.95 : (in < -0.95) ? -0.95 : in;
+    double inputLevel = fabs(input);
+        
+    if (inputLevel > threshold) {
+        double desiredGain = threshold / inputLevel;
+        double dbDesiredGain = log10(desiredGain) * 20.0;
+        double dbGainReduction = dbDesiredGain * (1.0 - 1.0 / ratio);
+        double desiredEnvelope = pow(10.0, dbGainReduction / 20.0);
+            
+        if (desiredEnvelope < envelope) 
+        {
+            double coeff = exp(log(0.01) / (attackTime * emmetSettings::sampleRate));
+            envelope = coeff * envelope + (1.0 - coeff) * desiredEnvelope;
+        }
+        else 
+        {
+            double coeff = exp(log(0.01) / (releaseTime * emmetSettings::sampleRate));
+            envelope = coeff * envelope + (1.0 - coeff) * desiredEnvelope;
+        }
+    } 
+    else
+    {
+        envelope = 1.0;
+    }
+    
+    gain = envelope;
+    return input * gain;
 }
 
 double emmetEnv::adsr(double in, int trigger) 
@@ -352,24 +447,4 @@ void emmetEnv::setSustain(double sustainL)
 void emmetEnv::setDecay(double decayMS) 
 {
 	decay = pow(0.01, 1.0 / (decayMS * emmetSettings::sampleRate * 0.001));
-}
-
-void emmetDyn::setAttack(double attackMS) 
-{
-	attack = pow(0.01, 1.0 / (attackMS * emmetSettings::sampleRate * 0.001));
-}
-
-void emmetDyn::setRelease(double releaseMS) 
-{
-	release = pow(0.01, 1.0 / (releaseMS * emmetSettings::sampleRate * 0.001));
-}
-
-void emmetDyn::setThreshold(double thresholdI) 
-{
-	threshold = thresholdI;
-}
-
-void emmetDyn::setRatio(double ratioF) 
-{
-	ratio = ratioF;
 }

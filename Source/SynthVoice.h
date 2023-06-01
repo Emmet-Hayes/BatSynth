@@ -35,10 +35,10 @@ public:
 	void setTotalGain(const std::atomic<float>* lvl) { totalGain = (double)*lvl; }
 	void setFilterCutoff(const std::atomic<float>* filtCut) { filt1.cutoff = (double)*filtCut; }
 	void setFilterResonance(const std::atomic<float>* filtRes) { filt1.resonance = (double)*filtRes; }
-	void setCompressionRatio(const std::atomic<float>* ratio) { comp1.setRatio((double)*ratio); compressGain = -0.05 * (double)*ratio + 0.9; }
-	void setCompressionThreshold(const std::atomic<float>* thresh) { comp1.setThreshold((double)*thresh); }
-	void setCompressionAttack(const std::atomic<float>* attack) { comp1.setAttack((double)*attack); }
-	void setCompressionRelease(const std::atomic<float>* release) { comp1.setRelease((double)*release); }
+	void setCompressionRatio(const std::atomic<float>* ratio) { comp1.ratio = (double)*ratio; compressGain = -0.05 * (double)*ratio + 0.9; }
+	void setCompressionThreshold(const std::atomic<float>* thresh) { comp1.threshold = (double)*thresh; }
+	void setCompressionAttack(const std::atomic<float>* attack) { comp1.attackTime = (double)*attack; }
+	void setCompressionRelease(const std::atomic<float>* release) { comp1.releaseTime = (double)*release; }
 	void setCompressionGain(const std::atomic<float>* gain) { compressGain = (double)*gain; }
 	void setDelayTime(const std::atomic<float>* time) { delay1.time = (double)*time; }
 	void setDelayFeedback(const std::atomic<float>* feedback) { delay1.feedback = (double)*feedback; } 
@@ -61,8 +61,8 @@ public:
 	double getFilterResonance() const { return filt1.resonance; }
 	double getCompressionRatio() const { return comp1.ratio; }
 	double getCompressionThreshold() const { return comp1.threshold; }
-	double getCompressionAttack() const { return comp1.attack; }
-	double getCompressionRelease() const { return comp1.release; }
+	double getCompressionAttack() const { return comp1.attackTime; }
+	double getCompressionRelease() const { return comp1.releaseTime; }
 	double getCompressionGain() const { return compressGain; }
 	double getDelayTime() const { return delay1.time; }
 	double getDelayFeedback() const { return delay1.feedback; }
@@ -145,7 +145,11 @@ public:
 	 [Noise]*gain-----------/'
 	 */
 	void renderNextBlock(AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override 
-	{
+	{	
+	    comp1.ratio = getCompressionRatio();
+	    comp1.threshold = getCompressionThreshold();
+	    comp1.attackTime = getCompressionAttack();
+	    comp1.releaseTime = getCompressionRelease();
 		for (int sample = 0; sample < numSamples; ++sample) 
 		{
 			double theSound = (getOsc1Type() + (getOsc2Type() * osc2Gain) + (noise1.noise() * noiseGain))/ 3.;
@@ -154,11 +158,10 @@ public:
 			theSound = getDistSignal(theSound);
 			theSound = filt1.lores(theSound, getFilterCutoff() + lfoFilterIntensity
 				* lfo1.sinewave(lfoFilterFreq), getFilterResonance());
-			theSound =  compressGain * comp1.compressor(theSound, getCompressionRatio(), getCompressionThreshold(),
-				getCompressionAttack(), getCompressionRelease()); 
-			theSound += delay1.dl(theSound, getDelayTime(), getDelayFeedback()) * delayGain;
+			theSound =  compressGain * comp1.process(theSound);
+			theSound += delay1.process(theSound) * delayGain;
 			theSound *= getTotalGain();
-			theSound = limit1.limiter(theSound);
+			theSound = limit1.process(theSound);
 			for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
 				outputBuffer.addSample(channel, startSample, theSound);
 			++startSample;
@@ -175,6 +178,7 @@ private:
 	emmetEnv env1; 
 	emmetFilter filt1;
 	emmetDistortion dist1;
-	emmetDyn comp1, limit1;
-	emmetFractionalDelay delay1;
+	emmetCompressor comp1, limit1 { 20.0, 0.9, 10.0, 100.0 };
+	//emmetFractionalDelay delay1;
+	emmetDelayLine delay1;
 };

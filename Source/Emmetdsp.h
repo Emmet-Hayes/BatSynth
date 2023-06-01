@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cstdint>
 #include <cmath>
+#include <vector>
 
 #define PI  3.1415926535897932384626433832795
 #define TWOPI 6.283185307179586476925286766559
@@ -38,16 +39,24 @@ public:
 	void phaseReset(double phaseIn);
 };
 
-class emmetFractionalDelay 
-{
-	static const int delaySize = 88200;
-	double memory[delaySize];
-	int writePointer = 0, readPointer = 0;
+class emmetDelayLine {
 public:
-	emmetFractionalDelay();
-	double time = 10000.0, feedback = 0.5;
-	double dl ( double sig, double delayTime, double feedback );
+    static const int MAX_DELAY = 88200;
+    std::vector<float> buffer;
+    int writePointer = 0;
+    float time = 0.0;
+    float feedback = 0.0;
+
+    emmetDelayLine() { buffer.resize(MAX_DELAY, 0.0); }
+    void setDelayTime(float delayTime) { time = delayTime; }
+    void setFeedback(float fdbk) { feedback = fdbk; }
+    float process(float input);
+
+private:
+    void write(float input);
+    float read(float delayTime);
 };
+
 
 class emmetFilter 
 {
@@ -67,32 +76,36 @@ public:
 	double resonance { 1.0 };
 	double lores(double input,double cutoff1, double resonance);
 	double hires(double input,double cutoff1, double resonance);
-	double bandpass(double input,double cutoff1, double resonance);
+	double bandpass(double input, double cutoff1, double resonance);
 	double lopass(double input,double cutoff);
 	double hipass(double input,double cutoff);
 };
 
-class emmetDyn 
+class emmetLPFilter {
+private:
+    double a;
+    double prevOutput;
+
+public:
+    emmetLPFilter() : prevOutput(0.0) {}
+    void setCutoffFrequency(double cutoff) { a = exp(-TWOPI * cutoff); }
+    double process(double input) { prevOutput = (1 - a) * input + a * prevOutput; return prevOutput; }
+};
+
+class emmetCompressor
 {
 public:
-	double gate(double input, double threshold=0.9, long holdtime=1, double attack=1, double release=0.01);
-	double compressor(double input, double ratio, double threshold=0.9, double attack=1, double release=0.01);
-	double limiter(double unlimited);
-	double input;
-	double ratio;
-	double currentRatio;
-	double threshold;
-	double output;
-	double attack;
-	double release;
-	double amplitude;
-	void setAttack(double attackMS);
-	void setRelease(double releaseMS);
-	void setThreshold(double thresholdI);
-	void setRatio(double ratioF);
-	long holdtime;
-	long holdcount;
-	int attackphase,holdphase,releasephase;
+    double ratio;
+    double threshold;
+    double attackTime;
+    double releaseTime;
+    double envelope;
+    double gain;
+
+    emmetCompressor() : ratio(1.0), threshold(0.0), attackTime(0.1), releaseTime(0.1), envelope(0.0), gain(1.0) {}
+    emmetCompressor(double r, double t, double atk, double rel) : ratio(r), threshold(t), attackTime(atk), releaseTime(rel),
+                                                             envelope(0.0), gain(1.0) {}
+    double process(double input);
 };
 
 class emmetEnv 
