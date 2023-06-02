@@ -161,14 +161,13 @@ SynthFrameworkAudioProcessorEditor::~SynthFrameworkAudioProcessorEditor() {
 
 void SynthFrameworkAudioProcessorEditor::paint (Graphics& g) {
     int height = static_cast<int>(scale * 800), width = static_cast<int>(scale * 600);
-    g.drawImage(image, 0, 0, height, width, 200, 0, 1600, 1200); 
+    g.drawImage(image, 0, 0, height, width, 0, 0, 1600, 1200);
 }
 
 void SynthFrameworkAudioProcessorEditor::resized() {
     //scale = 1.0f;
     comboboxes[0].setBounds(10, 30, 120, 30);
     comboboxes[1].setBounds(10, 85, 120, 30);
-    comboboxes[2].setBounds(10, 550, 60, 30);
     sliders[0].setBounds(130, 40, 60, 60);
     sliders[1].setBounds(200, 40, 60, 60);
     sliders[2].setBounds(270, 40, 60, 60);
@@ -187,12 +186,13 @@ void SynthFrameworkAudioProcessorEditor::resized() {
     sliders[15].setBounds(10, 300, 60, 60);
     sliders[16].setBounds(80, 300, 60, 60);
     sliders[17].setBounds(10, 460, 60, 60);
+    comboboxes[2].setBounds(10, 550, 60, 30);
     sliders[18].setBounds(80, 540, 50, 50);
     sliders[19].setBounds(10, 380, 60, 60);
     sliders[20].setBounds(80, 380, 60, 60);
     sliders[21].setBounds(80, 460, 60, 60);
     sliders[22].setBounds(710, 35, 80, 80);
-    scopeComponent.setBounds(150, 160, 630, 400);
+    scopeComponent.setBounds(185, 160, 600, 400);
 }
 
 void SynthFrameworkAudioProcessorEditor::timerCallback() {
