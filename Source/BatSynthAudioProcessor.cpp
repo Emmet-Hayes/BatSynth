@@ -1,9 +1,9 @@
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "BatSynthAudioProcessor.h"
+#include "BatSynthAudioProcessorEditor.h"
 
 const int NUM_VOICES = 8;
 
-SynthFrameworkAudioProcessor::SynthFrameworkAudioProcessor()
+BatSynthAudioProcessor::BatSynthAudioProcessor()
    #ifndef JucePlugin_PreferredChannelConfigurations
 :   AudioProcessor (BusesProperties()
    #if ! JucePlugin_IsMidiEffect
@@ -18,15 +18,15 @@ SynthFrameworkAudioProcessor::SynthFrameworkAudioProcessor()
     addAllControls();
 }
 
-SynthFrameworkAudioProcessor::~SynthFrameworkAudioProcessor() 
+BatSynthAudioProcessor::~BatSynthAudioProcessor()
 {}
 
-const String SynthFrameworkAudioProcessor::getName() const 
+const String BatSynthAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool SynthFrameworkAudioProcessor::acceptsMidi() const 
+bool BatSynthAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -35,7 +35,7 @@ bool SynthFrameworkAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool SynthFrameworkAudioProcessor::producesMidi() const 
+bool BatSynthAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -44,7 +44,7 @@ bool SynthFrameworkAudioProcessor::producesMidi() const
    #endif
 }
 
-bool SynthFrameworkAudioProcessor::isMidiEffect() const 
+bool BatSynthAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -53,42 +53,42 @@ bool SynthFrameworkAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double SynthFrameworkAudioProcessor::getTailLengthSeconds() const { return 0.0; }
+double BatSynthAudioProcessor::getTailLengthSeconds() const { return 0.0; }
 
-int SynthFrameworkAudioProcessor::getNumPrograms() 
+int BatSynthAudioProcessor::getNumPrograms()
 {
     return 1; 
 }
 
-int SynthFrameworkAudioProcessor::getCurrentProgram()  
+int BatSynthAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void SynthFrameworkAudioProcessor::setCurrentProgram(int)
+void BatSynthAudioProcessor::setCurrentProgram(int)
 {}
 
-const String SynthFrameworkAudioProcessor::getProgramName(int) 
+const String BatSynthAudioProcessor::getProgramName(int)
 {
     return {};
 }
 
-void SynthFrameworkAudioProcessor::changeProgramName(int, const String&) 
+void BatSynthAudioProcessor::changeProgramName(int, const String&)
 {}
 
-void SynthFrameworkAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) 
+void BatSynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     ignoreUnused(samplesPerBlock);
-    emmetSettings::sampleRate = static_cast<int>(sampleRate);
+    BatSynthSettings::sampleRate = static_cast<int>(sampleRate);
     mySynth.setCurrentPlaybackSampleRate(sampleRate);
     //midiCollector.reset(sampleRate);
 }
 
-void SynthFrameworkAudioProcessor::releaseResources()
+void BatSynthAudioProcessor::releaseResources()
 {}
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool SynthFrameworkAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const 
+bool BatSynthAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
    #if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
@@ -107,7 +107,7 @@ bool SynthFrameworkAudioProcessor::isBusesLayoutSupported(const BusesLayout& lay
 }
 #endif
 
-void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages) 
+void BatSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     float lowestSynthFrequency = 4186.01f;
     for (int i = 0; i < mySynth.getNumVoices(); ++i) 
@@ -168,17 +168,17 @@ void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     scopeDataCollector.process(buffer.getReadPointer(0), (size_t)buffer.getNumSamples(), currentFrequency);
 }
 
-bool SynthFrameworkAudioProcessor::hasEditor() const 
+bool BatSynthAudioProcessor::hasEditor() const
 {
   return true;
 }
 
-AudioProcessorEditor* SynthFrameworkAudioProcessor::createEditor() 
+AudioProcessorEditor* BatSynthAudioProcessor::createEditor()
 {
-  return new SynthFrameworkAudioProcessorEditor (*this);
+  return new BatSynthAudioProcessorEditor (*this);
 }
 
-void SynthFrameworkAudioProcessor::addAllControls() 
+void BatSynthAudioProcessor::addAllControls()
 {
     //keyboardState.reset();
     NormalisableRange<float> attackRange(0.1f, 5000.0f), decayRange(0.1f, 2000.0f), sustainRange(0.0f, 1.0f),
@@ -225,13 +225,13 @@ void SynthFrameworkAudioProcessor::addAllControls()
     //midiCollector.reset(emmetSettings::sampleRate);
 }
 
-void SynthFrameworkAudioProcessor::getStateInformation (MemoryBlock& destData) 
+void BatSynthAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
     std::unique_ptr<XmlElement> xml(tree.state.createXml());
     copyXmlToBinary(*xml, destData);
 }
 
-void SynthFrameworkAudioProcessor::setStateInformation (const void* data, int sizeInBytes) 
+void BatSynthAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     std::unique_ptr<XmlElement> xmlState (getXmlFromBinary(data, sizeInBytes));
     if (xmlState.get() != nullptr)
@@ -241,5 +241,5 @@ void SynthFrameworkAudioProcessor::setStateInformation (const void* data, int si
 
 AudioProcessor* JUCE_CALLTYPE createPluginFilter() 
 {
-    return new SynthFrameworkAudioProcessor();
+    return new BatSynthAudioProcessor();
 }

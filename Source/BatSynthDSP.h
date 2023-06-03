@@ -8,20 +8,19 @@
 #define PI  3.1415926535897932384626433832795
 #define TWOPI 6.283185307179586476925286766559
 
-class emmetSettings 
+class BatSynthSettings 
 {
 public:
 	static int sampleRate;
 };
 
-class emmetOsc 
+class BatSynthOsc 
 {
 	double frequency;
-	double phase;
+	double phase = 0.0;
 	double output;
 	double tri;
 public:
-	emmetOsc();
 	double sinewave(double frequency);
 	double coswave(double frequency);
 	double saw(double frequency);
@@ -39,7 +38,7 @@ public:
 	void phaseReset(double phaseIn);
 };
 
-class emmetDelayLine {
+class BatSynthDelayLine {
 public:
     static const int MAX_DELAY = 88200;
     std::vector<float> buffer;
@@ -47,7 +46,7 @@ public:
     float time = 0.0;
     float feedback = 0.0;
 
-    emmetDelayLine() { buffer.resize(MAX_DELAY, 0.0); }
+    BatSynthDelayLine() { buffer.resize(MAX_DELAY, 0.0); }
     void setDelayTime(float delayTime) { time = delayTime; }
     void setFeedback(float fdbk) { feedback = fdbk; }
     float process(float input);
@@ -58,7 +57,7 @@ private:
 };
 
 
-class emmetFilter 
+class BatSynthFilter 
 {
 	double gain { 0.0 };
 	double input { 0.0 };
@@ -71,7 +70,7 @@ class emmetFilter
 	double z { 0.0 }; //pole
 	double c { 0.0 }; //filter coefficient
 public:
-	emmetFilter() {};
+	BatSynthFilter() {};
 	double cutoff { 500.0 };
 	double resonance { 1.0 };
 	double lores(double input,double cutoff1, double resonance);
@@ -81,18 +80,18 @@ public:
 	double hipass(double input,double cutoff);
 };
 
-class emmetLPFilter {
+class BatSynthLPFilter {
 private:
     double a;
     double prevOutput;
 
 public:
-    emmetLPFilter() : prevOutput(0.0) {}
+    BatSynthLPFilter() : prevOutput(0.0) {}
     void setCutoffFrequency(double cutoff) { a = exp(-TWOPI * cutoff); }
     double process(double input) { prevOutput = (1 - a) * input + a * prevOutput; return prevOutput; }
 };
 
-class emmetCompressor
+class BatSynthCompressor
 {
 public:
     double ratio;
@@ -102,13 +101,13 @@ public:
     double envelope;
     double gain;
 
-    emmetCompressor() : ratio(1.0), threshold(0.0), attackTime(0.1), releaseTime(0.1), envelope(0.0), gain(1.0) {}
-    emmetCompressor(double r, double t, double atk, double rel) : ratio(r), threshold(t), attackTime(atk), releaseTime(rel),
+    BatSynthCompressor() : ratio(1.0), threshold(0.0), attackTime(0.1), releaseTime(0.1), envelope(0.0), gain(1.0) {}
+    BatSynthCompressor(double r, double t, double atk, double rel) : ratio(r), threshold(t), attackTime(atk), releaseTime(rel),
                                                              envelope(0.0), gain(1.0) {}
     double process(double input);
 };
 
-class emmetEnv 
+class BatSynthEnv 
 {
 public:
 	double ar(double input, double attack=1, double release=0.9, long holdtime=1, int trigger=0);
@@ -131,7 +130,7 @@ public:
 	int attackphase,decayphase,sustainphase,holdphase,releasephase;
 };
 
-class emmetDistortion 
+class BatSynthDistortion 
 {
 public:
 	double fastatan(const double input);
@@ -142,32 +141,32 @@ public:
 	double squareDist(const double, const double);
 };
 
-inline double emmetDistortion::fastatan(double x) 
+inline double BatSynthDistortion::fastatan(double x) 
 {
 	return (x / (1.0 + 0.28 * (x * x))); //
 }
 
-inline double emmetDistortion::tanhDist(double input, const double shape) 
+inline double BatSynthDistortion::tanhDist(double input, const double shape) 
 {
 	return (1.0 / tanh(shape)) * tanh(input * (shape/2))/ 1.8;
 }
 
-inline double emmetDistortion::atanDist(double input, const double shape) 
+inline double BatSynthDistortion::atanDist(double input, const double shape) 
 {
 	return (1.0 / atan(shape)) * atan(input * (shape/2)) /1.8;
 }
 
-inline double emmetDistortion::fastAtanDist(double input, const double shape) 
+inline double BatSynthDistortion::fastAtanDist(double input, const double shape) 
 {
 	return (1.0 / fastatan(shape)) * fastatan(input * (shape/2)) / 2.4;
 }
 
-inline double emmetDistortion::sigmoidDist(double input, const double shape) 
+inline double BatSynthDistortion::sigmoidDist(double input, const double shape) 
 {
 	return cbrt(input*(shape/4.))/3.;
 }
 
-inline double emmetDistortion::squareDist(double input, double shape) 
+inline double BatSynthDistortion::squareDist(double input, double shape) 
 {
 	return sqrt(input*shape);
 }

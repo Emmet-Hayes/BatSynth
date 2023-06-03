@@ -1,55 +1,50 @@
-#include "Emmetdsp.h"
+#include "BatSynthDSP.h"
 
 float chandiv = 1;
-int emmetSettings::sampleRate = 44100;
+int BatSynthSettings::sampleRate = 44100;
 int oversampleFactor = 2;
 
-emmetOsc::emmetOsc()
-{
-	phase = 0.0;
-}
-
-double emmetOsc::noise() 
+double BatSynthOsc::noise() 
 {
 	output = (rand()/(float)RAND_MAX) * 2 - 1;
 	return output;
 }
 
-void emmetOsc::phaseReset(double phaseIn) 
+void BatSynthOsc::phaseReset(double phaseIn) 
 {
 	phase = phaseIn;
 }
 
-double emmetOsc::sinewave(double freq) 
+double BatSynthOsc::sinewave(double freq) 
 {
 	output = sin(phase * (TWOPI));
 	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
+	phase += (1./(BatSynthSettings::sampleRate/(freq)));
 	return output;
 }
 
-double emmetOsc::coswave(double freq) 
+double BatSynthOsc::coswave(double freq) 
 {
 	output = cos(phase * (TWOPI));
 	if (phase >= 1.0) phase -= 1.0;
-	phase += (1./(emmetSettings::sampleRate/(freq)));
+	phase += (1./(BatSynthSettings::sampleRate/(freq)));
 	return output;
 }
 
-double emmetOsc::square(double freq) 
+double BatSynthOsc::square(double freq) 
 {
     double oversampledOutput[oversampleFactor];
 	
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         if (phase <= 0.5) oversampledOutput[i] = -1;
 	    else oversampledOutput[i] = 1;
     }
     
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -60,7 +55,7 @@ double emmetOsc::square(double freq)
 	return output;
 }
 
-double emmetOsc::pulse(double freq, double duty) 
+double BatSynthOsc::pulse(double freq, double duty) 
 {
     if (duty < 0.) duty = 0;
 	if (duty > 1.) duty = 1;
@@ -69,14 +64,14 @@ double emmetOsc::pulse(double freq, double duty)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1. /(emmetSettings::sampleRate / freq));
+        phase += (1. /(BatSynthSettings::sampleRate / freq));
     	if (phase >= 1.0) phase -= 1.0;
     	if (phase <= duty) oversampledOutput[i] = -1.;
 	    else oversampledOutput[i] = 1.;
     }
     
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -87,19 +82,19 @@ double emmetOsc::pulse(double freq, double duty)
 	return output;
 }
 
-double emmetOsc::saw(double freq) 
+double BatSynthOsc::saw(double freq) 
 {
     double oversampledOutput[oversampleFactor];
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         oversampledOutput[i] = phase * 2 - 1;
     }
     
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -110,20 +105,20 @@ double emmetOsc::saw(double freq)
 	return output;
 }
 
-double emmetOsc::sawr(double freq) 
+double BatSynthOsc::sawr(double freq) 
 {
 	return -saw(freq);
 }
 
-double emmetOsc::softdistsine(double freq) 
+double BatSynthOsc::softdistsine(double freq) 
 {
     double oversampledOutput[oversampleFactor];
     
     for (int i = 0; i < oversampleFactor; ++i)
         oversampledOutput[i] = tanh(1.2 * sinewave(freq));
         
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -134,7 +129,7 @@ double emmetOsc::softdistsine(double freq)
 	return output;
 }
 
-double emmetOsc::harddistsine(double freq) 
+double BatSynthOsc::harddistsine(double freq) 
 {
     double oversampledOutput[oversampleFactor];
 
@@ -144,8 +139,8 @@ double emmetOsc::harddistsine(double freq)
 	    if (oversampledOutput[i] < -1) oversampledOutput[i] = -1;
     }
 
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
 
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -156,20 +151,20 @@ double emmetOsc::harddistsine(double freq)
 	return output;
 }
 
-double emmetOsc::triangle(double freq) 
+double BatSynthOsc::triangle(double freq) 
 {
     double oversampledOutput[oversampleFactor];
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
 	    if (phase <= 0.5) oversampledOutput[i] = (phase - 0.25) * 4.;
 	    else oversampledOutput[i] = ((1.0 - phase) - 0.25) * 4.;
     }
     
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -180,19 +175,19 @@ double emmetOsc::triangle(double freq)
 	return output;
 }
 
-double emmetOsc::sawwane(double freq) 
+double BatSynthOsc::sawwane(double freq) 
 {
     double oversampledOutput[oversampleFactor];
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         oversampledOutput[i] = phase * phase * 2 - 1;
     }
     
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -203,19 +198,19 @@ double emmetOsc::sawwane(double freq)
 	return output;
 }
 
-double emmetOsc::sawwax(double freq) 
+double BatSynthOsc::sawwax(double freq) 
 {
     double oversampledOutput[oversampleFactor];
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         oversampledOutput[i] = sqrt(phase) * 2 - 1;
     }
     
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -226,7 +221,7 @@ double emmetOsc::sawwax(double freq)
     return output;
 }
 
-double emmetOsc::sawpulse(double freq, double duty) 
+double BatSynthOsc::sawpulse(double freq, double duty) 
 {
 	if (duty < 0.) duty = 0;
 	else if (duty > 0.4) duty = 0.4;
@@ -235,15 +230,15 @@ double emmetOsc::sawpulse(double freq, double duty)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (emmetSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
 	    if (phase < duty) oversampledOutput[i] = -1;
 	    else if (phase > (1 - duty)) oversampledOutput[i] = 1;
 	    else oversampledOutput[i] = phase * 2 - 1;
     }
     
-    emmetLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(emmetSettings::sampleRate * 0.48);
+    BatSynthLPFilter lpFilter;
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -254,21 +249,21 @@ double emmetOsc::sawpulse(double freq, double duty)
 	return output;
 }
 
-float emmetDelayLine::process(float input) 
+float BatSynthDelayLine::process(float input) 
 {
     float delayedSignal = read(time);
     write(input + delayedSignal * feedback);
     return delayedSignal;
 }
 
-void emmetDelayLine::write(float input)
+void BatSynthDelayLine::write(float input)
 {
     buffer[writePointer++] = input;
     if (writePointer >= MAX_DELAY)
         writePointer = 0;
 }
 
-float emmetDelayLine::read(float delayTime)
+float BatSynthDelayLine::read(float delayTime)
 {
     float readPointer = float(writePointer) - time;
     while (readPointer < 0) readPointer += MAX_DELAY;
@@ -283,27 +278,27 @@ float emmetDelayLine::read(float delayTime)
     return val0 + frac * (val1 - val0);
 }
 
-double emmetFilter::lopass(double in, double cutoff) 
+double BatSynthFilter::lopass(double in, double cutoff) 
 {
 	output = outputs[0] + cutoff*(in-outputs[0]);
 	outputs[0] = output;
 	return output;
 }
 
-double emmetFilter::hipass(double in, double cutoff) 
+double BatSynthFilter::hipass(double in, double cutoff) 
 {
 	output = input - (outputs[0] + cutoff * (in - outputs[0]));
 	outputs[0] = output;
 	return output;
 }
 
-double emmetFilter::lores(double in, double cutoff1, double resonance) 
+double BatSynthFilter::lores(double in, double cutoff1, double resonance) 
 {
 	cutoff = cutoff1;
 	if (cutoff < 20) cutoff = 20;
-	if (cutoff > (emmetSettings::sampleRate / 2.22)) cutoff = (emmetSettings::sampleRate / 2.22);
+	if (cutoff > (BatSynthSettings::sampleRate / 2.22)) cutoff = (BatSynthSettings::sampleRate / 2.22);
 	if (resonance < 1. || cutoff1 < 225) resonance = 1.;
-	z = cos(TWOPI * cutoff/emmetSettings::sampleRate);
+	z = cos(TWOPI * cutoff / BatSynthSettings::sampleRate);
 	c = 2 - 2 * z;
 	double r = (sqrt(2.0) * sqrt(-pow((z - 1.0), 3.0)) + resonance * (z - 1))/(resonance * (z - 1));
 	x = x + (in - y) * c;
@@ -313,13 +308,13 @@ double emmetFilter::lores(double in, double cutoff1, double resonance)
 	return output;
 }
 
-double emmetFilter::hires(double in, double cutoff1, double resonance) 
+double BatSynthFilter::hires(double in, double cutoff1, double resonance) 
 {
 	cutoff = cutoff1;
 	if (cutoff < 10) cutoff = 10;
-	if (cutoff > (emmetSettings::sampleRate)) cutoff = (emmetSettings::sampleRate);
+	if (cutoff > (BatSynthSettings::sampleRate)) cutoff = (BatSynthSettings::sampleRate);
 	if (resonance < 1.) resonance = 1;
-	z = cos(TWOPI * cutoff/emmetSettings::sampleRate);
+	z = cos(TWOPI * cutoff / BatSynthSettings::sampleRate);
 	c= 2 - 2 * z;
 	double r = (sqrt(2.0) * sqrt(-pow((z - 1.0), 3.0)) + resonance * (z - 1))/(resonance * (z - 1));
 	x = x + (in - y) * c;
@@ -329,23 +324,23 @@ double emmetFilter::hires(double in, double cutoff1, double resonance)
 	return output;
 }
 
-double emmetFilter::bandpass(double in, double cutoff1, double resonance) 
+double BatSynthFilter::bandpass(double in, double cutoff1, double resonance) 
 {
 	cutoff = cutoff1;
-	if (cutoff > (emmetSettings::sampleRate*0.5)) cutoff=(emmetSettings::sampleRate*0.5);
+	if (cutoff > (BatSynthSettings::sampleRate * 0.5)) cutoff = (BatSynthSettings::sampleRate * 0.5);
 	if (resonance >= 1.) resonance = 0.999999;
-	z = cos(TWOPI * cutoff/emmetSettings::sampleRate);
-	inputs[0] = (1 - resonance)*(sqrt(resonance * (resonance - 4.0 * pow(z, 2.0) + 2.0) + 1));
+	z = cos(TWOPI * cutoff / BatSynthSettings::sampleRate);
+	inputs[0] = (1 - resonance) * (sqrt(resonance * (resonance - 4.0 * pow(z, 2.0) + 2.0) + 1));
 	inputs[1] = 2 * z * resonance;
 	inputs[2] = pow((resonance * -1), 2);
 	
-	output=inputs[0] * in + inputs[1] * outputs[1] + inputs[2] * outputs[2];
+	output = inputs[0] * in + inputs[1] * outputs[1] + inputs[2] * outputs[2];
 	outputs[2] = outputs[1];
 	outputs[1] = output;
 	return output;
 }
 
-double emmetCompressor::process(double input)
+double BatSynthCompressor::process(double input)
 {
     double inputLevel = fabs(input);
         
@@ -357,12 +352,12 @@ double emmetCompressor::process(double input)
             
         if (desiredEnvelope < envelope) 
         {
-            double coeff = exp(log(0.01) / (attackTime * emmetSettings::sampleRate));
+            double coeff = exp(log(0.01) / (attackTime * BatSynthSettings::sampleRate));
             envelope = coeff * envelope + (1.0 - coeff) * desiredEnvelope;
         }
         else 
         {
-            double coeff = exp(log(0.01) / (releaseTime * emmetSettings::sampleRate));
+            double coeff = exp(log(0.01) / (releaseTime * BatSynthSettings::sampleRate));
             envelope = coeff * envelope + (1.0 - coeff) * desiredEnvelope;
         }
     } 
@@ -375,7 +370,7 @@ double emmetCompressor::process(double input)
     return input * gain;
 }
 
-double emmetEnv::adsr(double in, int trigger) 
+double BatSynthEnv::adsr(double in, int trigger) 
 {
 	if (trigger == 1 && attackphase != 1 && holdphase != 1 && decayphase != 1)
 	{
@@ -429,22 +424,22 @@ double emmetEnv::adsr(double in, int trigger)
 	return output;
 }
 
-void emmetEnv::setAttack(double attackMS) 
+void BatSynthEnv::setAttack(double attackMS) 
 {
-	attack = 1 - pow(0.01, 1.0 / (attackMS * emmetSettings::sampleRate * 0.001));
+	attack = 1 - pow(0.01, 1.0 / (attackMS * BatSynthSettings::sampleRate * 0.001));
 }
 
-void emmetEnv::setRelease(double releaseMS) 
+void BatSynthEnv::setRelease(double releaseMS) 
 {
-	release = pow(0.01, 1.0 / (releaseMS * emmetSettings::sampleRate * 0.001));
+	release = pow(0.01, 1.0 / (releaseMS * BatSynthSettings::sampleRate * 0.001));
 }
 
-void emmetEnv::setSustain(double sustainL) 
+void BatSynthEnv::setSustain(double sustainL) 
 {
 	sustain = sustainL;
 }
 
-void emmetEnv::setDecay(double decayMS) 
+void BatSynthEnv::setDecay(double decayMS) 
 {
-	decay = pow(0.01, 1.0 / (decayMS * emmetSettings::sampleRate * 0.001));
+	decay = pow(0.01, 1.0 / (decayMS * BatSynthSettings::sampleRate * 0.001));
 }

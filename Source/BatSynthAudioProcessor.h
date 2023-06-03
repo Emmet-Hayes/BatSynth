@@ -7,11 +7,11 @@
 const int NUM_SLIDERS = 23;
 const int NUM_COMBOBOXES = 3;
 
-class SynthFrameworkAudioProcessor  : public AudioProcessor 
+class BatSynthAudioProcessor  : public AudioProcessor
 {
 public:
-	SynthFrameworkAudioProcessor();
-	~SynthFrameworkAudioProcessor();
+	BatSynthAudioProcessor();
+	~BatSynthAudioProcessor();
 
 	void prepareToPlay (double sampleRate, int samplesPerBlock) override;
 	void releaseResources() override;
@@ -53,5 +53,5 @@ private:
 	float currentAmplitude = 0.0f;
 	float currentFrequency = 4186.01f;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SynthFrameworkAudioProcessor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessor)
 };

@@ -5,23 +5,24 @@
               pluginManufacturer="EmmetSoft" jucerFormatVersion="1">
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
+      <FILE id="NFshRb" name="BatSynthDSP.h" compile="0" resource="0" file="Source/BatSynthDSP.h"/>
+      <FILE id="ZxUGTO" name="BatSynthDSP.cpp" compile="1" resource="0" file="Source/BatSynthDSP.cpp"/>
+      <FILE id="fbkemA" name="BatSynthAudioProcessor.cpp" compile="1" resource="0"
+            file="Source/BatSynthAudioProcessor.cpp"/>
+      <FILE id="sj0OsE" name="BatSynthAudioProcessor.h" compile="0" resource="0"
+            file="Source/BatSynthAudioProcessor.h"/>
+      <FILE id="rxgkd5" name="BatSynthAudioProcessorEditor.cpp" compile="1"
+            resource="0" file="Source/BatSynthAudioProcessorEditor.cpp"/>
+      <FILE id="Tnp7Vl" name="BatSynthAudioProcessorEditor.h" compile="0"
+            resource="0" file="Source/BatSynthAudioProcessorEditor.h"/>
       <FILE id="M2mTG7" name="NoteToColor.cpp" compile="1" resource="0" file="Source/NoteToColor.cpp"/>
       <FILE id="jWMFi8" name="NoteToColor.h" compile="0" resource="0" file="Source/NoteToColor.h"/>
       <FILE id="oFv0Zb" name="CustomFeel.cpp" compile="1" resource="0" file="Source/CustomFeel.cpp"/>
       <FILE id="DSM5jL" name="CustomFeel.h" compile="0" resource="0" file="Source/CustomFeel.h"/>
-      <FILE id="VsoyEG" name="Emmetdsp.cpp" compile="1" resource="0" file="Source/Emmetdsp.cpp"/>
-      <FILE id="ulHYkL" name="Emmetdsp.h" compile="0" resource="0" file="Source/Emmetdsp.h"/>
       <FILE id="PMrrv5" name="ScopeComponent.h" compile="0" resource="0"
             file="Source/ScopeComponent.h"/>
       <FILE id="sf3IEm" name="SynthSounds.h" compile="0" resource="0" file="Source/SynthSounds.h"/>
       <FILE id="ez4SPY" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
-      <FILE id="hzuyG9" name="PluginProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginProcessor.cpp"/>
-      <FILE id="EWdn9F" name="PluginProcessor.h" compile="0" resource="0"
-            file="Source/PluginProcessor.h"/>
-      <FILE id="RIwNnw" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="BFI0yq" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <FILE id="EuDLyi" name="bgfile4.jpg" compile="0" resource="1" file="Images/bgfile4.jpg"/>
   </MAINGROUP>

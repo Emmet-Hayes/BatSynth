@@ -1,16 +1,16 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "PluginProcessor.h"
+#include "BatSynthAudioProcessor.h"
 #include "CustomFeel.h"
 
-class SynthFrameworkAudioProcessorEditor : public AudioProcessorEditor,
+class BatSynthAudioProcessorEditor : public AudioProcessorEditor,
                                            public Slider::Listener, 
                                            public ComboBox::Listener,
                                            public Timer
 {
 public:
-    SynthFrameworkAudioProcessorEditor (SynthFrameworkAudioProcessor&);
-    ~SynthFrameworkAudioProcessorEditor();
+    BatSynthAudioProcessorEditor (BatSynthAudioProcessor&);
+    ~BatSynthAudioProcessorEditor();
     void paint (Graphics&) override;
     void resized() override;
     void sliderValueChanged(Slider*) override {};
@@ -20,7 +20,7 @@ private:
     void addAllGUIComponents();
     int intify(float f);
 
-    SynthFrameworkAudioProcessor& processor;
+    BatSynthAudioProcessor& processor;
     
     Label labels[NUM_SLIDERS + NUM_COMBOBOXES];
     ComboBox comboboxes[NUM_COMBOBOXES]; // osc1, osc2, dist
@@ -40,5 +40,5 @@ private:
     juce::JPEGImageFormat* j;
     static float scale;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SynthFrameworkAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessorEditor)
 };

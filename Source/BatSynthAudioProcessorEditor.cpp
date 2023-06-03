@@ -8,12 +8,12 @@
  with terse yet descriptive detail.
   ==============================================================================*/
 
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "BatSynthAudioProcessor.h"
+#include "BatSynthAudioProcessorEditor.h"
 
-float SynthFrameworkAudioProcessorEditor::scale = 1.0f;
+float BatSynthAudioProcessorEditor::scale = 1.0f;
 
-SynthFrameworkAudioProcessorEditor::SynthFrameworkAudioProcessorEditor (SynthFrameworkAudioProcessor& p)
+BatSynthAudioProcessorEditor::BatSynthAudioProcessorEditor (BatSynthAudioProcessor& p)
 :   AudioProcessorEditor (&p)
 ,   processor (p)
 ,   scopeComponent(processor.audioBufferQueue) 
@@ -25,7 +25,7 @@ SynthFrameworkAudioProcessorEditor::SynthFrameworkAudioProcessorEditor (SynthFra
     addAllGUIComponents();
 }
 
-void SynthFrameworkAudioProcessorEditor::addAllGUIComponents() 
+void BatSynthAudioProcessorEditor::addAllGUIComponents()
 {    
     auto setupComboBox = [&](ComboBox &box, const Justification& jtype, const String &initialText,
                              bool isOsc = true) 
@@ -143,12 +143,12 @@ void SynthFrameworkAudioProcessorEditor::addAllGUIComponents()
     image = juce::ImageCache::getFromMemory(BinaryData::bgfile4_jpg, BinaryData::bgfile4_jpgSize);
 }
 
-int SynthFrameworkAudioProcessorEditor::intify(float f)
+int BatSynthAudioProcessorEditor::intify(float f)
 {
     return static_cast<int>(f);
 }
 
-SynthFrameworkAudioProcessorEditor::~SynthFrameworkAudioProcessorEditor() {
+BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() {
     setLookAndFeel(nullptr);
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
         comboboxes[i].removeListener(this);
@@ -159,12 +159,12 @@ SynthFrameworkAudioProcessorEditor::~SynthFrameworkAudioProcessorEditor() {
     processor.scopeDataCollector.removeAllListeners();
 }
 
-void SynthFrameworkAudioProcessorEditor::paint (Graphics& g) {
+void BatSynthAudioProcessorEditor::paint (Graphics& g) {
     int height = static_cast<int>(scale * 800), width = static_cast<int>(scale * 600);
     g.drawImage(image, 0, 0, height, width, 0, 0, 1600, 1200);
 }
 
-void SynthFrameworkAudioProcessorEditor::resized() {
+void BatSynthAudioProcessorEditor::resized() {
     //scale = 1.0f;
     comboboxes[0].setBounds(10, 30, 120, 30);
     comboboxes[1].setBounds(10, 85, 120, 30);
@@ -195,7 +195,7 @@ void SynthFrameworkAudioProcessorEditor::resized() {
     scopeComponent.setBounds(185, 160, 600, 400);
 }
 
-void SynthFrameworkAudioProcessorEditor::timerCallback() {
+void BatSynthAudioProcessorEditor::timerCallback() {
     float amplitude = processor.getCurrentAmplitude();
     float frequency = processor.getCurrentFrequency();
     

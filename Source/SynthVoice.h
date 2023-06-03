@@ -2,7 +2,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SynthSounds.h"
-#include "Emmetdsp.h"
+#include "BatSynthDSP.h"
 
 class SynthVoice : public SynthesiserVoice 
 {
@@ -174,11 +174,10 @@ private:
 		oscAllPitchBend = 1.0, keyboardVolume = 1.0, lfoPitchFreq = 2.0, lfoPitchIntensity = 0.0,
 		distDrive1 = 1.0;
 	int theWave1, theWave2, distChoice1;
-	emmetOsc osc1, osc2, noise1, lfo1, lfo2;
-	emmetEnv env1; 
-	emmetFilter filt1;
-	emmetDistortion dist1;
-	emmetCompressor comp1, limit1 { 20.0, 0.9, 10.0, 100.0 };
-	//emmetFractionalDelay delay1;
-	emmetDelayLine delay1;
+	BatSynthOsc osc1, osc2, noise1, lfo1, lfo2;
+	BatSynthEnv env1; 
+	BatSynthFilter filt1;
+	BatSynthDistortion dist1;
+	BatSynthCompressor comp1, limit1 { 20.0, 0.9, 10.0, 100.0 };
+	BatSynthDelayLine delay1;
 };
