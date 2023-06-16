@@ -140,7 +140,7 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
         sliders[i].setNumDecimalPlacesToDisplay(ndp_sliders[i]);
     }
     
-    image = juce::ImageCache::getFromMemory(BinaryData::bgfile4_jpg, BinaryData::bgfile4_jpgSize);
+    image = juce::ImageCache::getFromMemory(BinaryData::bgfile_jpg, BinaryData::bgfile_jpgSize);
 }
 
 int BatSynthAudioProcessorEditor::intify(float f)

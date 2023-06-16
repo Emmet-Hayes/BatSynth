@@ -24,7 +24,7 @@
       <FILE id="sf3IEm" name="SynthSounds.h" compile="0" resource="0" file="Source/SynthSounds.h"/>
       <FILE id="ez4SPY" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
     </GROUP>
-    <FILE id="EuDLyi" name="bgfile4.jpg" compile="0" resource="1" file="Images/bgfile4.jpg"/>
+    <FILE id="JNma9U" name="bgfile.jpg" compile="0" resource="1" file="Images/bgfile.jpg"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2019 targetFolder="Builds/VisualStudio2019">
