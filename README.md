@@ -1,7 +1,9 @@
 # BatSynth
 A polyphonic synthesizer implemented in C++ (with JUCE).
 An external midi device (like a usb keyboard) is required to make sounds! 
-Any MIDI devices connected to your computer should be automatically detected through the JUCE framework and show up in the options menu.
+If you are running the standalone version, any MIDI devices connected to your computer should be automatically detected thanks to the JUCE audio plugin client and show up in the options menu in the top left corner.
+
+I have recently updated this project to feature color changes across the GUI based on the lowest frequency note being currently played. Each bass frequency from the standard 12-note Western-European equal-temperament system will illuminate the UI in its own unique color. The amplitude of the final signal is furthur expressed visually by the brightness of the outlines around all sliders present in the GUI.
 
 This synthesizer has two sound oscillators, each with thirteen different wave shapes.
 Click on the label boxes below Osc1 and Osc2 to adjust their current respective oscillator wave shapes. 
