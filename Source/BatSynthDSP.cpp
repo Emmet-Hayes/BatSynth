@@ -2,7 +2,7 @@
 
 float chandiv = 1;
 int BatSynthSettings::sampleRate = 44100;
-int oversampleFactor = 2;
+const int oversampleFactor = 2;
 
 double BatSynthOsc::noise() 
 {

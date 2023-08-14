@@ -1,5 +1,5 @@
 #pragma once
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 #include "BatSynthAudioProcessor.h"
 #include "CustomFeel.h"
 

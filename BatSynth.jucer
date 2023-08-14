@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="PqNWLH" name="BatSynth" projectType="audioplug" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               version="1.0.0" pluginFormats="buildAU,buildLV2,buildStandalone,buildVST3"
-              pluginManufacturer="EmmetSoft" jucerFormatVersion="1">
+              pluginManufacturer="EmmetSoft" jucerFormatVersion="1" displaySplashScreen="1">
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
       <FILE id="NFshRb" name="BatSynthDSP.h" compile="0" resource="0" file="Source/BatSynthDSP.h"/>
