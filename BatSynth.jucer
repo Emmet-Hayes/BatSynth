@@ -2,29 +2,67 @@
 
 <JUCERPROJECT id="PqNWLH" name="BatSynth" projectType="audioplug" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               version="1.0.0" pluginFormats="buildAU,buildLV2,buildStandalone,buildVST3"
-              pluginManufacturer="EmmetSoft" jucerFormatVersion="1" displaySplashScreen="1">
+              pluginManufacturer="EmmetSoft" jucerFormatVersion="1" displaySplashScreen="1"
+              defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="gzhS9P" name="BatSynth">
+    <GROUP id="{229E3448-5685-CA5A-AF5D-349A0385FE40}" name="Resources">
+      <FILE id="JNma9U" name="bgfile.jpg" compile="0" resource="1" file="Images/bgfile.jpg"/>
+    </GROUP>
+    <GROUP id="{E765F9C0-6569-0A14-2F93-B1FB384DB5B5}" name="Common">
+      <FILE id="LVlvjQ" name="LogMsSlider.h" compile="0" resource="0" file="../Common/LogMsSlider.h"/>
+      <FILE id="N5uV8r" name="PercentSlider.h" compile="0" resource="0" file="../Common/PercentSlider.h"/>
+      <FILE id="C8debZ" name="PitchSlider.h" compile="0" resource="0" file="../Common/PitchSlider.h"/>
+      <FILE id="Winjqb" name="FreqSlider.h" compile="0" resource="0" file="../Common/FreqSlider.h"/>
+      <FILE id="xPJvqz" name="PresetBar.cpp" compile="1" resource="0" file="../Common/PresetBar.cpp"/>
+      <FILE id="tOMnSd" name="PresetBar.h" compile="0" resource="0" file="../Common/PresetBar.h"/>
+      <FILE id="ISAHf5" name="PresetComboBox.cpp" compile="1" resource="0"
+            file="../Common/PresetComboBox.cpp"/>
+      <FILE id="nglK54" name="PresetComboBox.h" compile="0" resource="0"
+            file="../Common/PresetComboBox.h"/>
+      <GROUP id="{5ACC1E68-1552-2C3A-ABF0-77ACDAD80052}" name="Fonts">
+        <FILE id="SejxIU" name="Juliafont-Regular.ttf" compile="0" resource="1"
+              file="../Common/Fonts/Juliafont-Regular.ttf"/>
+      </GROUP>
+      <FILE id="EFxtoO" name="AudioBufferQueue.h" compile="0" resource="0"
+            file="../Common/AudioBufferQueue.h"/>
+      <FILE id="ANhbFI" name="BaseAudioProcessor.h" compile="0" resource="0"
+            file="../Common/BaseAudioProcessor.h"/>
+      <FILE id="NslvYu" name="BaseAudioProcessor.cpp" compile="1" resource="0"
+            file="../Common/BaseAudioProcessor.cpp"/>
+      <FILE id="gbVWuO" name="BaseAudioProcessorEditor.h" compile="0" resource="0"
+            file="../Common/BaseAudioProcessorEditor.h"/>
+      <FILE id="LJptXz" name="BaseAudioProcessorEditor.cpp" compile="1" resource="0"
+            file="../Common/BaseAudioProcessorEditor.cpp"/>
+      <FILE id="z9HofL" name="CentredLabel.h" compile="0" resource="0" file="../Common/CentredLabel.h"/>
+      <FILE id="vXGtkB" name="CustomLookAndFeel.h" compile="0" resource="0"
+            file="../Common/CustomLookAndFeel.h"/>
+      <FILE id="kM59Wx" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+            file="../Common/CustomLookAndFeel.cpp"/>
+      <FILE id="m4e3pd" name="BatSynthLookAndFeel.h" compile="0" resource="0"
+            file="../Common/BatSynthLookAndFeel.h"/>
+      <FILE id="BfxElV" name="BatSynthLookAndFeel.cpp" compile="1" resource="0"
+            file="../Common/BatSynthLookAndFeel.cpp"/>
+      <FILE id="ihnvFZ" name="NoteToColor.h" compile="0" resource="0" file="../Common/NoteToColor.h"/>
+      <FILE id="ypcVhG" name="NoteToColor.cpp" compile="1" resource="0" file="../Common/NoteToColor.cpp"/>
+      <FILE id="UmeH0u" name="SpectrumScopeComponent.h" compile="0" resource="0"
+            file="../Common/SpectrumScopeComponent.h"/>
+      <FILE id="ubVCg1" name="WaveScopeComponent.h" compile="0" resource="0"
+            file="../Common/WaveScopeComponent.h"/>
+    </GROUP>
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
       <FILE id="NFshRb" name="BatSynthDSP.h" compile="0" resource="0" file="Source/BatSynthDSP.h"/>
       <FILE id="ZxUGTO" name="BatSynthDSP.cpp" compile="1" resource="0" file="Source/BatSynthDSP.cpp"/>
-      <FILE id="fbkemA" name="BatSynthAudioProcessor.cpp" compile="1" resource="0"
-            file="Source/BatSynthAudioProcessor.cpp"/>
       <FILE id="sj0OsE" name="BatSynthAudioProcessor.h" compile="0" resource="0"
             file="Source/BatSynthAudioProcessor.h"/>
-      <FILE id="rxgkd5" name="BatSynthAudioProcessorEditor.cpp" compile="1"
-            resource="0" file="Source/BatSynthAudioProcessorEditor.cpp"/>
+      <FILE id="fbkemA" name="BatSynthAudioProcessor.cpp" compile="1" resource="0"
+            file="Source/BatSynthAudioProcessor.cpp"/>
       <FILE id="Tnp7Vl" name="BatSynthAudioProcessorEditor.h" compile="0"
             resource="0" file="Source/BatSynthAudioProcessorEditor.h"/>
-      <FILE id="M2mTG7" name="NoteToColor.cpp" compile="1" resource="0" file="Source/NoteToColor.cpp"/>
-      <FILE id="jWMFi8" name="NoteToColor.h" compile="0" resource="0" file="Source/NoteToColor.h"/>
-      <FILE id="oFv0Zb" name="CustomFeel.cpp" compile="1" resource="0" file="Source/CustomFeel.cpp"/>
-      <FILE id="DSM5jL" name="CustomFeel.h" compile="0" resource="0" file="Source/CustomFeel.h"/>
-      <FILE id="PMrrv5" name="ScopeComponent.h" compile="0" resource="0"
-            file="Source/ScopeComponent.h"/>
+      <FILE id="rxgkd5" name="BatSynthAudioProcessorEditor.cpp" compile="1"
+            resource="0" file="Source/BatSynthAudioProcessorEditor.cpp"/>
       <FILE id="sf3IEm" name="SynthSounds.h" compile="0" resource="0" file="Source/SynthSounds.h"/>
       <FILE id="ez4SPY" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
     </GROUP>
-    <FILE id="JNma9U" name="bgfile.jpg" compile="0" resource="1" file="Images/bgfile.jpg"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2019 targetFolder="Builds/VisualStudio2019">
@@ -33,21 +71,19 @@
         <CONFIGURATION isDebug="0" name="Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_audio_basics" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../juce/JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="../juce/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\JUCE"/>
+        <MODULEPATH id="juce_audio_devices" path="..\JUCE"/>
+        <MODULEPATH id="juce_audio_formats" path="..\JUCE"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="..\JUCE"/>
+        <MODULEPATH id="juce_audio_processors" path="..\JUCE"/>
+        <MODULEPATH id="juce_audio_utils" path="..\JUCE"/>
+        <MODULEPATH id="juce_core" path="..\JUCE"/>
+        <MODULEPATH id="juce_data_structures" path="..\JUCE"/>
+        <MODULEPATH id="juce_events" path="..\JUCE"/>
+        <MODULEPATH id="juce_graphics" path="..\JUCE"/>
+        <MODULEPATH id="juce_gui_basics" path="..\JUCE"/>
+        <MODULEPATH id="juce_gui_extra" path="..\JUCE"/>
+        <MODULEPATH id="juce_dsp" path="..\JUCE"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX">
@@ -56,14 +92,12 @@
         <CONFIGURATION isDebug="0" name="Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_opengl" path="../../juce"/>
         <MODULEPATH id="juce_gui_extra" path="../../juce"/>
         <MODULEPATH id="juce_gui_basics" path="../../juce"/>
         <MODULEPATH id="juce_graphics" path="../../juce"/>
         <MODULEPATH id="juce_events" path="../../juce"/>
         <MODULEPATH id="juce_dsp" path="../../juce"/>
         <MODULEPATH id="juce_data_structures" path="../../juce"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce"/>
         <MODULEPATH id="juce_core" path="../../juce"/>
         <MODULEPATH id="juce_audio_utils" path="../../juce"/>
         <MODULEPATH id="juce_audio_processors" path="../../juce"/>
@@ -86,14 +120,12 @@
         <MODULEPATH id="juce_audio_processors" path="../../juce"/>
         <MODULEPATH id="juce_audio_utils" path="../../juce"/>
         <MODULEPATH id="juce_core" path="../../juce"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce"/>
         <MODULEPATH id="juce_data_structures" path="../../juce"/>
         <MODULEPATH id="juce_dsp" path="../../juce"/>
         <MODULEPATH id="juce_events" path="../../juce"/>
         <MODULEPATH id="juce_graphics" path="../../juce"/>
         <MODULEPATH id="juce_gui_basics" path="../../juce"/>
         <MODULEPATH id="juce_gui_extra" path="../../juce"/>
-        <MODULEPATH id="juce_opengl" path="../../juce"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -106,14 +138,12 @@
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
     <WINDOWS buildEnabled="1"/>

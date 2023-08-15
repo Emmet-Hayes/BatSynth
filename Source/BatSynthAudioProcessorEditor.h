@@ -1,9 +1,11 @@
 #pragma once
 #include <JuceHeader.h>
 #include "BatSynthAudioProcessor.h"
-#include "CustomFeel.h"
+#include "../../Common/BaseAudioProcessorEditor.h"
+#include "../../Common/BatSynthLookAndFeel.h"
+#include "../../Common/PresetBar.h"
 
-class BatSynthAudioProcessorEditor : public AudioProcessorEditor,
+class BatSynthAudioProcessorEditor : public BaseAudioProcessorEditor,
                                            public Slider::Listener, 
                                            public ComboBox::Listener,
                                            public Timer
@@ -11,31 +13,33 @@ class BatSynthAudioProcessorEditor : public AudioProcessorEditor,
 public:
     BatSynthAudioProcessorEditor (BatSynthAudioProcessor&);
     ~BatSynthAudioProcessorEditor();
-    void paint (Graphics&) override;
+    void paint (juce::Graphics&) override;
     void resized() override;
-    void sliderValueChanged(Slider*) override {};
-    void comboBoxChanged(ComboBox*) override {};
+    void sliderValueChanged(juce::Slider*) override {};
+    void comboBoxChanged(juce::ComboBox*) override {};
     void timerCallback() override;
 private:
     void addAllGUIComponents();
     int intify(float f);
 
     BatSynthAudioProcessor& processor;
+    PresetBar presetBar;
     
     Label labels[NUM_SLIDERS + NUM_COMBOBOXES];
     ComboBox comboboxes[NUM_COMBOBOXES]; // osc1, osc2, dist
-    Slider sliders[NUM_SLIDERS]; // atk, dcy, sus, rel, osc2pitch, osc2gain, noisegain, filtercut, filterres, lfoInten,
-                                 // lfoRate, compRatio, compThr, compAtk, compRel, compGain, distDrive, delTime, delFdbk, delGain, totGain
+    std::unique_ptr<juce::Slider> sliders[NUM_SLIDERS]; // atk, dcy, sus, rel, osc2pitch, osc2gain, noisegain, filtercut, filterres, lfoInten,
+                                 // lfoRate, totGain
     
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> comboboxattachments[NUM_COMBOBOXES];
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sliderattachments[NUM_SLIDERS];
 
-    ScopeComponent<float> scopeComponent;
+    WaveScopeComponent<float> waveScopeComponent;
+    SpectrumScopeComponent<float> spectrumScopeComponent;
     
     //MidiKeyboardComponent keyboardComponent;
     //MidiKeyboardState keyboardState;
     
-    CustomFeel lookAndFeel;
+    BatSynthLookAndFeel lookAndFeel;
     juce::Image image;
     juce::JPEGImageFormat* j;
     static float scale;

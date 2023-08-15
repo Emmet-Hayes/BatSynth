@@ -1,32 +1,26 @@
-/*==============================================================================
- PluginEditor.h
- Created: 3 Sep 2019 11:46:10pm
- Author:  Emmet Hayes
- 
- The editor's constructor creates a user interface based on the size of your
- device, then procedurally initializes the different components in the window
- with terse yet descriptive detail.
-  ==============================================================================*/
-
 #include "BatSynthAudioProcessor.h"
 #include "BatSynthAudioProcessorEditor.h"
+#include "../../Common/LogMsSlider.h"
+#include "../../Common/PitchSlider.h"
+#include "../../Common/FreqSlider.h"
+#include "../../Common/PercentSlider.h"
 
 float BatSynthAudioProcessorEditor::scale = 1.0f;
 
 BatSynthAudioProcessorEditor::BatSynthAudioProcessorEditor (BatSynthAudioProcessor& p)
-:   AudioProcessorEditor (&p)
-,   processor (p)
-,   scopeComponent(processor.audioBufferQueue) 
+:   BaseAudioProcessorEditor { p }
+,   presetBar                { p }
+,   processor                { p }
+,   waveScopeComponent(processor.audioBufferQueue)
+,   spectrumScopeComponent(processor.audioBufferQueue, lookAndFeel)
 {
-    startTimerHz(30); // refresh at 30 fps
-    setSize(800, 600);
-    lookAndFeel.setScale(scale);
-    setLookAndFeel(&lookAndFeel);
+    startTimerHz(60); // refresh at 30 fps
     addAllGUIComponents();
 }
 
 void BatSynthAudioProcessorEditor::addAllGUIComponents()
 {    
+    setLookAndFeel(&lookAndFeel);
     auto setupComboBox = [&](ComboBox &box, const Justification& jtype, const String &initialText,
                              bool isOsc = true) 
     {
@@ -51,15 +45,17 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
         label.attachToComponent(component, isAttached);
     };
     
-    auto setupSlider = [&](Slider& slider, Slider::SliderStyle style, float rangeStart, float rangeEnd, float value,
+    auto setupSlider = [&](Slider* slider, Slider::SliderStyle style, float rangeStart, float rangeEnd, float value,
                            Slider::TextEntryBoxPosition position, int textBoxWidth, int textBoxHeight) 
     {
-        slider.setSliderStyle(style);
-        slider.setRange(rangeStart, rangeEnd);
-        slider.setValue(value);
-        slider.setTextBoxStyle(position, true, textBoxWidth, textBoxHeight);
-        slider.addListener(this);
-        addAndMakeVisible(&slider);
+        slider->setSliderStyle(style);
+        slider->setRange(rangeStart, rangeEnd);
+        slider->setValue(value);
+        slider->setTextBoxStyle(position, true, textBoxWidth, textBoxHeight);
+        slider->setTextBoxIsEditable(true);
+        slider->setLookAndFeel(&lookAndFeel);
+        slider->addListener(this);
+        addAndMakeVisible(slider);
     };
     
     Font font1("Lucida Console", scale*10.0f, Font::bold);
@@ -67,80 +63,89 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     
     std::string sliderlabels[NUM_SLIDERS] = { "Atk", "Dec", "Sus", "Rel", "Pitch", "Gain", "Noise", "Cutoff", "Resonance", 
                                               "LFO Filter", "LFO F. Rate", "LFO Pitch", "LFO P. Rate", 
-                                              "Ratio", "Threshold", "Attack", "Release", "Comp Gain", "Drive", "Time", 
-                                              "Feedback", "Delay Gain", "Total Gain" };
+                                              "Total Gain" };
+    
+    sliders[0] = std::make_unique<LogMsSlider>(); // attack
+    setupSlider(sliders[0].get(), Slider::SliderStyle::Rotary, 0.1f, 5000.0f, 10.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[1] = std::make_unique<LogMsSlider>(); // decay
+    setupSlider(sliders[1].get(), Slider::SliderStyle::Rotary, 0.1f, 2000.0f, 200.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[2] = std::make_unique<juce::Slider>(); // sustain
+    setupSlider(sliders[2].get(), Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
+    sliders[3] = std::make_unique<LogMsSlider>(); // release
+    setupSlider(sliders[3].get(), Slider::SliderStyle::Rotary, 0.1f, 5000.0f, 100.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[4] = std::make_unique<PitchSlider>();
+    setupSlider(sliders[4].get(), Slider::SliderStyle::Rotary, 0.5f, 2.0f, 1.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[5] = std::make_unique<PercentSlider>();
+    setupSlider(sliders[5].get(), Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.5f, Slider::TextBoxBelow, 50, 15);
+    sliders[6] = std::make_unique<PercentSlider>();
+    setupSlider(sliders[6].get(), Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[7] = std::make_unique<FreqSlider>();
+    setupSlider(sliders[7].get(), Slider::SliderStyle::Rotary, 50.0f, 9000.0f, 500.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[8] = std::make_unique<juce::Slider>();
+    setupSlider(sliders[8].get(), Slider::SliderStyle::Rotary, 0.1f, 0.99f, 0.1f, Slider::TextBoxBelow, 50, 15);
+
+    sliders[9] = std::make_unique<PercentSlider>();
+    setupSlider(sliders[9].get(), Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[10] = std::make_unique<FreqSlider>();
+    setupSlider(sliders[10].get(), Slider::SliderStyle::Rotary, 0.5f, 12.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[11] = std::make_unique<PercentSlider>();
+    setupSlider(sliders[11].get(), Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[12] = std::make_unique<FreqSlider>();
+    setupSlider(sliders[12].get(), Slider::SliderStyle::Rotary, 0.5f, 12.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
+    sliders[13] = std::make_unique<PercentSlider>();
+    setupSlider(sliders[13].get(), Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
+    
     for (int i = 0; i < NUM_SLIDERS; ++i)
-        setupLabel(labels[i], sliderlabels[i], font2, Justification::centred, &sliders[i], false);
-    
-    setupSlider(sliders[0], Slider::SliderStyle::Rotary, 0.1f, 5000.0f, 10.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[1], Slider::SliderStyle::Rotary, 0.1f, 2000.0f, 200.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[2], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[3], Slider::SliderStyle::Rotary, 0.1f, 5000.0f, 100.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[4], Slider::SliderStyle::Rotary, 0.5f, 2.0f, 1.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[5], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.5f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[6], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[7], Slider::SliderStyle::Rotary, 50.0f, 9000.0f, 500.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[8], Slider::SliderStyle::Rotary, 0.1f, 0.99f, 0.1f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[9], Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[10], Slider::SliderStyle::Rotary, 0.5f, 12.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[11], Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[12], Slider::SliderStyle::Rotary, 0.5f, 12.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[13], Slider::SliderStyle::Rotary, 1.0f, 10.0f, 2.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[14], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.9f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[15], Slider::SliderStyle::Rotary, 0.5f, 200.0f, 10.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[16], Slider::SliderStyle::Rotary, 0.1f, 2.0f, 0.995f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[17], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[18], Slider::SliderStyle::Rotary, 0.01f, 6.0f, 1.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[19], Slider::SliderStyle::Rotary, 100.0f, 88000.0f, 10000.0f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[20], Slider::SliderStyle::Rotary, 0.0f, 0.9f, 0.5f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[21], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.5f, Slider::TextBoxBelow, 50, 15);
-    setupSlider(sliders[22], Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
-    
-    std::string comboboxlabels[NUM_COMBOBOXES] = { "Osc 1", "Osc 2", "Distortion" };
+        setupLabel(labels[i], sliderlabels[i], font2, Justification::centred, sliders[i].get(), false);
+
+    std::string comboboxlabels[NUM_COMBOBOXES] = { "Osc 1", "Osc 2" };
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
         setupLabel(labels[i + NUM_SLIDERS], comboboxlabels[i], font1, Justification::centred, &comboboxes[i], false);
     
     setupComboBox(comboboxes[0], Justification::centred, "Saw");
     setupComboBox(comboboxes[1], Justification::centred, "Sine");
-    setupComboBox(comboboxes[2], Justification::centred, "None", false); // NOT an osc
     
-    addAndMakeVisible(&scopeComponent);
-    processor.scopeDataCollector.addListener(&scopeComponent);
-    //addAndMakeVisible(&keyboardComponent);
+    addAndMakeVisible(&waveScopeComponent);
+    addAndMakeVisible(&spectrumScopeComponent);
+    processor.waveScopeDataCollector.addListener(&waveScopeComponent);
+    processor.spectrumScopeDataCollector.addListener(&spectrumScopeComponent);
 
-    auto setupComboBoxAttachments = [&](ComboBox& comboBox, juce::String treelabel,
+    auto setupComboBoxAttachments = [&](juce::ComboBox& comboBox, juce::String treelabel,
                                       std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment>& comboBoxAttachment) 
     {
         comboBoxAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(
-                                     processor.tree, treelabel, comboBox));
+                                     processor.apvts, treelabel, comboBox));
     };
     
-    auto setupSliderAttachments = [&](Slider& slider, juce::String treelabel,
+    auto setupSliderAttachments = [&](juce::Slider* slider, juce::String treelabel,
                                       std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment>& sliderAttachment) 
     {
         sliderAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(
-                                     processor.tree, treelabel, slider));
+                                     processor.apvts, treelabel, *slider));
     };
     
-    std::string comboboxtreelabels[NUM_COMBOBOXES] = { "wavetype", "wavetype2", "distortionType" };
+    std::string comboboxtreelabels[NUM_COMBOBOXES] = { "wavetype", "wavetype2" };
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
         setupComboBoxAttachments(comboboxes[i], comboboxtreelabels[i], comboboxattachments[i]);
 
     std::string slidertreelabels[NUM_SLIDERS] = { "attack", "decay", "sustain", "release", "osc2Pitch", "osc2Gain", "noiseGain", "filterCutoff",
                                                 "filterResonance", "lfoFilterIntensity", "lfoFilterRate", "lfoPitchIntensity", "lfoPitchRate",
-                                                "compressionRatio", "compressionThreshold", "compressionAttack", "compressionRelease",
-                                                "compressionGain", "distortionDrive", "delayTime", "delayFeedback", "delayGain", "totalGain" };
+                                                "totalGain" };
     for (int i = 0; i < NUM_SLIDERS; ++i)
-        setupSliderAttachments(sliders[i], slidertreelabels[i], sliderattachments[i]);
-
-    int ndp_sliders[NUM_SLIDERS] = { 0, 0, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 1, 2, 1, 1, 2, 2, 0, 2, 2, 2};
-    for (int i = 0; i < NUM_SLIDERS; ++i)
-    {
-        sliders[i].textFromValueFunction = nullptr;
-        sliders[i].setNumDecimalPlacesToDisplay(ndp_sliders[i]);
-    }
+        setupSliderAttachments(sliders[i].get(), slidertreelabels[i], sliderattachments[i]);
     
+    presetBar.setLookAndFeel(&lookAndFeel);
+    addAndMakeVisible(presetBar);
+
+    sliders[2]->textFromValueFunction = nullptr;
+    sliders[2]->setNumDecimalPlacesToDisplay(2);
+    sliders[8]->textFromValueFunction = nullptr;
+    sliders[8]->setNumDecimalPlacesToDisplay(2);
+
     image = juce::ImageCache::getFromMemory(BinaryData::bgfile_jpg, BinaryData::bgfile_jpgSize);
+    setSize(800, 600);
+    lookAndFeel.setWindowScale(scale);
+    setLookAndFeel(&lookAndFeel);
 }
 
 int BatSynthAudioProcessorEditor::intify(float f)
@@ -150,13 +155,15 @@ int BatSynthAudioProcessorEditor::intify(float f)
 
 BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() {
     setLookAndFeel(nullptr);
+
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
         comboboxes[i].removeListener(this);
         
     for (int i = 0; i < NUM_SLIDERS; ++i)
-        sliders[i].removeListener(this);
+        sliders[i]->removeListener(this);
 
-    processor.scopeDataCollector.removeAllListeners();
+    processor.waveScopeDataCollector.removeAllListeners();
+    processor.spectrumScopeDataCollector.removeAllListeners();
 }
 
 void BatSynthAudioProcessorEditor::paint (Graphics& g) {
@@ -166,33 +173,25 @@ void BatSynthAudioProcessorEditor::paint (Graphics& g) {
 
 void BatSynthAudioProcessorEditor::resized() {
     //scale = 1.0f;
-    comboboxes[0].setBounds(10, 30, 120, 30);
-    comboboxes[1].setBounds(10, 85, 120, 30);
-    sliders[0].setBounds(130, 40, 60, 60);
-    sliders[1].setBounds(200, 40, 60, 60);
-    sliders[2].setBounds(270, 40, 60, 60);
-    sliders[3].setBounds(340, 40, 60, 60);
-    sliders[4].setBounds(70, 130, 50, 50);
-    sliders[5].setBounds(10, 130, 50, 50);
-    sliders[6].setBounds(130, 130, 50, 50);
-    sliders[7].setBounds(410, 45, 70, 70);
-    sliders[8].setBounds(490, 45, 70, 70);
-    sliders[9].setBounds(570, 20, 60, 60);
-    sliders[10].setBounds(640, 20, 60, 60);
-    sliders[11].setBounds(570, 100, 60, 60);
-    sliders[12].setBounds(640, 100, 60, 60);
-    sliders[13].setBounds(10, 220, 60, 60);
-    sliders[14].setBounds(80, 220, 60, 60);
-    sliders[15].setBounds(10, 300, 60, 60);
-    sliders[16].setBounds(80, 300, 60, 60);
-    sliders[17].setBounds(10, 460, 60, 60);
-    comboboxes[2].setBounds(10, 550, 60, 30);
-    sliders[18].setBounds(80, 540, 50, 50);
-    sliders[19].setBounds(10, 380, 60, 60);
-    sliders[20].setBounds(80, 380, 60, 60);
-    sliders[21].setBounds(80, 460, 60, 60);
-    sliders[22].setBounds(710, 35, 80, 80);
-    scopeComponent.setBounds(185, 160, 600, 400);
+    presetBar.setBounds(0, 5, 800, 25);
+    comboboxes[0].setBounds(10, 75, 120, 30);
+    comboboxes[1].setBounds(10, 160, 120, 30);
+    sliders[4]->setBounds(180, 150, 60, 60);
+    sliders[5]->setBounds(260, 150, 60, 60);
+    sliders[6]->setBounds(340, 150, 60, 60);
+    sliders[0]->setBounds(140, 50, 70, 70);
+    sliders[1]->setBounds(220, 50, 70, 70);
+    sliders[2]->setBounds(300, 50, 70, 70);
+    sliders[3]->setBounds(380, 50, 70, 70);
+    sliders[7]->setBounds(460, 50, 80, 80);
+    sliders[8]->setBounds(460, 150, 80, 80);
+    sliders[9]->setBounds(570, 50, 60, 60);
+    sliders[10]->setBounds(640, 50, 60, 60);
+    sliders[11]->setBounds(570, 145, 60, 60);
+    sliders[12]->setBounds(640, 145, 60, 60);
+    sliders[13]->setBounds(710, 85, 80, 80);
+    waveScopeComponent.setBounds(15, 235, 780, 180);
+    spectrumScopeComponent.setBounds(15, 425, 780, 180);
 }
 
 void BatSynthAudioProcessorEditor::timerCallback() {
@@ -201,5 +200,4 @@ void BatSynthAudioProcessorEditor::timerCallback() {
     
     lookAndFeel.setGainColorIntensity(amplitude);
     lookAndFeel.setFrequencyColor(frequency);
-    repaint();
 }
