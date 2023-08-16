@@ -1,14 +1,15 @@
 #pragma once
 #include <JuceHeader.h>
 #include "BatSynthAudioProcessor.h"
+#include "OpenGLComponent.h"
 #include "../../Common/BaseAudioProcessorEditor.h"
 #include "../../Common/BatSynthLookAndFeel.h"
 #include "../../Common/PresetBar.h"
 
-class BatSynthAudioProcessorEditor : public BaseAudioProcessorEditor,
-                                           public Slider::Listener, 
-                                           public ComboBox::Listener,
-                                           public Timer
+class BatSynthAudioProcessorEditor : public BaseAudioProcessorEditor
+                                   , public Slider::Listener
+                                   , public ComboBox::Listener
+                                   , public Timer
 {
 public:
     BatSynthAudioProcessorEditor (BatSynthAudioProcessor&);
@@ -35,6 +36,7 @@ private:
 
     WaveScopeComponent<float> waveScopeComponent;
     SpectrumScopeComponent<float> spectrumScopeComponent;
+    std::unique_ptr<OpenGLComponent> openGLComponent;
     
     //MidiKeyboardComponent keyboardComponent;
     //MidiKeyboardState keyboardState;

@@ -11,8 +11,8 @@ BatSynthAudioProcessorEditor::BatSynthAudioProcessorEditor (BatSynthAudioProcess
 :   BaseAudioProcessorEditor { p }
 ,   presetBar                { p }
 ,   processor                { p }
-,   waveScopeComponent(processor.audioBufferQueue)
-,   spectrumScopeComponent(processor.audioBufferQueue, lookAndFeel)
+,   waveScopeComponent       { processor.audioBufferQueue }
+,   spectrumScopeComponent   { processor.audioBufferQueue, lookAndFeel }
 {
     startTimerHz(60); // refresh at 30 fps
     addAllGUIComponents();
@@ -142,6 +142,9 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     sliders[8]->textFromValueFunction = nullptr;
     sliders[8]->setNumDecimalPlacesToDisplay(2);
 
+    openGLComponent = std::make_unique<OpenGLComponent>();
+    addAndMakeVisible(openGLComponent.get());
+
     image = juce::ImageCache::getFromMemory(BinaryData::bgfile_jpg, BinaryData::bgfile_jpgSize);
     setSize(800, 600);
     lookAndFeel.setWindowScale(scale);
@@ -152,6 +155,7 @@ int BatSynthAudioProcessorEditor::intify(float f)
 {
     return static_cast<int>(f);
 }
+
 
 BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() {
     setLookAndFeel(nullptr);
@@ -190,8 +194,9 @@ void BatSynthAudioProcessorEditor::resized() {
     sliders[11]->setBounds(570, 145, 60, 60);
     sliders[12]->setBounds(640, 145, 60, 60);
     sliders[13]->setBounds(710, 85, 80, 80);
-    waveScopeComponent.setBounds(15, 235, 780, 180);
-    spectrumScopeComponent.setBounds(15, 425, 780, 180);
+    waveScopeComponent.setBounds(15, 235, 380, 180);
+    spectrumScopeComponent.setBounds(15, 425, 380, 180);
+    openGLComponent->setBounds(400, 235, 380, 360);
 }
 
 void BatSynthAudioProcessorEditor::timerCallback() {
@@ -200,4 +205,7 @@ void BatSynthAudioProcessorEditor::timerCallback() {
     
     lookAndFeel.setGainColorIntensity(amplitude);
     lookAndFeel.setFrequencyColor(frequency);
+    openGLComponent->setShaderColor(frequency);
+    openGLComponent->setShaderColorIntensity(amplitude);
+    repaint();
 }
