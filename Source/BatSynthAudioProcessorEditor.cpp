@@ -205,7 +205,7 @@ void BatSynthAudioProcessorEditor::timerCallback() {
     
     lookAndFeel.setGainColorIntensity(amplitude);
     lookAndFeel.setFrequencyColor(frequency);
-    openGLComponent->setShaderColor(frequency);
-    openGLComponent->setShaderColorIntensity(amplitude);
+    openGLComponent->colorVal = frequency;
+    openGLComponent->colorIntensity = amplitude;
     repaint();
 }

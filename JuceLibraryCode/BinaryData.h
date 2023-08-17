@@ -11,11 +11,23 @@ namespace BinaryData
     extern const char*   bgfile_jpg;
     const int            bgfile_jpgSize = 1297149;
 
+    extern const char*   bluecrab_obj;
+    const int            bluecrab_objSize = 18409435;
+
+    extern const char*   juce_icon_png;
+    const int            juce_icon_pngSize = 105697;
+
+    extern const char*   portmeirion_jpg;
+    const int            portmeirion_jpgSize = 145904;
+
+    extern const char*   tile_background_png;
+    const int            tile_background_pngSize = 151;
+
     extern const char*   JuliafontRegular_ttf;
     const int            JuliafontRegular_ttfSize = 15516;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 2;
+    const int namedResourceListSize = 6;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -7,6 +7,11 @@
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{229E3448-5685-CA5A-AF5D-349A0385FE40}" name="Resources">
       <FILE id="JNma9U" name="bgfile.jpg" compile="0" resource="1" file="Images/bgfile.jpg"/>
+      <FILE id="G3eCkB" name="bluecrab.obj" compile="0" resource="1" file="Source/bluecrab.obj"/>
+      <FILE id="XrRz6P" name="juce_icon.png" compile="0" resource="1" file="Source/juce_icon.png"/>
+      <FILE id="BsMLXR" name="portmeirion.jpg" compile="0" resource="1" file="Source/portmeirion.jpg"/>
+      <FILE id="TyD1wc" name="tile_background.png" compile="0" resource="1"
+            file="Source/tile_background.png"/>
     </GROUP>
     <GROUP id="{E765F9C0-6569-0A14-2F93-B1FB384DB5B5}" name="Common">
       <FILE id="LVlvjQ" name="LogMsSlider.h" compile="0" resource="0" file="../Common/LogMsSlider.h"/>
@@ -50,6 +55,9 @@
             file="../Common/WaveScopeComponent.h"/>
     </GROUP>
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
+      <FILE id="Qqu5me" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
+      <FILE id="RfFkxV" name="WavefrontObjParser.h" compile="0" resource="0"
+            file="Source/WavefrontObjParser.h"/>
       <FILE id="TG1gQn" name="OpenGLComponent.h" compile="0" resource="0"
             file="Source/OpenGLComponent.h"/>
       <FILE id="NFshRb" name="BatSynthDSP.h" compile="0" resource="0" file="Source/BatSynthDSP.h"/>
