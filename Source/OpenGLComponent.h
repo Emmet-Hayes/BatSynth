@@ -5,12 +5,6 @@
 
 struct OpenGLUtils
 {
-    //==============================================================================
-    /** Vertex data to be passed to the shaders.
-        For the purposes of this demo, each vertex will have a 3D position, a colour and a
-        2D texture co-ordinate. Of course you can ignore these or manipulate them in the
-        shader programs but are some useful defaults to work from.
-     */
     struct Vertex
     {
         float position[3];
@@ -19,8 +13,6 @@ struct OpenGLUtils
         float texCoord[2];
     };
 
-    //==============================================================================
-    // This class just manages the attributes that the demo shaders use.
     struct Attributes
     {
         explicit Attributes (OpenGLShaderProgram& shader)
@@ -85,8 +77,6 @@ struct OpenGLUtils
         }
     };
 
-    //==============================================================================
-    // This class just manages the uniform values that the demo shaders use.
     struct Uniforms
     {
         explicit Uniforms (OpenGLShaderProgram& shader)
@@ -118,10 +108,6 @@ struct OpenGLUtils
         }
     };
 
-    //==============================================================================
-    /** This loads a 3D model from an OBJ file and converts it into some vertex buffers
-        that we can draw.
-    */
     struct Shape
     {
         Shape()
@@ -219,7 +205,6 @@ struct OpenGLUtils
         }
     };
 
-    //==============================================================================
     struct ShaderPreset
     {
         const char* name;
@@ -240,7 +225,6 @@ struct OpenGLUtils
             {
                 "Fractal Pyramid",
 
-                SHADER_DEMO_HEADER
                 SHADER_DEMO_HEADER
                 "attribute vec2 position;\n"
                 "attribute vec4 normal;\n"
@@ -401,31 +385,33 @@ struct OpenGLUtils
                 "       vec3 color = palette(length(uv0) + i * 0.2 + timeKeeper * 0.4 + synthNoteColor);\n"
                 "       d = abs(sin(d*12.0 + timeKeeper + audioAmplitude) / 12.0);\n"
                 "       d = pow(0.015 / d, 1.3);\n"
-                "       finalColor += color * d;\n"
+                "       finalColor += (color / 4.0) * d;\n"
                 "   }\n"
                #endif
                 "    gl_FragColor = vec4(finalColor, 1.0);\n"
                 "}\n"
             },
             {
-                "Flat Colour",
+                "Synth Ball",
 
                 SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
+                "attribute vec2 position;\n"
+                "attribute vec4 normal;\n"
                 "attribute vec4 sourceColour;\n"
                 "attribute vec2 textureCoordIn;\n"
                 "\n"
                 "uniform mat4 projectionMatrix;\n"
                 "uniform mat4 viewMatrix;\n"
+                "uniform vec4 lightPosition;\n"
                 "\n"
                 "varying vec4 destinationColour;\n"
                 "varying vec2 textureCoordOut;\n"
+                "varying float lightIntensity;\n"
                 "\n"
                 "void main()\n"
                 "{\n"
-                "    destinationColour = sourceColour;\n"
-                "    textureCoordOut = textureCoordIn;\n"
-                "    gl_Position = projectionMatrix * viewMatrix * position;\n"
+                "textureCoordOut = position * 0.5 + 0.5;\n"
+                "gl_Position = vec4(position, 0.0, 1.0);\n"
                 "}\n",
 
                 SHADER_DEMO_HEADER
@@ -436,357 +422,134 @@ struct OpenGLUtils
                 "varying vec4 destinationColour;\n"
                 "varying vec2 textureCoordOut;\n"
                #endif
+                "uniform float timeKeeper;\n"
+                "uniform vec2 viewResolution;\n"
+                "uniform float audioAmplitude;\n"
+                "uniform float synthNoteColor;\n"
                 "\n"
-                "void main()\n"
+                "#define INNER_RADIUS 0.75\n"
+                "#define OUTER_RADIUS 0.9\n"
+                "#define SHEET_THICKNESS 0.012\n"
+                "#define NOISINESS 10.0\n"
+                "#define INNER_COLOR vec4(0.0, 30.0, 30.0, 1.0)\n"
+                "#define OUTER_COLOR vec4(20.0, 20.0, 30.0, 1.0)\n"
+                "#define NUM_STEPS 20\n"
+                "#define TIME_SCALE 5.0\n"
+                "\n"
+                "vec3 palette(float t)\n"
                 "{\n"
-                "    gl_FragColor = destinationColour;\n"
+                "   vec3 a = vec3(0.6, 0.4, 0.5);\n"
+                "   vec3 b = vec3(0.7, 0.3, 0.5);\n"
+                "   vec3 c = vec3(0.8, 1.0, 0.6);\n"
+                "   vec3 d = vec3(0.76, 0.41, 0.96);\n\n"
+                "   return a + b * cos(6.28318 * (c * t + d));\n"
                 "}\n"
-            },
-
-            {
-                "Rainbow",
-
-                SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
-                "attribute vec4 sourceColour;\n"
-                "attribute vec2 textureCoordIn;\n"
                 "\n"
-                "uniform mat4 projectionMatrix;\n"
-                "uniform mat4 viewMatrix;\n"
-                "\n"
-                "varying vec4 destinationColour;\n"
-                "varying vec2 textureCoordOut;\n"
-                "\n"
-                "varying float xPos;\n"
-                "varying float yPos;\n"
-                "varying float zPos;\n"
-                "\n"
-                "void main()\n"
+                "float trapezium(float x)\n"
                 "{\n"
-                "    vec4 v = vec4 (position);\n"
-                "    xPos = clamp (v.x, 0.0, 1.0);\n"
-                "    yPos = clamp (v.y, 0.0, 1.0);\n"
-                "    zPos = clamp (v.z, 0.0, 1.0);\n"
-                "    gl_Position = projectionMatrix * viewMatrix * position;\n"
-                "}",
-
-                SHADER_DEMO_HEADER
-               #if JUCE_OPENGL_ES
-                "varying lowp vec4 destinationColour;\n"
-                "varying lowp vec2 textureCoordOut;\n"
-                "varying lowp float xPos;\n"
-                "varying lowp float yPos;\n"
-                "varying lowp float zPos;\n"
-               #else
-                "varying vec4 destinationColour;\n"
-                "varying vec2 textureCoordOut;\n"
-                "varying float xPos;\n"
-                "varying float yPos;\n"
-                "varying float zPos;\n"
-               #endif
-                "\n"
-                "void main()\n"
-                "{\n"
-                "    gl_FragColor = vec4 (xPos, yPos, zPos, 1.0);\n"
-                "}"
-            },
-
-            {
-                "Changing Colour",
-
-                SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
-                "attribute vec2 textureCoordIn;\n"
-                "\n"
-                "uniform mat4 projectionMatrix;\n"
-                "uniform mat4 viewMatrix;\n"
-                "\n"
-                "varying vec2 textureCoordOut;\n"
-                "\n"
-                "void main()\n"
-                "{\n"
-                "    textureCoordOut = textureCoordIn;\n"
-                "    gl_Position = projectionMatrix * viewMatrix * position;\n"
-                "}\n",
-
-                SHADER_DEMO_HEADER
-                "#define PI 3.1415926535897932384626433832795\n"
-                "\n"
-               #if JUCE_OPENGL_ES
-                "precision mediump float;\n"
-                "varying lowp vec2 textureCoordOut;\n"
-               #else
-                "varying vec2 textureCoordOut;\n"
-               #endif
-                "uniform float bouncingNumber;\n"
-                "\n"
-                "void main()\n"
-                "{\n"
-                "   float b = bouncingNumber;\n"
-                "   float n = b * PI * 2.0;\n"
-                "   float sn = (sin (n * textureCoordOut.x) * 0.5) + 0.5;\n"
-                "   float cn = (sin (n * textureCoordOut.y) * 0.5) + 0.5;\n"
-                "\n"
-                "   vec4 col = vec4 (b, sn, cn, 1.0);\n"
-                "   gl_FragColor = col;\n"
+                "   return min(1.0, max(0.0, 1.0 - abs(-mod(x, 1.0) * 3.0 + 1.0)) * 2.0);\n"
                 "}\n"
-            },
 
-            {
-                "Simple Light",
-
-                SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
-                "attribute vec4 normal;\n"
-                "\n"
-                "uniform mat4 projectionMatrix;\n"
-                "uniform mat4 viewMatrix;\n"
-                "uniform vec4 lightPosition;\n"
-                "\n"
-                "varying float lightIntensity;\n"
-                "\n"
-                "void main()\n"
+                "vec3 colFromHue(float hue)\n"
                 "{\n"
-                "    vec4 light = viewMatrix * lightPosition;\n"
-                "    lightIntensity = dot (light, normal);\n"
-                "\n"
-                "    gl_Position = projectionMatrix * viewMatrix * position;\n"
-                "}\n",
-
-                SHADER_DEMO_HEADER
-               #if JUCE_OPENGL_ES
-                "varying highp float lightIntensity;\n"
-               #else
-                "varying float lightIntensity;\n"
-               #endif
-                "\n"
-                "void main()\n"
-                "{\n"
-               #if JUCE_OPENGL_ES
-                "   highp float l = lightIntensity * 0.25;\n"
-                "   highp vec4 colour = vec4 (l, l, l, 1.0);\n"
-               #else
-                "   float l = lightIntensity * 0.25;\n"
-                "   vec4 colour = vec4 (l, l, l, 1.0);\n"
-               #endif
-                "\n"
-                "    gl_FragColor = colour;\n"
+                    "return vec3(trapezium(hue - 1.0 / 3.0), trapezium(hue), trapezium(hue + 1.0 / 3.0));\n"
                 "}\n"
-            },
-
-            {
-                "Flattened",
-
-                SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
-                "attribute vec4 normal;\n"
                 "\n"
-                "uniform mat4 projectionMatrix;\n"
-                "uniform mat4 viewMatrix;\n"
-                "uniform vec4 lightPosition;\n"
-                "\n"
-                "varying float lightIntensity;\n"
-                "\n"
-                "void main()\n"
+                "float cnoise3(float pos)\n"
                 "{\n"
-                "    vec4 light = viewMatrix * lightPosition;\n"
-                "    lightIntensity = dot (light, normal);\n"
-                "\n"
-                "    vec4 v = vec4 (position);\n"
-                "    v.z = v.z * 0.1;\n"
-                "\n"
-                "    gl_Position = projectionMatrix * viewMatrix * v;\n"
-                "}\n",
-
-                SHADER_DEMO_HEADER
-               #if JUCE_OPENGL_ES
-                "varying highp float lightIntensity;\n"
-               #else
-                "varying float lightIntensity;\n"
-               #endif
-                "\n"
-                "void main()\n"
-                "{\n"
-               #if JUCE_OPENGL_ES
-                "   highp float l = lightIntensity * 0.25;\n"
-                "   highp vec4 colour = vec4 (l, l, l, 1.0);\n"
-               #else
-                "   float l = lightIntensity * 0.25;\n"
-                "   vec4 colour = vec4 (l, l, l, 1.0);\n"
-               #endif
-                "\n"
-                "    gl_FragColor = colour;\n"
+                "   return (cos(pos / 2.0) * 0.2 + 1.0);\n"
                 "}\n"
-            },
+                "\n"
+                "float cnoise2(float pos)\n"
+                "{\n"
+                "    return (sin(pos * cnoise3(pos) / 2.0) * 0.2 + 1.0);\n"
+                "}\n"
+                "\n"
+                "float cnoise(vec4 pos)\n"
+                "{\n"
+                "   float x = pos.x * cnoise2(pos.y) + pos.w * 0.87123 + 82.52;\n"
+                "   float y = pos.y * cnoise2(pos.z) + pos.w * 0.78725 + 12.76;\n"
+                "   float z = pos.z * cnoise2(pos.x) + pos.w * 0.68201 + 42.03;\n"
+                "   return (sin(x) + sin(y) + sin(z)) / 3.0;\n"
+                "}\n"
+                "\n"
+                "vec4 merge_colours(vec4 apply_this, vec4 on_top_of_this)\n"
+                "{\n"
+                "    return on_top_of_this * (1.0 - apply_this.a) + apply_this * apply_this.a;\n"
+                "}\n"
+                "\n"
+                "vec4 getdensity(vec3 pos)\n"
+                "{\n"
+                "    float time = timeKeeper * TIME_SCALE;\n"
+                "    vec3 samplePos = normalize(pos);\n"
+                "    vec4 inner_color = vec4(colFromHue(cnoise(vec4(samplePos / 5.0, time / 15.0))) * 25.0, 0.5 + (audioAmplitude * 0.5));\n"
+                "    inner_color = merge_colours(inner_color, vec4(palette(synthNoteColor), 1.0));\n"
+                "    vec4 outer_color = merge_colours(vec4(25.0,25.0,25.0,0.5), inner_color);\n"
+                "    float sample_ = (cnoise(vec4(samplePos * NOISINESS, time)) + 1.0) / 2.0;\n"
+                "    sample_ = clamp(sample_, 0.0, 1.0);\n"
+                "    float innerIncBorder = INNER_RADIUS + SHEET_THICKNESS;\n"
+                "    float outerIncBorder = OUTER_RADIUS - SHEET_THICKNESS;\n"
+                "    float radius = innerIncBorder + (outerIncBorder - innerIncBorder) * sample_;\n"
+                "    float dist = distance(pos, vec3(0.0, 0.0, 0.0));\n"
+                "    float density = exp(-pow(dist - radius, 2.0) * 05000.0) * 0.7 + (audioAmplitude * 0.3);\n"
+                "    return (inner_color + (outer_color - inner_color) * (radius - innerIncBorder) / (outerIncBorder - innerIncBorder)) * density;\n"
+                "}\n"
+                "\n"
+                "vec4 raymarch(vec3 start, vec3 end)\n"
+                "{\n"
+                "    vec4 retn = vec4(0.0, 0.0, 0.0, 0.0);\n"
+                "    vec3 delta = end - start;\n"
+                "    float stepDistance = length(delta) / float(NUM_STEPS);\n"
 
-            {
-                "Toon Shader",
+                "    vec4 densityPrevious = getdensity(start);\n"
+                "    for (int i = 1; i < NUM_STEPS; i++)\n"
+                "    {\n"
+                "        vec3 samplePos = start + delta * float(i) / float(NUM_STEPS);\n"
+                "        vec4 density = getdensity(samplePos);\n"
+                "        vec4 densityIntegrated = (density + densityPrevious) / 2.0;\n"
+                "        retn += densityIntegrated;\n"
+                "        densityPrevious = density;\n"
+                "    }\n"
+                "    return retn * stepDistance;\n"
+                "}\n"
+                "\n"
+                "vec4 raymarch_ball(vec2 coord)\n"
+                "{\n"
+                "    float d = distance(coord, vec2(0.0, 0.0));\n"
+                "    if (d > OUTER_RADIUS) {\n"
+                "        return vec4(0.0, 0.0, 0.0, 0.0);\n"
+                "    }\n"
+                "    float dOuterNormalized = d / OUTER_RADIUS;\n"
+                "    float outerStartZ = -sqrt(1.0 - dOuterNormalized * dOuterNormalized) * OUTER_RADIUS;\n"
+                "    float outerEndZ = -outerStartZ;\n"
+                "    if (d > INNER_RADIUS) {\n"
+                "        vec4 frontPart = raymarch(vec3(coord, outerStartZ), vec3(coord, 0));\n"
+                "        vec4 backPart = raymarch(vec3(coord, 0), vec3(coord, outerEndZ));\n"
+                "        return frontPart + backPart;\n"
+                "    }\n"
 
-                SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
-                "attribute vec4 normal;\n"
+                "    float dInnerNormalized = d / INNER_RADIUS;\n"
+                "    float innerStartZ = -sqrt(1.0 - dInnerNormalized * dInnerNormalized) * INNER_RADIUS;\n"
+                "    float innerEndZ = -innerStartZ;\n"
+                "    vec4 frontPart = raymarch(vec3(coord, outerStartZ), vec3(coord, innerStartZ));\n"
+                "    vec4 backPart = raymarch(vec3(coord, innerEndZ), vec3(coord, outerEndZ));\n"
+                "    vec4 final = frontPart + backPart;\n"
+                "    return final;\n"
+                "}\n"
                 "\n"
-                "uniform mat4 projectionMatrix;\n"
-                "uniform mat4 viewMatrix;\n"
-                "uniform vec4 lightPosition;\n"
-                "\n"
-                "varying float lightIntensity;\n"
-                "\n"
+
                 "void main()\n"
                 "{\n"
-                "    vec4 light = viewMatrix * lightPosition;\n"
-                "    lightIntensity = dot (light, normal);\n"
-                "\n"
-                "    gl_Position = projectionMatrix * viewMatrix * position;\n"
-                "}\n",
-
-                SHADER_DEMO_HEADER
-               #if JUCE_OPENGL_ES
-                "varying highp float lightIntensity;\n"
-               #else
-                "varying float lightIntensity;\n"
-               #endif
-                "\n"
-                "void main()\n"
-                "{\n"
-               #if JUCE_OPENGL_ES
-                "    highp float intensity = lightIntensity * 0.5;\n"
-                "    highp vec4 colour;\n"
-               #else
-                "    float intensity = lightIntensity * 0.5;\n"
-                "    vec4 colour;\n"
-               #endif
-                "\n"
-                "    if (intensity > 0.95)\n"
-                "        colour = vec4 (1.0, 0.5, 0.5, 1.0);\n"
-                "    else if (intensity > 0.5)\n"
-                "        colour  = vec4 (0.6, 0.3, 0.3, 1.0);\n"
-                "    else if (intensity > 0.25)\n"
-                "        colour  = vec4 (0.4, 0.2, 0.2, 1.0);\n"
-                "    else\n"
-                "        colour  = vec4 (0.2, 0.1, 0.1, 1.0);\n"
-                "\n"
-                "    gl_FragColor = colour;\n"
+                "    vec2 uv = (gl_FragCoord.xy / min(viewResolution.x, viewResolution.y)) * 2.0 - vec2(viewResolution.x / viewResolution.y, 1.0);\n"
+                "    gl_FragColor = merge_colours(raymarch_ball(uv), vec4(0.0, 0.0, 0.0, 1.0));\n"
                 "}\n"
             }
         };
 
         return Array<ShaderPreset> (presets, numElementsInArray (presets));
     }
-
-    //==============================================================================
-    // These classes are used to load textures from the various sources that the demo uses..
-    struct DemoTexture
-    {
-        virtual ~DemoTexture() {}
-        virtual bool applyTo (OpenGLTexture&) = 0;
-
-        String name;
-    };
-
-    struct DynamicTexture   : public DemoTexture
-    {
-        DynamicTexture() { name = "Dynamically-generated texture"; }
-
-        Image image;
-        BouncingNumber x, y;
-
-        bool applyTo (OpenGLTexture& texture) override
-        {
-            int size = 128;
-
-            if (! image.isValid())
-                image = Image (Image::ARGB, size, size, true);
-
-            {
-                Graphics g (image);
-                g.fillAll (Colours::lightcyan);
-
-                g.setColour (Colours::darkred);
-                g.drawRect (0, 0, size, size, 2);
-
-                g.setColour (Colours::green);
-                g.fillEllipse (x.getValue() * (float) size * 0.9f,
-                               y.getValue() * (float) size * 0.9f,
-                               (float) size * 0.1f,
-                               (float) size * 0.1f);
-
-                g.setColour (Colours::black);
-                g.setFont (40);
-
-                g.drawFittedText (String (Time::getCurrentTime().getMilliseconds()), image.getBounds(), Justification::centred, 1);
-            }
-
-            texture.loadImage (image);
-            return true;
-        }
-    };
-
-    static Image resizeImageToPowerOfTwo (Image image)
-    {
-        if (! (isPowerOfTwo (image.getWidth()) && isPowerOfTwo (image.getHeight())))
-            return image.rescaled (jmin (1024, nextPowerOfTwo (image.getWidth())),
-                                   jmin (1024, nextPowerOfTwo (image.getHeight())));
-
-        return image;
-    }
-
-    struct BuiltInTexture   : public DemoTexture
-    {
-        BuiltInTexture (const char* nm, const void* imageData, size_t imageSize)
-            : image (resizeImageToPowerOfTwo (ImageFileFormat::loadFrom (imageData, imageSize)))
-        {
-            name = nm;
-        }
-
-        Image image;
-
-        bool applyTo (OpenGLTexture& texture) override
-        {
-            texture.loadImage (image);
-            return false;
-        }
-    };
-
-    struct TextureFromFile   : public DemoTexture
-    {
-        TextureFromFile (const File& file)
-        {
-            name = file.getFileName();
-            image = resizeImageToPowerOfTwo (ImageFileFormat::loadFrom (file));
-        }
-
-        Image image;
-
-        bool applyTo (OpenGLTexture& texture) override
-        {
-            texture.loadImage (image);
-            return false;
-        }
-    };
-
-    struct TextureFromAsset   : public DemoTexture
-    {
-        TextureFromAsset (const char* assetName)
-        {
-            name = assetName;
-            image = resizeImageToPowerOfTwo (getImageFromAssets (assetName));
-        }
-
-        Image image;
-
-        bool applyTo (OpenGLTexture& texture) override
-        {
-            texture.loadImage (image);
-            return false;
-        }
-    };
 };
 
-//==============================================================================
-/** This is the main demo component - the GL context gets attached to it, and
-    it implements the OpenGLRenderer callback so that it can do real GL work.
-*/
 class OpenGLComponent  : public Component
                        , private OpenGLRenderer
                        , private AsyncUpdater
@@ -825,8 +588,6 @@ public:
 
     void newOpenGLContextCreated() override
     {
-        // nothing to do in this case - we'll initialise our shaders + textures
-        // on demand, during the render callback.
         freeAllContextObjects();
 
         if (controlsOverlay.get() != nullptr)
@@ -835,12 +596,7 @@ public:
 
     void openGLContextClosing() override
     {
-        // When the context is about to close, you must use this callback to delete
-        // any GPU resources while the context is still current.
         freeAllContextObjects();
-
-        if (lastTexture != nullptr)
-            setTexture (lastTexture);
     }
 
     void freeAllContextObjects()
@@ -849,11 +605,8 @@ public:
         shader    .reset();
         attributes.reset();
         uniforms  .reset();
-        texture   .release();
     }
 
-    // This is a virtual method in OpenGLRenderer, and is called when it's time
-    // to do your GL rendering.
     void renderOpenGL() override
     {
         using namespace ::juce::gl;
@@ -865,10 +618,6 @@ public:
         auto desktopScale = (float) openGLContext.getRenderingScale();
 
         OpenGLHelpers::clear (juce::Colours::black);
-
-        if (textureToUse != nullptr)
-            if (! textureToUse->applyTo (texture))
-                textureToUse = nullptr;
 
         // First draw our background graphics to demonstrate the OpenGLGraphicsContext class
         if (doBackgroundDrawing)
@@ -891,8 +640,6 @@ public:
         glViewport (0, 0,
                     roundToInt (desktopScale * (float) bounds.getWidth()),
                     roundToInt (desktopScale * (float) bounds.getHeight()));
-
-        texture.bind();
 
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -956,11 +703,6 @@ public:
         return viewMatrix * rotationMatrix;
     }
 
-    void setTexture (OpenGLUtils::DemoTexture* t)
-    {
-        lastTexture = textureToUse = t;
-    }
-
     void setShaderProgram (const String& vertexShader, const String& fragmentShader)
     {
         const ScopedLock lock (shaderMutex); // Prevent concurrent access to shader strings and status
@@ -977,7 +719,7 @@ public:
         const ScopedLock lock (mutex);
 
         bounds = getLocalBounds();
-        //controlsOverlay->setBounds (bounds);
+        controlsOverlay->setBounds (bounds);
         //draggableOrientation.setViewport (bounds);
     }
 
@@ -1039,10 +781,9 @@ private:
         This component sits on top of the main GL demo, and contains all the sliders
         and widgets that control things.
     */
-    class OpenGLComponentControlsOverlay  : public Component,
-                                 private CodeDocument::Listener,
-                                 private Slider::Listener,
-                                 private Timer
+    class OpenGLComponentControlsOverlay  : public Component
+                                          , private CodeDocument::Listener
+                                          , private Timer
     {
     public:
         OpenGLComponentControlsOverlay (OpenGLComponent& d)
@@ -1051,24 +792,6 @@ private:
             addAndMakeVisible (statusLabel);
             statusLabel.setJustificationType (Justification::topLeft);
             statusLabel.setFont (Font (14.0f));
-
-            addAndMakeVisible (sizeSlider);
-            sizeSlider.setRange (0.0, 1.0, 0.001);
-            sizeSlider.addListener (this);
-
-            addAndMakeVisible (zoomLabel);
-            zoomLabel.attachToComponent (&sizeSlider, true);
-
-            addAndMakeVisible (speedSlider);
-            speedSlider.setRange (0.0, 0.5, 0.001);
-            speedSlider.addListener (this);
-            speedSlider.setSkewFactor (0.5f);
-
-            addAndMakeVisible (speedLabel);
-            speedLabel.attachToComponent (&speedSlider, true);
-
-            addAndMakeVisible (showBackgroundToggle);
-            showBackgroundToggle.onClick = [this] { demo.doBackgroundDrawing = showBackgroundToggle.getToggleState(); };
 
             addAndMakeVisible (tabbedComp);
             tabbedComp.setTabBarDepth (25);
@@ -1079,15 +802,6 @@ private:
             vertexDocument.addListener (this);
             fragmentDocument.addListener (this);
 
-            textures.add (new OpenGLUtils::TextureFromAsset ("portmeirion.jpg"));
-            textures.add (new OpenGLUtils::TextureFromAsset ("tile_background.png"));
-            textures.add (new OpenGLUtils::TextureFromAsset ("juce_icon.png"));
-            textures.add (new OpenGLUtils::DynamicTexture());
-
-            addAndMakeVisible (textureBox);
-            textureBox.onChange = [this] { selectTexture (textureBox.getSelectedId()); };
-            updateTexturesList();
-
             addAndMakeVisible (presetBox);
             presetBox.onChange = [this] { selectPreset (presetBox.getSelectedItemIndex()); };
 
@@ -1097,47 +811,19 @@ private:
                 presetBox.addItem (presets[i].name, i + 1);
 
             addAndMakeVisible (presetLabel);
-            presetLabel.attachToComponent (&presetBox, true);
-
-            addAndMakeVisible (textureLabel);
-            textureLabel.attachToComponent (&textureBox, true);
+            presetLabel.attachToComponent (&presetBox, false);
 
             lookAndFeelChanged();
         }
 
         void initialise()
         {
-            showBackgroundToggle.setToggleState (false, sendNotification);
-            textureBox.setSelectedItemIndex (0);
             presetBox .setSelectedItemIndex (0);
-            speedSlider.setValue (0.01);
-            sizeSlider .setValue (0.5);
         }
 
         void resized() override
         {
-            auto area = getLocalBounds().reduced (4);
-
-            auto top = area.removeFromTop (75);
-
-            auto sliders = top.removeFromRight (area.getWidth() / 2);
-            showBackgroundToggle.setBounds (sliders.removeFromBottom (25));
-            speedSlider         .setBounds (sliders.removeFromBottom (25));
-            sizeSlider          .setBounds (sliders.removeFromBottom (25));
-
-            top.removeFromRight (70);
-            statusLabel.setBounds (top);
-
-            auto shaderArea = area.removeFromBottom (area.getHeight() / 2);
-
-            auto presets = shaderArea.removeFromTop (25);
-            presets.removeFromLeft (100);
-            presetBox.setBounds (presets.removeFromLeft (150));
-            presets.removeFromLeft (100);
-            textureBox.setBounds (presets);
-
-            shaderArea.removeFromTop (4);
-            tabbedComp.setBounds (shaderArea);
+            presetBox.setBounds (getWidth() - 120, 0, 120, 30);
         }
 
         bool isMouseButtonDownThreadsafe() const { return buttonDown; }
@@ -1181,44 +867,6 @@ private:
             startTimer (1);
         }
 
-        void selectTexture (int itemID)
-        {
-            if (itemID == 1000)
-            {
-                textureFileChooser = std::make_unique<FileChooser> ("Choose an image to open...",
-                                                                    File::getSpecialLocation (File::userPicturesDirectory),
-                                                                    "*.jpg;*.jpeg;*.png;*.gif");
-                auto chooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles;
-
-                textureFileChooser->launchAsync (chooserFlags, [this] (const FileChooser& fc)
-                {
-                    if (fc.getResult() == File{})
-                        return;
-
-                    textures.add (new OpenGLUtils::TextureFromFile (fc.getResult()));
-                    updateTexturesList();
-
-                    textureBox.setSelectedId (textures.size());
-                });
-            }
-            else
-            {
-                if (auto* t = textures[itemID - 1])
-                    demo.setTexture (t);
-            }
-        }
-
-        void updateTexturesList()
-        {
-            textureBox.clear();
-
-            for (int i = 0; i < textures.size(); ++i)
-                textureBox.addItem (textures.getUnchecked (i)->name, i + 1);
-
-            textureBox.addSeparator();
-            textureBox.addItem ("Load from a file...", 1000);
-        }
-
         void updateShader()
         {
             startTimer (10);
@@ -1227,14 +875,6 @@ private:
         Label statusLabel;
 
     private:
-        void sliderValueChanged (Slider*) override
-        {
-            const ScopedLock lock (demo.mutex);
-
-            demo.scale         = (float) sizeSlider .getValue();
-            demo.rotationSpeed = (float) speedSlider.getValue();
-        }
-
         enum { shaderLinkDelay = 500 };
 
         void codeDocumentTextInserted (const String& /*newText*/, int /*insertIndex*/) override
@@ -1279,14 +919,11 @@ private:
 
         ComboBox presetBox, textureBox;
 
-        Label presetLabel   { {}, "Shader Preset:" },
-              textureLabel  { {}, "Texture:" };
+        Label presetLabel   { {}, "Shader Preset:" };
 
         Slider speedSlider, sizeSlider;
 
         ToggleButton showBackgroundToggle  { "Draw 2D graphics in background" };
-
-        OwnedArray<OpenGLUtils::DemoTexture> textures;
 
         std::unique_ptr<FileChooser> textureFileChooser;
 
@@ -1303,10 +940,6 @@ private:
     std::unique_ptr<OpenGLUtils::Shape> shape;
     std::unique_ptr<OpenGLUtils::Attributes> attributes;
     std::unique_ptr<OpenGLUtils::Uniforms> uniforms;
-
-    OpenGLTexture texture;
-    OpenGLUtils::DemoTexture* textureToUse = nullptr;
-    OpenGLUtils::DemoTexture* lastTexture  = nullptr;
 
     CriticalSection shaderMutex;
     String newVertexShader, newFragmentShader, statusText;
