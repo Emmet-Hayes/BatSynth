@@ -96,13 +96,14 @@ struct OpenGLUtils
             texture         .reset (createUniform (shader, "demoTexture"));
             lightPosition   .reset (createUniform (shader, "lightPosition"));
             bouncingNumber  .reset (createUniform (shader, "bouncingNumber"));
+            viewResolution  .reset (createUniform (shader, "viewResolution"));
             timeKeeper      .reset (createUniform (shader, "timeKeeper"));
             audioAmplitude  .reset (createUniform (shader, "audioAmplitude"));
             synthNoteColor  .reset (createUniform (shader, "synthNoteColor"));
         }
 
-        std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix, viewMatrix, texture, lightPosition, bouncingNumber, timeKeeper,
-                                                      audioAmplitude, synthNoteColor;
+        std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix, viewMatrix, texture, lightPosition, bouncingNumber, 
+                                                      viewResolution, timeKeeper, audioAmplitude, synthNoteColor;
 
     private:
         static OpenGLShaderProgram::Uniform* createUniform (OpenGLShaderProgram& shader,
@@ -240,7 +241,7 @@ struct OpenGLUtils
                 "Texture + Lighting",
 
                 SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
+                "attribute vec2 position;\n"
                 "attribute vec4 normal;\n"
                 "attribute vec4 sourceColour;\n"
                 "attribute vec2 textureCoordIn;\n"
@@ -255,13 +256,8 @@ struct OpenGLUtils
                 "\n"
                 "void main()\n"
                 "{\n"
-                "    destinationColour = sourceColour;\n"
-                "    textureCoordOut = textureCoordIn;\n"
-                "\n"
-                "    vec4 light = viewMatrix * lightPosition;\n"
-                "    lightIntensity = dot (light, normal);\n"
-                "\n"
-                "    gl_Position = projectionMatrix * viewMatrix * position;\n"
+                "textureCoordOut = position * 0.5 + 0.5;\n"
+                "gl_Position = vec4(position, 0.0, 1.0);\n"
                 "}\n",
 
                 SHADER_DEMO_HEADER
@@ -277,6 +273,7 @@ struct OpenGLUtils
                 "\n"
                 "uniform sampler2D demoTexture;\n"
                 "uniform float timeKeeper;\n"
+                "uniform vec2 viewResolution;\n"
                 "uniform float audioAmplitude;\n"
                 "uniform float synthNoteColor;\n\n"
                 "vec3 palette(float t)\n"
@@ -294,10 +291,20 @@ struct OpenGLUtils
                 "   highp float l = max (0.3, lightIntensity * 0.3);\n"
                 "   highp vec4 colour = vec4 (l, l, l, 1.0);\n"
                #else
-                "   float l = max (0.3, lightIntensity * 0.3 * audioAmplitude);\n"
-                "   vec4 colour = vec4 (palette(synthNoteColor), 1.0);\n"
+                "   vec2 uv = (gl_FragCoord.xy * 2.0 - viewResolution.xy) / viewResolution.y;\n"
+                "   vec2 uv0 = uv;\n"
+                "   vec3 finalColor = vec3(0.0);\n"
+                "   for (float i = 0.0; i < 4.0; ++i)\n"
+                "   {\n"
+                "       uv = fract(uv * 1.6) - 0.5;\n"
+                "       float d = length(uv) * exp(-length(uv0));\n"
+                "       vec3 color = palette(length(uv0) + i * 0.2 + timeKeeper * 0.4 + synthNoteColor);\n"
+                "       d = abs(sin(d*12.0 + timeKeeper + audioAmplitude) / 12.0);\n"
+                "       d = pow(0.015 / d, 1.3);\n"
+                "       finalColor += color * d;\n"
+                "   }\n"
                #endif
-                "    gl_FragColor = colour * texture2D (demoTexture, textureCoordOut);\n"
+                "    gl_FragColor = vec4(finalColor, 1.0);\n"
                 "}\n"
             },
 
@@ -847,6 +854,9 @@ public:
         if (uniforms->bouncingNumber.get() != nullptr)
             uniforms->bouncingNumber->set (bouncingNumber.getValue());
 
+        if (uniforms->viewResolution.get() != nullptr)
+            uniforms->viewResolution->set (getWidth(), getHeight());
+
         if (uniforms->timeKeeper.get() != nullptr)
             uniforms->timeKeeper->set(time);
 
@@ -907,8 +917,8 @@ public:
         const ScopedLock lock (mutex);
 
         bounds = getLocalBounds();
-        controlsOverlay->setBounds (bounds);
-        draggableOrientation.setViewport (bounds);
+        //controlsOverlay->setBounds (bounds);
+        //draggableOrientation.setViewport (bounds);
     }
 
     Rectangle<int> bounds;
