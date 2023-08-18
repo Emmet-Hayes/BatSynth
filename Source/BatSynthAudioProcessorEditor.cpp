@@ -145,7 +145,7 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     openGLComponent = std::make_unique<OpenGLComponent>();
     addAndMakeVisible(openGLComponent.get());
 
-    image = juce::ImageCache::getFromMemory(BinaryData::bgfile_jpg, BinaryData::bgfile_jpgSize);
+    //image = juce::ImageCache::getFromMemory(BinaryData::bgfile_jpg, BinaryData::bgfile_jpgSize);
     setSize(800, 600);
     lookAndFeel.setWindowScale(scale);
     setLookAndFeel(&lookAndFeel);
@@ -171,8 +171,9 @@ BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() {
 }
 
 void BatSynthAudioProcessorEditor::paint (Graphics& g) {
-    int height = static_cast<int>(scale * 800), width = static_cast<int>(scale * 600);
-    g.drawImage(image, 0, 0, height, width, 0, 0, 1600, 1200);
+    //int height = static_cast<int>(scale * 800), width = static_cast<int>(scale * 600);
+    //g.drawImage(image, 0, 0, height, width, 0, 0, 1600, 1200);
+    g.fillAll(juce::Colours::black);
 }
 
 void BatSynthAudioProcessorEditor::resized() {

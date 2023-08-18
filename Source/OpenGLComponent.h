@@ -238,7 +238,107 @@ struct OpenGLUtils
         ShaderPreset presets[] =
         {
             {
-                "Texture + Lighting",
+                "Fractal Pyramid",
+
+                SHADER_DEMO_HEADER
+                SHADER_DEMO_HEADER
+                "attribute vec2 position;\n"
+                "attribute vec4 normal;\n"
+                "attribute vec4 sourceColour;\n"
+                "attribute vec2 textureCoordIn;\n"
+                "\n"
+                "uniform mat4 projectionMatrix;\n"
+                "uniform mat4 viewMatrix;\n"
+                "uniform vec4 lightPosition;\n"
+                "\n"
+                "varying vec4 destinationColour;\n"
+                "varying vec2 textureCoordOut;\n"
+                "varying float lightIntensity;\n"
+                "\n"
+                "void main()\n"
+                "{\n"
+                "textureCoordOut = position * 0.5 + 0.5;\n"
+                "gl_Position = vec4(position, 0.0, 1.0);\n"
+                "}\n",
+
+                SHADER_DEMO_HEADER
+               #if JUCE_OPENGL_ES
+                "varying lowp vec4 destinationColour;\n"
+                "varying lowp vec2 textureCoordOut;\n"
+               #else
+                "varying vec4 destinationColour;\n"
+                "varying vec2 textureCoordOut;\n"
+                "uniform float timeKeeper;\n"
+                "uniform vec2 viewResolution;\n"
+                "uniform float audioAmplitude;\n"
+                "uniform float synthNoteColor;\n\n"
+               #endif
+                "\n"
+                "uniform sampler2D demoTexture;\n"
+                "\n"
+                "vec3 palette(float t)\n"
+                "{\n"
+                "   vec3 a = vec3(0.6, 0.4, 0.5);\n"
+                "   vec3 b = vec3(0.7, 0.3, 0.5);\n"
+                "   vec3 c = vec3(0.8, 1.0, 0.6);\n"
+                "   vec3 d = vec3(0.76, 0.41, 0.96);\n\n"
+                "   return a + b * cos(6.28318 * (c * t + d));\n"
+                "}\n"
+                "vec2 rotate(vec2 p,float a)\n"
+                "{\n"
+                "   float c = cos(a);\n"
+                "   float s = sin(a);\n"
+                "   return p * mat2(c,s,-s,c);\n"
+                "}\n"
+                "\n"
+                "float map(vec3 p)\n"
+                "{\n"
+                "   for (int i = 0; i < 8; ++i)\n"
+                "   {\n"
+                "       float t = timeKeeper * 0.2;\n"
+                "       p.xz = rotate(p.xz,t);\n"
+                "       p.xy = rotate(p.xy,t * 1.89);\n"
+                "       p.xz = abs(p.xz);\n"
+                "       p.xz -= .5;\n"
+                "   }\n"
+                "   return dot(sign(p),p) / 5.;\n"
+                "}\n"
+                "\n"
+                "vec4 rm(vec3 ro, vec3 rd)\n"
+                "{\n"
+                "   float t = 0.;\n"
+                "   vec3 col = vec3(0.);\n"
+                "   float d;\n"
+                "   for (float i = 0.; i < 64.; i++)\n"
+                "   {\n"
+                "       vec3 p = ro + rd * t;\n"
+                "       d = map(p) * .5;\n"
+                "       if (d < 0.02)\n"
+                "           break;\n"
+                "       if (d > 100.)\n"
+                "           break;\n"
+
+                "       col += palette(synthNoteColor + timeKeeper * 0.4) / (400. * (d));\n"
+                "       t += d;\n"
+                "   }\n"
+                "   return vec4(col,1. / (d * 100.));\n"
+                "}\n"
+                "void main()\n"
+                "{\n"
+                "    vec2 uv = (gl_FragCoord.xy - (viewResolution.xy / 2.)) / viewResolution.x;\n"
+                "    vec3 ro = vec3(0.,0.,-50.);\n"
+                "    ro.xz = rotate(ro.xz,timeKeeper);\n"
+                "    vec3 cf = normalize(-ro);\n"
+                "    vec3 cs = normalize(cross(cf,vec3(0.,1.,0.)));\n"
+                "    vec3 cu = normalize(cross(cf,cs));\n"
+                "    vec3 uuv = ro + cf * 3. + uv.x * cs + uv.y * cu;\n"
+                "    vec3 rd = normalize(uuv - ro);\n"
+                "    vec4 col = rm(ro,rd) + audioAmplitude;\n"
+                "    gl_FragColor = col; \n"
+                "}\n"
+            },
+            {
+                "Fractal Kaleidoscope",
 
                 SHADER_DEMO_HEADER
                 "attribute vec2 position;\n"
@@ -307,45 +407,6 @@ struct OpenGLUtils
                 "    gl_FragColor = vec4(finalColor, 1.0);\n"
                 "}\n"
             },
-
-            {
-                "Textured",
-
-                SHADER_DEMO_HEADER
-                "attribute vec4 position;\n"
-                "attribute vec4 sourceColour;\n"
-                "attribute vec2 textureCoordIn;\n"
-                "\n"
-                "uniform mat4 projectionMatrix;\n"
-                "uniform mat4 viewMatrix;\n"
-                "\n"
-                "varying vec4 destinationColour;\n"
-                "varying vec2 textureCoordOut;\n"
-                "\n"
-                "void main()\n"
-                "{\n"
-                "    destinationColour = sourceColour;\n"
-                "    textureCoordOut = textureCoordIn;\n"
-                "    gl_Position = projectionMatrix * viewMatrix * position;\n"
-                "}\n",
-
-                SHADER_DEMO_HEADER
-               #if JUCE_OPENGL_ES
-                "varying lowp vec4 destinationColour;\n"
-                "varying lowp vec2 textureCoordOut;\n"
-               #else
-                "varying vec4 destinationColour;\n"
-                "varying vec2 textureCoordOut;\n"
-               #endif
-                "\n"
-                "uniform sampler2D demoTexture;\n"
-                "\n"
-                "void main()\n"
-                "{\n"
-                "    gl_FragColor = texture2D (demoTexture, textureCoordOut);\n"
-                "}\n"
-            },
-
             {
                 "Flat Colour",
 
@@ -803,8 +864,7 @@ public:
 
         auto desktopScale = (float) openGLContext.getRenderingScale();
 
-        OpenGLHelpers::clear (getUIColourIfAvailable (LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
-                                                      Colours::lightblue));
+        OpenGLHelpers::clear (juce::Colours::black);
 
         if (textureToUse != nullptr)
             if (! textureToUse->applyTo (texture))
@@ -910,7 +970,7 @@ public:
 
 
 
-    void paint (Graphics&) override {}
+    void paint(Graphics& g) override {}
 
     void resized() override
     {
