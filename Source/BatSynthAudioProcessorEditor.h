@@ -1,7 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "BatSynthAudioProcessor.h"
-#include "OpenGLComponent.h"
+#include "../../Common/OpenGLComponent.h"
 #include "../../Common/BaseAudioProcessorEditor.h"
 #include "../../Common/BatSynthLookAndFeel.h"
 #include "../../Common/PresetBar.h"
@@ -23,6 +23,8 @@ private:
     void addAllGUIComponents();
     int intify(float f);
 
+    BatSynthLookAndFeel lookAndFeel;
+
     BatSynthAudioProcessor& processor;
     PresetBar presetBar;
     
@@ -41,7 +43,6 @@ private:
     //MidiKeyboardComponent keyboardComponent;
     //MidiKeyboardState keyboardState;
     
-    BatSynthLookAndFeel lookAndFeel;
     juce::Image image;
     juce::JPEGImageFormat* j;
     static float scale;

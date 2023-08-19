@@ -5,10 +5,12 @@
               pluginManufacturer="EmmetSoft" jucerFormatVersion="1" displaySplashScreen="1"
               defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="gzhS9P" name="BatSynth">
-    <GROUP id="{229E3448-5685-CA5A-AF5D-349A0385FE40}" name="Resources">
-      <FILE id="JNma9U" name="bgfile.jpg" compile="0" resource="1" file="Images/bgfile.jpg"/>
-    </GROUP>
     <GROUP id="{E765F9C0-6569-0A14-2F93-B1FB384DB5B5}" name="Common">
+      <FILE id="hEeM6R" name="Utilities.h" compile="0" resource="0" file="../Common/Utilities.h"/>
+      <FILE id="E3a7q8" name="WavefrontObjParser.h" compile="0" resource="0"
+            file="../Common/WavefrontObjParser.h"/>
+      <FILE id="A88Twj" name="OpenGLComponent.h" compile="0" resource="0"
+            file="../Common/OpenGLComponent.h"/>
       <FILE id="LVlvjQ" name="LogMsSlider.h" compile="0" resource="0" file="../Common/LogMsSlider.h"/>
       <FILE id="N5uV8r" name="PercentSlider.h" compile="0" resource="0" file="../Common/PercentSlider.h"/>
       <FILE id="C8debZ" name="PitchSlider.h" compile="0" resource="0" file="../Common/PitchSlider.h"/>
@@ -50,11 +52,6 @@
             file="../Common/WaveScopeComponent.h"/>
     </GROUP>
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
-      <FILE id="Qqu5me" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
-      <FILE id="RfFkxV" name="WavefrontObjParser.h" compile="0" resource="0"
-            file="Source/WavefrontObjParser.h"/>
-      <FILE id="TG1gQn" name="OpenGLComponent.h" compile="0" resource="0"
-            file="Source/OpenGLComponent.h"/>
       <FILE id="NFshRb" name="BatSynthDSP.h" compile="0" resource="0" file="Source/BatSynthDSP.h"/>
       <FILE id="ZxUGTO" name="BatSynthDSP.cpp" compile="1" resource="0" file="Source/BatSynthDSP.cpp"/>
       <FILE id="sj0OsE" name="BatSynthAudioProcessor.h" compile="0" resource="0"

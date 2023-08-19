@@ -8,14 +8,11 @@
 
 namespace BinaryData
 {
-    extern const char*   bgfile_jpg;
-    const int            bgfile_jpgSize = 1297149;
-
     extern const char*   JuliafontRegular_ttf;
     const int            JuliafontRegular_ttfSize = 15516;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 2;
+    const int namedResourceListSize = 1;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

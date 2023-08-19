@@ -14,13 +14,12 @@ BatSynthAudioProcessorEditor::BatSynthAudioProcessorEditor (BatSynthAudioProcess
 ,   waveScopeComponent       { processor.audioBufferQueue }
 ,   spectrumScopeComponent   { processor.audioBufferQueue, lookAndFeel }
 {
-    startTimerHz(60); // refresh at 30 fps
+    startTimerHz(30); // refresh at 30 fps
     addAllGUIComponents();
 }
 
 void BatSynthAudioProcessorEditor::addAllGUIComponents()
 {    
-    setLookAndFeel(&lookAndFeel);
     auto setupComboBox = [&](ComboBox &box, const Justification& jtype, const String &initialText,
                              bool isOsc = true) 
     {
@@ -36,11 +35,10 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
         addAndMakeVisible(&box);
     };
     
-    auto setupLabel = [&](Label &label, const juce::String& text, const juce::Font& font, const Justification& jtype,
+    auto setupLabel = [&](Label &label, const juce::String& text, const Justification& jtype,
                           Component* component, bool isAttached) 
     {
         label.setText(text, dontSendNotification);
-        label.setFont(font);
         label.setJustificationType(jtype);
         label.attachToComponent(component, isAttached);
     };
@@ -53,13 +51,9 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
         slider->setValue(value);
         slider->setTextBoxStyle(position, true, textBoxWidth, textBoxHeight);
         slider->setTextBoxIsEditable(true);
-        slider->setLookAndFeel(&lookAndFeel);
         slider->addListener(this);
         addAndMakeVisible(slider);
     };
-    
-    Font font1("Lucida Console", scale*10.0f, Font::bold);
-    Font font2("Lucida Console", scale*9.0f, Font::bold);
     
     std::string sliderlabels[NUM_SLIDERS] = { "Atk", "Dec", "Sus", "Rel", "Pitch", "Gain", "Noise", "Cutoff", "Resonance", 
                                               "LFO Filter", "LFO F. Rate", "LFO Pitch", "LFO P. Rate", 
@@ -96,11 +90,11 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     setupSlider(sliders[13].get(), Slider::SliderStyle::Rotary, 0.0f, 1.0f, 0.8f, Slider::TextBoxBelow, 50, 15);
     
     for (int i = 0; i < NUM_SLIDERS; ++i)
-        setupLabel(labels[i], sliderlabels[i], font2, Justification::centred, sliders[i].get(), false);
+        setupLabel(labels[i], sliderlabels[i], Justification::centred, sliders[i].get(), false);
 
     std::string comboboxlabels[NUM_COMBOBOXES] = { "Osc 1", "Osc 2" };
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
-        setupLabel(labels[i + NUM_SLIDERS], comboboxlabels[i], font1, Justification::centred, &comboboxes[i], false);
+        setupLabel(labels[i + NUM_SLIDERS], comboboxlabels[i], Justification::centred, &comboboxes[i], false);
     
     setupComboBox(comboboxes[0], Justification::centred, "Saw");
     setupComboBox(comboboxes[1], Justification::centred, "Sine");
@@ -145,7 +139,6 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     openGLComponent = std::make_unique<OpenGLComponent>();
     addAndMakeVisible(openGLComponent.get());
 
-    //image = juce::ImageCache::getFromMemory(BinaryData::bgfile_jpg, BinaryData::bgfile_jpgSize);
     setSize(800, 600);
     lookAndFeel.setWindowScale(scale);
     setLookAndFeel(&lookAndFeel);
@@ -171,8 +164,6 @@ BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() {
 }
 
 void BatSynthAudioProcessorEditor::paint (Graphics& g) {
-    //int height = static_cast<int>(scale * 800), width = static_cast<int>(scale * 600);
-    //g.drawImage(image, 0, 0, height, width, 0, 0, 1600, 1200);
     g.fillAll(juce::Colours::black);
 }
 
@@ -206,7 +197,7 @@ void BatSynthAudioProcessorEditor::timerCallback() {
     
     lookAndFeel.setGainColorIntensity(amplitude);
     lookAndFeel.setFrequencyColor(frequency);
-    openGLComponent->colorVal = frequency;
-    openGLComponent->colorIntensity = amplitude;
+    openGLComponent->synthNoteColor = frequency;
+    openGLComponent->audioAmplitude = amplitude;
     repaint();
 }
