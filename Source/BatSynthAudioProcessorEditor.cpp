@@ -5,8 +5,6 @@
 #include "../../Common/FreqSlider.h"
 #include "../../Common/PercentSlider.h"
 
-float BatSynthAudioProcessorEditor::scale = 1.0f;
-
 BatSynthAudioProcessorEditor::BatSynthAudioProcessorEditor (BatSynthAudioProcessor& p)
 :   BaseAudioProcessorEditor { p }
 ,   presetBar                { p }
@@ -139,9 +137,13 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     openGLComponent = std::make_unique<OpenGLComponent>();
     addAndMakeVisible(openGLComponent.get());
 
-    setSize(800, 600);
-    lookAndFeel.setWindowScale(scale);
     setLookAndFeel(&lookAndFeel);
+    
+    const auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
+    setResizable(false, true);
+    getConstrainer()->setFixedAspectRatio (ratio);
+    getConstrainer()->setSizeLimits(defaultWidth, defaultHeight, defaultWidth * 2, defaultHeight * 2);
+    setSize (defaultWidth, defaultHeight);
 }
 
 int BatSynthAudioProcessorEditor::intify(float f)
@@ -168,27 +170,35 @@ void BatSynthAudioProcessorEditor::paint (Graphics& g) {
 }
 
 void BatSynthAudioProcessorEditor::resized() {
-    //scale = 1.0f;
-    presetBar.setBounds(0, 5, 800, 25);
-    comboboxes[0].setBounds(10, 75, 120, 30);
-    comboboxes[1].setBounds(10, 160, 120, 30);
-    sliders[4]->setBounds(180, 150, 60, 60);
-    sliders[5]->setBounds(260, 150, 60, 60);
-    sliders[6]->setBounds(340, 150, 60, 60);
-    sliders[0]->setBounds(140, 50, 70, 70);
-    sliders[1]->setBounds(220, 50, 70, 70);
-    sliders[2]->setBounds(300, 50, 70, 70);
-    sliders[3]->setBounds(380, 50, 70, 70);
-    sliders[7]->setBounds(460, 50, 80, 80);
-    sliders[8]->setBounds(460, 150, 80, 80);
-    sliders[9]->setBounds(570, 50, 60, 60);
-    sliders[10]->setBounds(640, 50, 60, 60);
-    sliders[11]->setBounds(570, 145, 60, 60);
-    sliders[12]->setBounds(640, 145, 60, 60);
-    sliders[13]->setBounds(710, 85, 80, 80);
-    waveScopeComponent.setBounds(15, 235, 380, 180);
-    spectrumScopeComponent.setBounds(15, 425, 380, 180);
-    openGLComponent->setBounds(400, 235, 380, 360);
+    const auto scale = static_cast<float> (getWidth()) / defaultWidth;
+
+    auto setBoundsAndApplyScaling = [&](juce::Component* component, int x, int y, int w, int h)
+    {
+        component->setBounds(static_cast<int>(x * scale), static_cast<int>(y * scale), 
+                             static_cast<int>(w * scale), static_cast<int>(h * scale));
+    };
+
+    lookAndFeel.setWindowScale(scale);
+    setBoundsAndApplyScaling(&presetBar, 0, 5, 800, 25);
+    setBoundsAndApplyScaling(&comboboxes[0], 10, 75, 120, 30);
+    setBoundsAndApplyScaling(&comboboxes[1], 10, 160, 120, 30);
+    setBoundsAndApplyScaling(sliders[4].get(), 180, 150, 60, 60);
+    setBoundsAndApplyScaling(sliders[5].get(), 260, 150, 60, 60);
+    setBoundsAndApplyScaling(sliders[6].get(), 340, 150, 60, 60);
+    setBoundsAndApplyScaling(sliders[0].get(), 140, 50, 70, 70);
+    setBoundsAndApplyScaling(sliders[1].get(), 220, 50, 70, 70);
+    setBoundsAndApplyScaling(sliders[2].get(), 300, 50, 70, 70);
+    setBoundsAndApplyScaling(sliders[3].get(), 380, 50, 70, 70);
+    setBoundsAndApplyScaling(sliders[7].get(), 460, 50, 80, 80);
+    setBoundsAndApplyScaling(sliders[8].get(), 460, 150, 80, 80);
+    setBoundsAndApplyScaling(sliders[9].get(), 570, 50, 60, 60);
+    setBoundsAndApplyScaling(sliders[10].get(), 640, 50, 60, 60);
+    setBoundsAndApplyScaling(sliders[11].get(), 570, 145, 60, 60);
+    setBoundsAndApplyScaling(sliders[12].get(), 640, 145, 60, 60);
+    setBoundsAndApplyScaling(sliders[13].get(), 710, 85, 80, 80);
+    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 180);
+    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 180);
+    setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 360);
 }
 
 void BatSynthAudioProcessorEditor::timerCallback() {

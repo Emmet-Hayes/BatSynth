@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="PqNWLH" name="BatSynth" projectType="audioplug" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
-              version="1.0.0" pluginFormats="buildAU,buildLV2,buildStandalone,buildVST3"
-              pluginManufacturer="EmmetSoft" jucerFormatVersion="1" displaySplashScreen="1"
-              defines="JUCE_MODAL_LOOPS_PERMITTED=1">
+              version="1.0.0" pluginFormats="buildAU,buildVST3" pluginManufacturer="EmmetSoft"
+              jucerFormatVersion="1" displaySplashScreen="1" defines="JUCE_MODAL_LOOPS_PERMITTED=1"
+              companyName="EmmetSoft">
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{E765F9C0-6569-0A14-2F93-B1FB384DB5B5}" name="Common">
       <FILE id="hEeM6R" name="Utilities.h" compile="0" resource="0" file="../Common/Utilities.h"/>

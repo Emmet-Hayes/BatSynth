@@ -44,8 +44,9 @@ private:
     //MidiKeyboardState keyboardState;
     
     juce::Image image;
-    juce::JPEGImageFormat* j;
-    static float scale;
+    
+    int defaultWidth = 800;
+    int defaultHeight = 600;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessorEditor)
 };
