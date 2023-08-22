@@ -21,7 +21,7 @@ public:
     void timerCallback() override;
 private:
     void addAllGUIComponents();
-    int intify(float f);
+    void handleOpenGLComponent(float amplitude, float frequency);
 
     BatSynthLookAndFeel lookAndFeel;
 
@@ -32,14 +32,16 @@ private:
     ComboBox comboboxes[NUM_COMBOBOXES]; // osc1, osc2, dist
     std::unique_ptr<juce::Slider> sliders[NUM_SLIDERS]; // atk, dcy, sus, rel, osc2pitch, osc2gain, noisegain, filtercut, filterres, lfoInten,
                                  // lfoRate, totGain
-    
+
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> comboboxattachments[NUM_COMBOBOXES];
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sliderattachments[NUM_SLIDERS];
 
     WaveScopeComponent<float> waveScopeComponent;
     SpectrumScopeComponent<float> spectrumScopeComponent;
     std::unique_ptr<OpenGLComponent> openGLComponent;
-    
+    bool isOpenGLAvailable = false;
+    int tryInitializeOpenGL = 0;
+    float scale = 1.0f;
     //MidiKeyboardComponent keyboardComponent;
     //MidiKeyboardState keyboardState;
     

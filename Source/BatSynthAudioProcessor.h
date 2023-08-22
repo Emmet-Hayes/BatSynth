@@ -12,30 +12,30 @@ const int NUM_COMBOBOXES = 2;
 class BatSynthAudioProcessor  : public BaseAudioProcessor
 {
 public:
-	BatSynthAudioProcessor();
+    BatSynthAudioProcessor();
 
-	void prepareToPlay (double sampleRate, int samplesPerBlock) override;
-	void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
-	juce::AudioProcessorEditor* createEditor() override;
-	juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() override;
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
+    juce::AudioProcessorEditor* createEditor() override;
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() override;
 
 
-	float getCurrentAmplitude() const { return currentAmplitude; }
-	float getCurrentFrequency() const { return currentFrequency; }
+    float getCurrentAmplitude() const { return currentAmplitude; }
+    float getCurrentFrequency() const { return currentFrequency; }
 
-	AudioBufferQueue<float> audioBufferQueue;
-	WaveScopeDataCollector<float> waveScopeDataCollector { audioBufferQueue };
-	SpectrumScopeDataCollector<float> spectrumScopeDataCollector { audioBufferQueue };
-	//MidiKeyboardState keyboardState;
-	//MidiMessageCollector midiCollector;
+    AudioBufferQueue<float> audioBufferQueue;
+    WaveScopeDataCollector<float> waveScopeDataCollector { audioBufferQueue };
+    SpectrumScopeDataCollector<float> spectrumScopeDataCollector { audioBufferQueue };
+    //MidiKeyboardState keyboardState;
+    //MidiMessageCollector midiCollector;
 
 private:
-	void addAllControls();
+    void addAllControls();
 
-	Synthesiser mySynth;
-	SynthVoice* myVoice;
-	float currentAmplitude = 0.0f;
-	float currentFrequency = 4186.01f;
+    Synthesiser mySynth;
+    SynthVoice* myVoice;
+    float currentAmplitude = 0.0f;
+    float currentFrequency = 4186.01f;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessor)
 };
