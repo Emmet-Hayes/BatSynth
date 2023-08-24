@@ -186,41 +186,15 @@ void BatSynthAudioProcessorEditor::resized() {
     setBoundsAndApplyScaling(sliders[11].get(), 570, 145, 60, 60, true);
     setBoundsAndApplyScaling(sliders[12].get(), 640, 145, 60, 60, true);
     setBoundsAndApplyScaling(sliders[13].get(), 710, 85, 80, 80, true);
-}
-
-void BatSynthAudioProcessorEditor::handleOpenGLComponent(float amplitude, float frequency)
-{
-    // checking OpenGL language version cannot be done in resized(), so we update on timer callback instead
-    const float newScale = static_cast<float> (getWidth()) / defaultWidth;
-
-    bool scaleChanged = false;
-    if (static_cast<int>(newScale * 100) != static_cast<int>(scale * 100))
-        scaleChanged = true;
-    
-    auto setBoundsAndApplyScaling = [&](juce::Component* component, int x, int y, int w, int h)
-    {
-        component->setBounds(static_cast<int>(x * newScale), static_cast<int>(y * newScale),
-                             static_cast<int>(w * newScale), static_cast<int>(h * newScale));
-    };
-
-    isOpenGLAvailable = juce::OpenGLShaderProgram::getLanguageVersion() >= 3.2;
-    if ((isOpenGLAvailable && tryInitializeOpenGL == 0) ||
-        (isOpenGLAvailable && scaleChanged))
-    {
-        openGLComponent->synthNoteColor = frequency;
-        openGLComponent->audioAmplitude = amplitude;
-        setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 180);
-        setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 180);
-        setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 360);
-    }
-    else
-    {
-        setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 770, 180);
-        setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 770, 180);
-        setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 0, 0); // empty
-    }
-
-    tryInitializeOpenGL++;
+   #if JUCE_WINDOWS // for now, openGL component is only working on windows, which is honestly a huge bummer.
+    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 180);
+    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 180);
+    setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 360);
+   #elif JUCE_MAC
+    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 770, 180);
+    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 770, 180);
+    setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 0, 0); // empty
+   #endif
 }
 
 void BatSynthAudioProcessorEditor::timerCallback() {
@@ -229,6 +203,7 @@ void BatSynthAudioProcessorEditor::timerCallback() {
 
     lookAndFeel.setGainColorIntensity(amplitude);
     lookAndFeel.setFrequencyColor(frequency);
-    handleOpenGLComponent(amplitude, frequency);
+    openGLComponent->synthNoteColor = frequency;
+    openGLComponent->audioAmplitude = amplitude;
     repaint();
 }

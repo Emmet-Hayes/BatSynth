@@ -21,7 +21,6 @@ public:
     void timerCallback() override;
 private:
     void addAllGUIComponents();
-    void handleOpenGLComponent(float amplitude, float frequency);
 
     BatSynthLookAndFeel lookAndFeel;
 
@@ -39,8 +38,6 @@ private:
     WaveScopeComponent<float> waveScopeComponent;
     SpectrumScopeComponent<float> spectrumScopeComponent;
     std::unique_ptr<OpenGLComponent> openGLComponent;
-    bool isOpenGLAvailable = false;
-    int tryInitializeOpenGL = 0;
     float scale = 1.0f;
     //MidiKeyboardComponent keyboardComponent;
     //MidiKeyboardState keyboardState;
