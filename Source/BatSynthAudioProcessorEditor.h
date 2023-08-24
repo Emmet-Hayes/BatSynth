@@ -47,8 +47,8 @@ private:
     
     juce::Image image;
     
-    int defaultWidth = 800;
-    int defaultHeight = 600;
+    static constexpr int defaultWidth  { 800 };
+    static constexpr int defaultHeight { 600 };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessorEditor)
 };
