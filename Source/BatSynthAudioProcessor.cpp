@@ -6,7 +6,7 @@ const int NUM_VOICES = 8;
 BatSynthAudioProcessor::BatSynthAudioProcessor()
 :   BaseAudioProcessor{ createParameterLayout() }
 {
-    addAllControls();
+    addAllSynthControls();
 }
 
 void BatSynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
@@ -14,7 +14,7 @@ void BatSynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBloc
     ignoreUnused(samplesPerBlock);
     BatSynthSettings::sampleRate = static_cast<int>(sampleRate);
     mySynth.setCurrentPlaybackSampleRate(sampleRate);
-    //midiCollector.reset(sampleRate);
+    midiCollector.reset(sampleRate);
 }
 
 
@@ -49,8 +49,8 @@ void BatSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
     currentFrequency = lowestSynthFrequency;
 
     buffer.clear();
-    //midiCollector.removeNextBlockOfMessages(midiMessages, buffer.getNumSamples()); // [11]
-    //keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(), true);
+    midiCollector.removeNextBlockOfMessages(midiMessages, buffer.getNumSamples()); // [11]
+    keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(), true);
     mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
   
     float rms = 0.0f;
@@ -75,14 +75,13 @@ AudioProcessorEditor* BatSynthAudioProcessor::createEditor()
   return new BatSynthAudioProcessorEditor (*this);
 }
 
-void BatSynthAudioProcessor::addAllControls()
+void BatSynthAudioProcessor::addAllSynthControls()
 {
     mySynth.clearVoices(); 
     for (int i = 0; i < NUM_VOICES; ++i) 
         mySynth.addVoice(new SynthVoice());
     mySynth.clearSounds();
     mySynth.addSound(new SynthSound());
-    //midiCollector.reset(emmetSettings::sampleRate);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout BatSynthAudioProcessor::createParameterLayout()

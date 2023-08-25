@@ -19,23 +19,23 @@ public:
     juce::AudioProcessorEditor* createEditor() override;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() override;
 
-
     float getCurrentAmplitude() const { return currentAmplitude; }
     float getCurrentFrequency() const { return currentFrequency; }
 
     AudioBufferQueue<float> audioBufferQueue;
     WaveScopeDataCollector<float> waveScopeDataCollector { audioBufferQueue };
     SpectrumScopeDataCollector<float> spectrumScopeDataCollector { audioBufferQueue };
-    //MidiKeyboardState keyboardState;
-    //MidiMessageCollector midiCollector;
+    MidiKeyboardState keyboardState;
+    MidiMessageCollector midiCollector;
 
 private:
-    void addAllControls();
+    void addAllSynthControls();
 
     Synthesiser mySynth;
     SynthVoice* myVoice;
-    float currentAmplitude = 0.0f;
-    float currentFrequency = 4186.01f;
+
+    float currentAmplitude { 0.0f };
+    float currentFrequency { 4186.01f };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessor)
 };

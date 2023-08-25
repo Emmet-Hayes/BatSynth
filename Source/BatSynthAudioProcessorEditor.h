@@ -29,8 +29,8 @@ private:
     
     Label labels[NUM_SLIDERS + NUM_COMBOBOXES];
     ComboBox comboboxes[NUM_COMBOBOXES]; // osc1, osc2, dist
-    std::unique_ptr<juce::Slider> sliders[NUM_SLIDERS]; // atk, dcy, sus, rel, osc2pitch, osc2gain, noisegain, filtercut, filterres, lfoInten,
-                                 // lfoRate, totGain
+    std::unique_ptr<juce::Slider> sliders[NUM_SLIDERS]; // atk, dcy, sus, rel, osc2pitch, osc2gain, noisegain, 
+                                                        // filtercut, filterres, lfoInten, lfoRate, totGain
 
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> comboboxattachments[NUM_COMBOBOXES];
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sliderattachments[NUM_SLIDERS];
@@ -38,10 +38,10 @@ private:
     WaveScopeComponent<float> waveScopeComponent;
     SpectrumScopeComponent<float> spectrumScopeComponent;
     std::unique_ptr<OpenGLComponent> openGLComponent;
-    float scale = 1.0f;
-    //MidiKeyboardComponent keyboardComponent;
-    //MidiKeyboardState keyboardState;
-    
+    MidiKeyboardComponent keyboardComponent;
+
+    float scale { 1.0f };
+
     juce::Image image;
     
     static constexpr int defaultWidth  { 800 };

@@ -11,6 +11,7 @@ BatSynthAudioProcessorEditor::BatSynthAudioProcessorEditor (BatSynthAudioProcess
 ,   presetBar                { p }
 ,   waveScopeComponent       { processor.audioBufferQueue }
 ,   spectrumScopeComponent   { processor.audioBufferQueue, lookAndFeel }
+,   keyboardComponent { processor.keyboardState, juce::MidiKeyboardComponent::Orientation::horizontalKeyboard }
 {
     startTimerHz(30); // refresh at 30 fps
     setLookAndFeel(&lookAndFeel);
@@ -132,6 +133,8 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
 
     openGLComponent = std::make_unique<OpenGLComponent>();
     addAndMakeVisible(openGLComponent.get());
+
+    addAndMakeVisible(keyboardComponent);
     
     const auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
     setResizable(false, true);
@@ -141,7 +144,8 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
 }
 
 
-BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() {
+BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() 
+{
     setLookAndFeel(nullptr);
 
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
@@ -154,11 +158,13 @@ BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() {
     processor.spectrumScopeDataCollector.removeAllListeners();
 }
 
-void BatSynthAudioProcessorEditor::paint (Graphics& g) {
+void BatSynthAudioProcessorEditor::paint (Graphics& g) 
+{
     g.fillAll(juce::Colours::black);
 }
 
-void BatSynthAudioProcessorEditor::resized() {
+void BatSynthAudioProcessorEditor::resized() 
+{
     scale = static_cast<float> (getWidth()) / defaultWidth;
     auto setBoundsAndApplyScaling = [&](juce::Component* component, int x, int y, int w, int h, bool isSlider = false)
     {
@@ -186,18 +192,21 @@ void BatSynthAudioProcessorEditor::resized() {
     setBoundsAndApplyScaling(sliders[11].get(), 570, 145, 60, 60, true);
     setBoundsAndApplyScaling(sliders[12].get(), 640, 145, 60, 60, true);
     setBoundsAndApplyScaling(sliders[13].get(), 710, 85, 80, 80, true);
-   #if JUCE_WINDOWS // for now, openGL component is only working on windows, which is honestly a huge bummer.
-    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 180);
-    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 180);
-    setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 360);
+   #if JUCE_WINDOWS // for now, openGL components are only rendering on windows, which is honestly a huge bummer.
+    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 130);
+    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 130);
+    setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 310);
+    setBoundsAndApplyScaling(&keyboardComponent, 10, 560, 780, 40);
    #elif JUCE_MAC
-    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 770, 180);
-    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 770, 180);
+    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 770, 130);
+    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 770, 130);
     setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 0, 0); // empty
+    setBoundsAndApplyScaling(&keyboardComponent, 10, 560, 780, 40);
    #endif
 }
 
-void BatSynthAudioProcessorEditor::timerCallback() {
+void BatSynthAudioProcessorEditor::timerCallback() 
+{
     float amplitude = processor.getCurrentAmplitude();
     float frequency = processor.getCurrentFrequency();
 

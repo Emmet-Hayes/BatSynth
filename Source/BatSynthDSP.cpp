@@ -6,7 +6,7 @@ const int oversampleFactor = 2;
 
 double BatSynthOsc::noise() 
 {
-    output = (rand()/(float)RAND_MAX) * 2 - 1;
+    output = (rand()/(float)RAND_MAX) * 2.0 - 1.0;
     return output;
 }
 
@@ -37,7 +37,7 @@ double BatSynthOsc::square(double freq)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (static_cast<double>(BatSynthSettings::sampleRate) * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         if (phase <= 0.5) oversampledOutput[i] = -1;
         else oversampledOutput[i] = 1;
@@ -88,7 +88,7 @@ double BatSynthOsc::saw(double freq)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (static_cast<double>(BatSynthSettings::sampleRate) * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         oversampledOutput[i] = phase * 2 - 1;
     }
@@ -157,7 +157,7 @@ double BatSynthOsc::triangle(double freq)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (static_cast<double>(BatSynthSettings::sampleRate) * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         if (phase <= 0.5) oversampledOutput[i] = (phase - 0.25) * 4.;
         else oversampledOutput[i] = ((1.0 - phase) - 0.25) * 4.;
@@ -181,7 +181,7 @@ double BatSynthOsc::sawwane(double freq)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (static_cast<double>(BatSynthSettings::sampleRate) * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         oversampledOutput[i] = phase * phase * 2 - 1;
     }
@@ -204,7 +204,7 @@ double BatSynthOsc::sawwax(double freq)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (static_cast<double>(BatSynthSettings::sampleRate) * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         oversampledOutput[i] = sqrt(phase) * 2 - 1;
     }
@@ -230,7 +230,7 @@ double BatSynthOsc::sawpulse(double freq, double duty)
     
     for (int i = 0; i < oversampleFactor; ++i)
     {
-        phase += (1./ (BatSynthSettings::sampleRate * oversampleFactor / freq));
+        phase += (1./ (static_cast<double>(BatSynthSettings::sampleRate) * oversampleFactor / freq));
         if (phase >= 1.0 ) phase -= 1.0;
         if (phase < duty) oversampledOutput[i] = -1;
         else if (phase > (1 - duty)) oversampledOutput[i] = 1;
@@ -238,7 +238,7 @@ double BatSynthOsc::sawpulse(double freq, double duty)
     }
     
     BatSynthLPFilter lpFilter;
-    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48);
+    lpFilter.setCutoffFrequency(BatSynthSettings::sampleRate * 0.48); // filter out high frequencies nyquist
     
     double sum = 0;
     for (int i = 0; i < oversampleFactor; ++i)
@@ -247,35 +247,6 @@ double BatSynthOsc::sawpulse(double freq, double duty)
     output = sum / oversampleFactor;
     
     return output;
-}
-
-float BatSynthDelayLine::process(float input) 
-{
-    float delayedSignal = read(time);
-    write(input + delayedSignal * feedback);
-    return delayedSignal;
-}
-
-void BatSynthDelayLine::write(float input)
-{
-    buffer[writePointer++] = input;
-    if (writePointer >= MAX_DELAY)
-        writePointer = 0;
-}
-
-float BatSynthDelayLine::read(float delayTime)
-{
-    float readPointer = float(writePointer) - time;
-    while (readPointer < 0) readPointer += MAX_DELAY;
-        
-    int index0 = int(readPointer);
-    int index1 = (index0 + 1) % MAX_DELAY;
-        
-    float frac = readPointer - float(index0);
-    float val0 = buffer[index0];
-    float val1 = buffer[index1];
-        
-    return val0 + frac * (val1 - val0);
 }
 
 double BatSynthFilter::lopass(double in, double cutoff) 
@@ -343,29 +314,29 @@ double BatSynthFilter::bandpass(double in, double cutoff1, double resonance)
 double BatSynthCompressor::process(double input)
 {
     double inputLevel = fabs(input);
-        
+
     if (inputLevel > threshold) {
         double desiredGain = threshold / inputLevel;
         double dbDesiredGain = log10(desiredGain) * 20.0;
         double dbGainReduction = dbDesiredGain * (1.0 - 1.0 / ratio);
         double desiredEnvelope = pow(10.0, dbGainReduction / 20.0);
-            
-        if (desiredEnvelope < envelope) 
+
+        if (desiredEnvelope < envelope)
         {
             double coeff = exp(log(0.01) / (attackTime * BatSynthSettings::sampleRate));
             envelope = coeff * envelope + (1.0 - coeff) * desiredEnvelope;
         }
-        else 
+        else
         {
             double coeff = exp(log(0.01) / (releaseTime * BatSynthSettings::sampleRate));
             envelope = coeff * envelope + (1.0 - coeff) * desiredEnvelope;
         }
-    } 
+    }
     else
     {
         envelope = 1.0;
     }
-    
+
     gain = envelope;
     return input * gain;
 }
