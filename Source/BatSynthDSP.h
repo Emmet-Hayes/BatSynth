@@ -8,17 +8,16 @@
 #define PI  3.1415926535897932384626433832795
 #define TWOPI 6.283185307179586476925286766559
 
+
 class BatSynthSettings 
 {
 public:
     static int sampleRate;
 };
 
+
 class BatSynthOsc 
 {
-    double phase = 0.0;
-    double output;
-
 public:
     double sinewave(double frequency);
     double coswave(double frequency);
@@ -34,6 +33,10 @@ public:
     double softdistsine(double frequency);
     double harddistsine(double frequency);
     void phaseReset(double phaseIn);
+
+private:
+    double phase = 0.0;
+    double output;
 };
 
 
@@ -97,14 +100,9 @@ public:
     int trigger = 0;
 
 private:
-    double input;
-    double output;
-    double attack;
-    double decay;
-    double sustain;
-    double release;
-    double amplitude;
+    double input, output, amplitude,
+           attack, decay, sustain, release;
     long holdtime = 1;
     long holdcount;
-    int attackphase,decayphase,sustainphase,holdphase,releasephase;
+    int attackphase, decayphase, sustainphase, holdphase, releasephase;
 };

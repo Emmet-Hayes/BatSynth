@@ -1,10 +1,12 @@
 #pragma once
-#include <JuceHeader.h>
-#include "SynthSounds.h"
-#include "SynthVoice.h"
+
 #include "../../Common/BaseAudioProcessor.h"
 #include "../../Common/WaveScopeComponent.h"
 #include "../../Common/SpectrumScopeComponent.h"
+
+#include "SynthSounds.h"
+#include "SynthVoice.h"
+
 
 const int NUM_SLIDERS = 14;
 const int NUM_COMBOBOXES = 2;

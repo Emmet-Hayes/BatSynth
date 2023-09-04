@@ -1,8 +1,10 @@
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
+
 #include "SynthSounds.h"
 #include "BatSynthDSP.h"
+
 
 class SynthVoice : public SynthesiserVoice 
 {
@@ -139,10 +141,10 @@ public:
     }
 
 private:
-    double level, frequency, totalGain = 1.0, delayGain = 0.7, compressGain = 0.8, noiseGain = 0.0,
-        osc2Gain = 0.0, osc2PitchBend = 1.0, lfoFilterFreq = 1.0, lfoFilterIntensity = 0.0,
-        oscAllPitchBend = 1.0, keyboardVolume = 1.0, lfoPitchFreq = 2.0, lfoPitchIntensity = 0.0,
-        distDrive1 = 1.0;
+    double level, frequency, totalGain { 1.0 }, delayGain { 0.7 }, compressGain { 0.8 }, noiseGain { 0.0 },
+           osc2Gain { 0.0 }, osc2PitchBend { 1.0 }, lfoFilterFreq { 1.0 }, lfoFilterIntensity { 0.0 },
+           oscAllPitchBend { 1.0 }, keyboardVolume { 1.0 }, lfoPitchFreq { 2.0 }, lfoPitchIntensity { 0.0 },
+           distDrive1 { 1.0 };
     int theWave1, theWave2, distChoice1;
     BatSynthOsc osc1, osc2, noise1, lfo1, lfo2;
     BatSynthEnv env1; 

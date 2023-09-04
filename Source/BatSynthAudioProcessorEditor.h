@@ -1,14 +1,17 @@
 #pragma once
-#include <JuceHeader.h>
-#include "BatSynthAudioProcessor.h"
+
 #include "../../Common/OpenGLComponent.h"
 #include "../../Common/BaseAudioProcessorEditor.h"
 #include "../../Common/BatSynthLookAndFeel.h"
 #include "../../Common/PresetBar.h"
 
+#include "BatSynthAudioProcessor.h"
+
+
 class BatSynthAudioProcessorEditor : public BaseAudioProcessorEditor
-                                   , public Slider::Listener
-                                   , public ComboBox::Listener
+                                   , public juce::Slider::Listener
+                                   , public juce::ComboBox::Listener
+                                   , public juce::Button::Listener
                                    , public Timer
 {
 public:
@@ -18,6 +21,7 @@ public:
     void resized() override;
     void sliderValueChanged(juce::Slider*) override {};
     void comboBoxChanged(juce::ComboBox*) override {};
+    void buttonClicked(juce::Button* button) override;
     void timerCallback() override;
 private:
     void addAllGUIComponents();
@@ -39,6 +43,8 @@ private:
     SpectrumScopeComponent<float> spectrumScopeComponent;
     std::unique_ptr<OpenGLComponent> openGLComponent;
     MidiKeyboardComponent keyboardComponent;
+
+    juce::TextButton zoomButton;
 
     float scale { 1.0f };
 

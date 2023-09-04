@@ -1,6 +1,7 @@
 #include "BatSynthAudioProcessor.h"
 #include "BatSynthAudioProcessorEditor.h"
 
+
 const int NUM_VOICES = 8;
 
 BatSynthAudioProcessor::BatSynthAudioProcessor()
@@ -92,7 +93,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout BatSynthAudioProcessor::crea
         filterCutRange(50.f, 7100.f), filterResonRange(1.f, 10.f), lfoFilterIntenRange(0.f, 0.9f),
         lfoFilterRateRange(0.5f, 12.0f), lfoPitchIntenRange(0.0f, 0.9f), lfoPitchRateRange(0.05f, 6.0f), totalGainRange(0.f, 1.0f);
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    using Parameter = AudioProcessorValueTreeState::Parameter; //shortens the next few lines a bit
+    using Parameter = AudioProcessorValueTreeState::Parameter;
     layout.add(std::make_unique<Parameter>("attack", "Attack", "Attack", attackRange, 0.1f, nullptr, nullptr));
     layout.add(std::make_unique<Parameter>("decay", "Decay", "Decay", decayRange, 500.f, nullptr, nullptr));
     layout.add(std::make_unique<Parameter>("sustain", "Sustain", "Sustain", sustainRange, 0.8f, nullptr, nullptr));
