@@ -39,6 +39,8 @@ private:
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> comboboxattachments[NUM_COMBOBOXES];
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sliderattachments[NUM_SLIDERS];
 
+    WaveTableComponent waveTableComponent;
+
     WaveScopeComponent<float> waveScopeComponent;
     SpectrumScopeComponent<float> spectrumScopeComponent;
     std::unique_ptr<OpenGLComponent> openGLComponent;
@@ -50,8 +52,8 @@ private:
 
     juce::Image image;
     
-    static constexpr int defaultWidth  { 800 };
-    static constexpr int defaultHeight { 600 };
+    static constexpr int DEFAULT_WIDTH  { 800 };
+    static constexpr int DEFAULT_HEIGHT { 600 };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BatSynthAudioProcessorEditor)
 };

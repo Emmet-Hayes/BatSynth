@@ -2,16 +2,21 @@
 
 #include <JuceHeader.h>
 
-#include "SynthSounds.h"
 #include "BatSynthDSP.h"
+#include "BatSynthCompressor.h"
+#include "BatSynthEnv.h"
+#include "BatSynthFilter.h"
+#include "BatSynthOsc.h"
+#include "BatSynthSounds.h"
 
 
-class SynthVoice : public SynthesiserVoice 
+class BatSynthVoice : public SynthesiserVoice 
 {
 public:
+
     bool canPlaySound(SynthesiserSound* sound) override 
     {
-        return dynamic_cast<SynthSound*>(sound) != nullptr; 
+        return dynamic_cast<BatSynthSound*>(sound) != nullptr; 
     }
 
     void startNote(int midiNoteNumber, float velocity,
@@ -47,10 +52,16 @@ public:
     void setLfoPitchIntensity(const std::atomic<float>* newGain) { lfoPitchIntensity = *newGain; }
     void setLfoPitchRate(const std::atomic<float>* newRate) { lfoPitchFreq = *newRate; }
     void setDistDrive(const std::atomic<float>* newDrive) { distDrive1 = (double)*newDrive; }
-    void setOsc1Type(const std::atomic<float>* oscType) { theWave1 = static_cast<int>((double)*oscType + 0.1); }
-    void setOsc2Type(const std::atomic<float>* oscType) { theWave2 = static_cast<int>((double)*oscType + 0.1); }
-    void setDistType(const std::atomic<float>* newType) { distChoice1 = static_cast<int>((double)*newType + 0.1); }
+    void setOsc1Type(const std::atomic<float>* oscType) { theWave1 = static_cast<int>((double)*oscType + 0.05); }
+    void setOsc2Type(const std::atomic<float>* oscType) { theWave2 = static_cast<int>((double)*oscType + 0.05); }
+    void setDistType(const std::atomic<float>* newType) { distChoice1 = static_cast<int>((double)*newType + 0.05); }
     
+    void setWaveTable(const float* tableData, int size) 
+    {
+        waveTable = tableData;
+        waveTableSize = size;
+    }
+
     double getFrequency() const { return frequency; }
     double getTotalGain() const { return totalGain; }
     double getFilterCutoff() const { return filt1.cutoff; }
@@ -83,6 +94,7 @@ public:
             case 10: return osc1.pulse(frequency * oscAllPitchBend + lfoPitchIntensity * (lfo2.sinewave(lfoPitchFreq) * 5) * (frequency/220.), 0.3);
             case 11: return osc1.sawpulse(frequency * oscAllPitchBend + lfoPitchIntensity * (lfo2.sinewave(lfoPitchFreq) * 5) * (frequency/220.), 0.2);
             case 12: return osc1.sawpulse(frequency * oscAllPitchBend + lfoPitchIntensity * (lfo2.sinewave(lfoPitchFreq) * 5) * (frequency/220.), 0.3);
+            case 13: return osc1.customwave(frequency, waveTable, waveTableSize);
         }
     }
     double getOsc2Type() 
@@ -102,6 +114,7 @@ public:
             case 10: return osc2.pulse(frequency * osc2PitchBend * oscAllPitchBend + lfoPitchIntensity * (lfo2.sinewave(lfoPitchFreq) * 5) * (frequency/220.), 0.3);
             case 11: return osc2.sawpulse(frequency * osc2PitchBend * oscAllPitchBend + lfoPitchIntensity * (lfo2.sinewave(lfoPitchFreq) * 5) * (frequency/220.), 0.2);
             case 12: return osc2.sawpulse(frequency * osc2PitchBend * oscAllPitchBend + lfoPitchIntensity * (lfo2.sinewave(lfoPitchFreq) * 5) * (frequency/220.), 0.3);
+            case 13: return osc1.customwave(frequency, waveTable, waveTableSize);
         }
     }
     
@@ -130,8 +143,8 @@ public:
             double theSound = (getOsc1Type() + (getOsc2Type() * osc2Gain) + (noise1.noise() * noiseGain))/ 3.;
             theSound *= level * keyboardVolume;
             theSound = env1.adsr(theSound, env1.trigger);
-            theSound = filt1.lores(theSound, getFilterCutoff() + lfoFilterIntensity
-                * lfo1.sinewave(lfoFilterFreq), getFilterResonance());
+            theSound = filt1.lores(theSound, 
+                       getFilterCutoff() + lfoFilterIntensity * lfo1.sinewave(lfoFilterFreq), getFilterResonance());
             theSound *= getTotalGain();
             theSound = limit1.process(theSound);
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
@@ -146,8 +159,12 @@ private:
            oscAllPitchBend { 1.0 }, keyboardVolume { 1.0 }, lfoPitchFreq { 2.0 }, lfoPitchIntensity { 0.0 },
            distDrive1 { 1.0 };
     int theWave1, theWave2, distChoice1;
+    
     BatSynthOsc osc1, osc2, noise1, lfo1, lfo2;
     BatSynthEnv env1; 
     BatSynthFilter filt1;
     BatSynthCompressor limit1 { 20.0, 0.9, 10.0, 100.0 };
+
+    const float* waveTable = nullptr;
+    int waveTableSize = 0;
 };

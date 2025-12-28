@@ -1,9 +1,6 @@
 #include "BatSynthAudioProcessor.h"
 #include "BatSynthAudioProcessorEditor.h"
 
-
-const int NUM_VOICES = 8;
-
 BatSynthAudioProcessor::BatSynthAudioProcessor()
 :   BaseAudioProcessor{ createParameterLayout() }
 {
@@ -12,8 +9,10 @@ BatSynthAudioProcessor::BatSynthAudioProcessor()
 
 void BatSynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
-    ignoreUnused(samplesPerBlock);
-    BatSynthSettings::sampleRate = static_cast<int>(sampleRate);
+    audioBufferQueue.setBufferSize((size_t) samplesPerBlock);
+    waveScopeDataCollector.resizeInternalBufferFromQueue();
+    spectrumScopeDataCollector.resizeInternalBufferFromQueue();
+    BatSynthDSP::sampleRate = static_cast<int>(sampleRate);
     mySynth.setCurrentPlaybackSampleRate(sampleRate);
     midiCollector.reset(sampleRate);
 }
@@ -24,7 +23,7 @@ void BatSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
     float lowestSynthFrequency = 4186.01f;
     for (int i = 0; i < mySynth.getNumVoices(); ++i) 
     {
-        myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i));
+        myVoice = dynamic_cast<BatSynthVoice*>(mySynth.getVoice(i));
         if (myVoice != nullptr) 
         {
             myVoice->setAttack(apvts.getRawParameterValue("attack"));
@@ -49,26 +48,26 @@ void BatSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
     }
     currentFrequency = lowestSynthFrequency;
 
-    buffer.clear();
-    midiCollector.removeNextBlockOfMessages(midiMessages, buffer.getNumSamples()); // [11]
-    keyboardState.processNextMidiBuffer(midiMessages, 0, buffer.getNumSamples(), true);
-    mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-  
-    float rms = 0.0f;
     int numOutputs = getTotalNumOutputChannels();
     int numSamples = buffer.getNumSamples();
+
+    buffer.clear();
+    midiCollector.removeNextBlockOfMessages(midiMessages, numSamples); // [11]
+    keyboardState.processNextMidiBuffer(midiMessages, 0, numSamples, true);
+    mySynth.renderNextBlock(buffer, midiMessages, 0, numSamples);
+  
+    float rms = 0.0f;
     for (int i = 0; i < numOutputs; ++i)
     {
         auto channelData = buffer.getReadPointer(i);
         rms += std::inner_product(channelData, channelData + numSamples, channelData, 0.0f);
     }
-    rms /= buffer.getNumSamples() * buffer.getNumChannels();
+    rms /= numSamples * numOutputs;
     rms = std::sqrt(rms);
-  
     currentAmplitude = rms;
-  
-    waveScopeDataCollector.process(buffer.getReadPointer(0), (size_t)buffer.getNumSamples(), currentFrequency);
-    spectrumScopeDataCollector.process(buffer.getReadPointer(0), (size_t)buffer.getNumSamples(), currentFrequency);
+
+    waveScopeDataCollector.process(buffer.getReadPointer(0), (size_t)numSamples, currentFrequency);
+    spectrumScopeDataCollector.process(buffer.getReadPointer(0), (size_t)numSamples, currentFrequency);
 }
 
 AudioProcessorEditor* BatSynthAudioProcessor::createEditor()
@@ -80,15 +79,23 @@ void BatSynthAudioProcessor::addAllSynthControls()
 {
     mySynth.clearVoices(); 
     for (int i = 0; i < NUM_VOICES; ++i) 
-        mySynth.addVoice(new SynthVoice());
+        mySynth.addVoice(new BatSynthVoice());
     mySynth.clearSounds();
-    mySynth.addSound(new SynthSound());
+    mySynth.addSound(new BatSynthSound());
+
+    // give every voice a pointer to mySynth.wavetable
+    for (int i = 0; i < mySynth.getNumVoices(); ++i)
+    {
+        if (auto* v = dynamic_cast<BatSynthVoice*>(mySynth.getVoice(i)))
+            v->setWaveTable(mySynth.wavetable.data(),
+                (int)BatSynth::tableSize);
+    }
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout BatSynthAudioProcessor::createParameterLayout()
 {
     NormalisableRange<float> attackRange(0.1f, 5000.0f), decayRange(0.1f, 2000.0f), sustainRange(0.0f, 1.0f),
-        releaseRange(0.1f, 5000.0f), wavetypeRange(0, 12), wavetype2Range(0, 12),
+        releaseRange(0.1f, 5000.0f), wavetypeRange(0, 13), wavetype2Range(0, 13),
         osc2GainRange(0.f, 1.f), noiseGainRange(0.f, 1.f), osc2PitchRange(0.5f, 2.f),
         filterCutRange(50.f, 7100.f), filterResonRange(1.f, 10.f), lfoFilterIntenRange(0.f, 0.9f),
         lfoFilterRateRange(0.5f, 12.0f), lfoPitchIntenRange(0.0f, 0.9f), lfoPitchRateRange(0.05f, 6.0f), totalGainRange(0.f, 1.0f);
@@ -111,6 +118,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout BatSynthAudioProcessor::crea
     layout.add(std::make_unique<Parameter>("wavetype", "Wavetype", "Wavetype", wavetypeRange, 1, nullptr, nullptr));
     layout.add(std::make_unique<Parameter>("wavetype2", "Wavetype 2", "Wavetype 2", wavetype2Range, 0, nullptr, nullptr));
     return layout;
+}
+
+void BatSynthAudioProcessor::setCustomWaveform(const std::vector<float>& wave)
+{
+    mySynth.setCustomWaveform(wave);
 }
 
 AudioProcessor* JUCE_CALLTYPE createPluginFilter() 

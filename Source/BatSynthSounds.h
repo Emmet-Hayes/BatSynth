@@ -3,7 +3,7 @@
 #include <JuceHeader.h>
 
 
-class SynthSound : public SynthesiserSound 
+class BatSynthSound : public SynthesiserSound 
 {
 public:
     bool appliesToNote(int) { return true; }

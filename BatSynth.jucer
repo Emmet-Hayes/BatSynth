@@ -6,6 +6,8 @@
               companyName="EmmetSoft">
   <MAINGROUP id="gzhS9P" name="BatSynth">
     <GROUP id="{E765F9C0-6569-0A14-2F93-B1FB384DB5B5}" name="Common">
+      <FILE id="Axgxzq" name="WaveTableComponent.h" compile="0" resource="0"
+            file="../Common/WaveTableComponent.h"/>
       <FILE id="hEeM6R" name="Utilities.h" compile="0" resource="0" file="../Common/Utilities.h"/>
       <FILE id="E3a7q8" name="WavefrontObjParser.h" compile="0" resource="0"
             file="../Common/WavefrontObjParser.h"/>
@@ -52,8 +54,21 @@
             file="../Common/WaveScopeComponent.h"/>
     </GROUP>
     <GROUP id="{816762A0-31F2-D755-0F9C-28D79F22A5D0}" name="Source">
+      <FILE id="HmcrUv" name="BatSynthDSP.cpp" compile="1" resource="0" file="Source/BatSynthDSP.cpp"/>
+      <FILE id="CdATxl" name="BatSynthOsc.cpp" compile="1" resource="0" file="Source/BatSynthOsc.cpp"/>
+      <FILE id="AKs4MZ" name="BatSynthFilter.cpp" compile="1" resource="0"
+            file="Source/BatSynthFilter.cpp"/>
+      <FILE id="sCQVlK" name="BatSynthCompressor.cpp" compile="1" resource="0"
+            file="Source/BatSynthCompressor.cpp"/>
+      <FILE id="CW7i5F" name="BatSynthEnv.cpp" compile="1" resource="0" file="Source/BatSynthEnv.cpp"/>
+      <FILE id="Vus5Kb" name="BatSynthEnv.h" compile="0" resource="0" file="Source/BatSynthEnv.h"/>
+      <FILE id="rQZDw6" name="BatSynthCompressor.h" compile="0" resource="0"
+            file="Source/BatSynthCompressor.h"/>
+      <FILE id="mUw3CO" name="BatSynthFilter.h" compile="0" resource="0"
+            file="Source/BatSynthFilter.h"/>
+      <FILE id="DhNGid" name="BatSynthOsc.h" compile="0" resource="0" file="Source/BatSynthOsc.h"/>
+      <FILE id="ElYAAo" name="BatSynth.h" compile="0" resource="0" file="Source/BatSynth.h"/>
       <FILE id="NFshRb" name="BatSynthDSP.h" compile="0" resource="0" file="Source/BatSynthDSP.h"/>
-      <FILE id="ZxUGTO" name="BatSynthDSP.cpp" compile="1" resource="0" file="Source/BatSynthDSP.cpp"/>
       <FILE id="sj0OsE" name="BatSynthAudioProcessor.h" compile="0" resource="0"
             file="Source/BatSynthAudioProcessor.h"/>
       <FILE id="fbkemA" name="BatSynthAudioProcessor.cpp" compile="1" resource="0"
@@ -62,8 +77,9 @@
             resource="0" file="Source/BatSynthAudioProcessorEditor.h"/>
       <FILE id="rxgkd5" name="BatSynthAudioProcessorEditor.cpp" compile="1"
             resource="0" file="Source/BatSynthAudioProcessorEditor.cpp"/>
-      <FILE id="sf3IEm" name="SynthSounds.h" compile="0" resource="0" file="Source/SynthSounds.h"/>
-      <FILE id="ez4SPY" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
+      <FILE id="sf3IEm" name="BatSynthSounds.h" compile="0" resource="0"
+            file="Source/BatSynthSounds.h"/>
+      <FILE id="ez4SPY" name="BatSynthVoice.h" compile="0" resource="0" file="Source/BatSynthVoice.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

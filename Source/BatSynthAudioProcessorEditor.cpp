@@ -13,7 +13,8 @@ BatSynthAudioProcessorEditor::BatSynthAudioProcessorEditor (BatSynthAudioProcess
 ,   presetBar                { p }
 ,   waveScopeComponent       { processor.audioBufferQueue }
 ,   spectrumScopeComponent   { processor.audioBufferQueue, lookAndFeel }
-,   keyboardComponent { processor.keyboardState, juce::MidiKeyboardComponent::Orientation::horizontalKeyboard }
+,   keyboardComponent        { processor.keyboardState, juce::MidiKeyboardComponent::Orientation::horizontalKeyboard }
+,   waveTableComponent       { BatSynth::tableSize }
 {
     startTimerHz(30);
     setLookAndFeel(&lookAndFeel);
@@ -27,8 +28,8 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     {
         const std::vector<String> options = isOsc ? std::vector<String>({ "Sine", "Saw", "Square", "Soft Distorted Sine", "Hard Distorted Sine", 
                                                                     "Triangle", "Noise", "Sharp Saw", "Thick Saw", "Pulse 0.2", "Pulse 0.3",
-                                                                    "Saw Pulse 0.2", "Saw Pulse 0.3" }) :
-                                                std::vector<String>({ "None", "Sigmoid", "Tanh", "Arctan10", "FastArcTan10" });
+                                                                    "Saw Pulse 0.2", "Saw Pulse 0.3", "Custom Wave"}) :
+                                                    std::vector<String>({ "None", "Sigmoid", "Tanh", "Arctan10", "FastArcTan10" });
         for (int i = 0; i < options.size(); ++i)
             box.addItem(options[i], i+1);
         box.setJustificationType(jtype);
@@ -97,6 +98,15 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     setupComboBox(comboboxes[0], Justification::centred, "Saw");
     setupComboBox(comboboxes[1], Justification::centred, "Sine");
 
+    addAndMakeVisible(waveTableComponent);
+    waveTableComponent.onWaveformChanged = [this](const std::vector<float>& wave)
+    {
+        processor.setCustomWaveform(wave);
+    };
+
+    waveScopeComponent.resizeInternalBuffersFromQueue();
+    spectrumScopeComponent.resizeInternalBuffersFromQueue();
+
     addAndMakeVisible(&waveScopeComponent);
     addAndMakeVisible(&spectrumScopeComponent);
     processor.waveScopeDataCollector.addListener(&waveScopeComponent);
@@ -142,11 +152,11 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     zoomButton.addListener(this);
     addAndMakeVisible(zoomButton);
     
-    const auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
+    const auto ratio = static_cast<double> (DEFAULT_WIDTH) / DEFAULT_HEIGHT;
     setResizable(false, true);
     getConstrainer()->setFixedAspectRatio (ratio);
-    getConstrainer()->setSizeLimits(defaultWidth, defaultHeight, defaultWidth * 2, defaultHeight * 2);
-    setSize (defaultWidth, defaultHeight);
+    getConstrainer()->setSizeLimits(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_WIDTH * 2, DEFAULT_HEIGHT * 2);
+    setSize (DEFAULT_WIDTH, DEFAULT_HEIGHT);
 }
 
 
@@ -173,7 +183,7 @@ void BatSynthAudioProcessorEditor::paint (Graphics& g)
 
 void BatSynthAudioProcessorEditor::resized() 
 {
-    scale = static_cast<float> (getWidth()) / defaultWidth;
+    scale = static_cast<float> (getWidth()) / DEFAULT_WIDTH;
     auto setBoundsAndApplyScaling = [&](juce::Component* component, int x, int y, int w, int h, bool isSlider = false)
     {
         component->setBounds(static_cast<int>(x * scale), static_cast<int>(y * scale), 
@@ -211,7 +221,8 @@ void BatSynthAudioProcessorEditor::resized()
        #if JUCE_WINDOWS // for now, openGL components are only rendering on windows, which is honestly a huge bummer.
         setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 130);
         setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 130);
-        setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 310);
+        setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 130);
+        setBoundsAndApplyScaling(&waveTableComponent, 400, 425, 380, 130);
         setBoundsAndApplyScaling(&zoomButton, 740, 175, 30, 30);
         setBoundsAndApplyScaling(&keyboardComponent, 10, 560, 780, 40);
        #elif JUCE_MAC
