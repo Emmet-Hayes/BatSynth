@@ -11,7 +11,6 @@
 class BatSynthAudioProcessorEditor : public BaseAudioProcessorEditor
                                    , public juce::Slider::Listener
                                    , public juce::ComboBox::Listener
-                                   , public juce::Button::Listener
                                    , public Timer
 {
 public:
@@ -21,7 +20,6 @@ public:
     void resized() override;
     void sliderValueChanged(juce::Slider*) override {};
     void comboBoxChanged(juce::ComboBox*) override {};
-    void buttonClicked(juce::Button* button) override;
     void timerCallback() override;
 private:
     void addAllGUIComponents();
@@ -45,8 +43,6 @@ private:
     SpectrumScopeComponent<float> spectrumScopeComponent;
     std::unique_ptr<OpenGLComponent> openGLComponent;
     MidiKeyboardComponent keyboardComponent;
-
-    juce::TextButton zoomButton;
 
     float scale { 1.0f };
 

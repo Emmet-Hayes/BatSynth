@@ -111,6 +111,7 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     addAndMakeVisible(&spectrumScopeComponent);
     processor.waveScopeDataCollector.addListener(&waveScopeComponent);
     processor.spectrumScopeDataCollector.addListener(&spectrumScopeComponent);
+    processor.waveScopeDataCollector.addListener(&waveTableComponent);
 
     auto setupComboBoxAttachments = [&](juce::ComboBox& comboBox, juce::String treelabel,
                                       std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment>& comboBoxAttachment) 
@@ -147,10 +148,6 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
     addAndMakeVisible(openGLComponent.get());
 
     addAndMakeVisible(keyboardComponent);
-
-    zoomButton.setToggleable(true);
-    zoomButton.addListener(this);
-    addAndMakeVisible(zoomButton);
     
     const auto ratio = static_cast<double> (DEFAULT_WIDTH) / DEFAULT_HEIGHT;
     setResizable(false, true);
@@ -163,8 +160,6 @@ void BatSynthAudioProcessorEditor::addAllGUIComponents()
 BatSynthAudioProcessorEditor::~BatSynthAudioProcessorEditor() 
 {
     setLookAndFeel(nullptr);
-    
-    zoomButton.removeListener(this);
 
     for (int i = 0; i < NUM_COMBOBOXES; ++i)
         comboboxes[i].removeListener(this);
@@ -193,58 +188,36 @@ void BatSynthAudioProcessorEditor::resized()
     };
     
     lookAndFeel.setWindowScale(scale);
-    if (zoomButton.getToggleState())
-    {
-        setBoundsAndApplyScaling(openGLComponent.get(), 5, 30, 745, 520);
-        setBoundsAndApplyScaling(&zoomButton, 740, 550, 30, 30);
-        setBoundsAndApplyScaling(sliders[13].get(), 710, 85, 0, 0, true);
-    }
-    else
-    {
-        setBoundsAndApplyScaling(&presetBar, 0, 5, 800, 25);
-        setBoundsAndApplyScaling(&comboboxes[0], 10, 75, 120, 30);
-        setBoundsAndApplyScaling(&comboboxes[1], 10, 160, 120, 30);
-        setBoundsAndApplyScaling(sliders[4].get(), 180, 150, 60, 60, true);
-        setBoundsAndApplyScaling(sliders[5].get(), 260, 150, 60, 60, true);
-        setBoundsAndApplyScaling(sliders[6].get(), 340, 150, 60, 60, true);
-        setBoundsAndApplyScaling(sliders[0].get(), 140, 50, 70, 70, true);
-        setBoundsAndApplyScaling(sliders[1].get(), 220, 50, 70, 70, true);
-        setBoundsAndApplyScaling(sliders[2].get(), 300, 50, 70, 70, true);
-        setBoundsAndApplyScaling(sliders[3].get(), 380, 50, 70, 70, true);
-        setBoundsAndApplyScaling(sliders[7].get(), 460, 50, 80, 80, true);
-        setBoundsAndApplyScaling(sliders[8].get(), 460, 150, 80, 80, true);
-        setBoundsAndApplyScaling(sliders[9].get(), 570, 50, 60, 60, true);
-        setBoundsAndApplyScaling(sliders[10].get(), 640, 50, 60, 60, true);
-        setBoundsAndApplyScaling(sliders[11].get(), 570, 145, 60, 60, true);
-        setBoundsAndApplyScaling(sliders[12].get(), 640, 145, 60, 60, true);
-        setBoundsAndApplyScaling(sliders[13].get(), 710, 85, 80, 80, true);
-       #if JUCE_WINDOWS // for now, openGL components are only rendering on windows, which is honestly a huge bummer.
-        setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 130);
-        setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 130);
-        setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 380, 130);
-        setBoundsAndApplyScaling(&waveTableComponent, 400, 425, 380, 130);
-        setBoundsAndApplyScaling(&zoomButton, 740, 175, 30, 30);
-        setBoundsAndApplyScaling(&keyboardComponent, 10, 560, 780, 40);
-       #elif JUCE_MAC
-        setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 770, 130);
-        setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 770, 130);
-        setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 0, 0); // empty
-        setBoundsAndApplyScaling(&zoomButton, 740, 175, 0, 0);
-        setBoundsAndApplyScaling(&keyboardComponent, 10, 560, 780, 40);
-       #endif
-    }
-}
-
-void BatSynthAudioProcessorEditor::buttonClicked(juce::Button* button)
-{
-    if (button == &zoomButton)
-    {
-        if (button->getToggleState())
-            zoomButton.setToggleState(false, juce::NotificationType::dontSendNotification);
-        else
-            zoomButton.setToggleState(true, juce::NotificationType::dontSendNotification);
-        resized();
-    }
+    setBoundsAndApplyScaling(&presetBar, 0, 5, 800, 25);
+    setBoundsAndApplyScaling(&comboboxes[0], 10, 75, 120, 30);
+    setBoundsAndApplyScaling(&comboboxes[1], 10, 160, 120, 30);
+    setBoundsAndApplyScaling(sliders[4].get(), 180, 150, 60, 60, true);
+    setBoundsAndApplyScaling(sliders[5].get(), 260, 150, 60, 60, true);
+    setBoundsAndApplyScaling(sliders[6].get(), 340, 150, 60, 60, true);
+    setBoundsAndApplyScaling(sliders[0].get(), 140, 50, 70, 70, true);
+    setBoundsAndApplyScaling(sliders[1].get(), 220, 50, 70, 70, true);
+    setBoundsAndApplyScaling(sliders[2].get(), 300, 50, 70, 70, true);
+    setBoundsAndApplyScaling(sliders[3].get(), 380, 50, 70, 70, true);
+    setBoundsAndApplyScaling(sliders[7].get(), 460, 50, 80, 80, true);
+    setBoundsAndApplyScaling(sliders[8].get(), 460, 150, 80, 80, true);
+    setBoundsAndApplyScaling(sliders[9].get(), 570, 50, 60, 60, true);
+    setBoundsAndApplyScaling(sliders[10].get(), 640, 50, 60, 60, true);
+    setBoundsAndApplyScaling(sliders[11].get(), 570, 145, 60, 60, true);
+    setBoundsAndApplyScaling(sliders[12].get(), 640, 145, 60, 60, true);
+    setBoundsAndApplyScaling(sliders[13].get(), 710, 85, 80, 80, true);
+    #if JUCE_WINDOWS // for now, openGL components are only rendering on windows, which is honestly a huge bummer.
+    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 380, 130);
+    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 380, 130);
+    setBoundsAndApplyScaling(&waveTableComponent, 400, 235, 380, 130);
+    setBoundsAndApplyScaling(openGLComponent.get(), 400, 425, 380, 130);
+    setBoundsAndApplyScaling(&keyboardComponent, 10, 560, 780, 40);
+    #elif JUCE_MAC
+    setBoundsAndApplyScaling(&waveScopeComponent, 15, 235, 770, 130);
+    setBoundsAndApplyScaling(&spectrumScopeComponent, 15, 425, 770, 130);
+    setBoundsAndApplyScaling(openGLComponent.get(), 400, 235, 0, 0); // empty
+    setBoundsAndApplyScaling(&zoomButton, 740, 175, 0, 0);
+    setBoundsAndApplyScaling(&keyboardComponent, 10, 560, 780, 40);
+    #endif
 }
 
 void BatSynthAudioProcessorEditor::timerCallback()
